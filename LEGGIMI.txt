@@ -1,0 +1,133 @@
+SPECCHIO STUDIO 1.3.1 — BUILD 7
+Mac Apple Silicon · macOS 14 o successivo
+Aggiornato il 18 ottobre 2026
+
+AVVIO E COMPILAZIONE
+Da questa cartella esegui ./build.sh e apri “Specchio Studio.app”.
+Servono Apple Command Line Tools, Swift, Clang e Python 3. Le dipendenze
+native sono incluse; non serve Homebrew. Per ricompilare anche OpenSSL,
+esegui prima ./Native/build_crypto.sh; occorrono anche Perl e make.
+L’app locale è firmata ad hoc, senza firma Developer ID né notarizzazione.
+L’icona geometrica è generata dal codice incluso: per riprodurla esegui
+swift scripts/generate_icon.swift dalla cartella del progetto.
+Un pacchetto preparato localmente non è ancora una release pubblica approvata.
+
+COLLEGARE UNA SORGENTE
+USB: collega iPhone/iPad con un cavo dati, sbloccalo e autorizza il Mac.
+Premi Rileva USB, seleziona il dispositivo e Connetti. Fotocamera è il
+permesso usato da macOS per questa sorgente; Microfono può essere richiesto
+per l’audio. Se la sorgente è occupata, chiudi altre app di acquisizione.
+
+Wireless: premi Wireless. Sul dispositivo apri Centro di Controllo →
+Duplica schermo → Specchio Studio; inserisci il codice mostrato nell’app
+quando richiesto. Per la prima prova usa la stessa rete Wi-Fi. Scegli il
+nome Specchio Studio, non quello del ricevitore integrato nel Mac.
+Il video appare nella finestra dello Studio. Per terminare, interrompi la
+duplicazione sul dispositivo o premi Disconnetti. Dopo la fine del flusso
+il ricevitore può rimanere in attesa della prossima connessione.
+Una sola finestra per processo può attivare il ricevitore wireless.
+
+Finestra / schermo: usa il selettore nativo di macOS per acquisire un’altra
+finestra o un display. Consenti Registrazione schermo quando richiesto.
+Puoi aprire altre finestre dell’app dal menu File; il funzionamento con
+più dispositivi contemporanei richiede ancora una verifica hardware.
+
+REGISTRARE E COMPORRE
+Registra salva il flusso originale in MOV H.264 o HEVC. Scegli qualità e
+countdown prima dell’avvio. L’audio viene incluso quando la sorgente lo
+fornisce e i permessi lo consentono; per Finestra / schermo è opzionale.
+L’audio acquisito non viene riprodotto dal vivo.
+
+Il programma tenta di finalizzare la registrazione su stop, disconnessione,
+fine del flusso o chiusura. Un cambio di risoluzione termina il file in
+corso. Le prove hardware riportate in VALIDAZIONE.txt risalgono al
+17 ottobre 2026 e non sostituiscono una verifica della build corrente.
+
+Per applicare sfondo, cornice, rotazione e specchio a un filmato, usa
+Incornicia video dopo aver registrato, oppure Cornice nella Libreria.
+Puoi scegliere un file video locale, un intervallo temporale e il formato
+di uscita. Fine = 0 esporta fino al termine. L’uscita è MOV H.264 con audio
+del file sorgente quando presente. L’esportazione può essere annullata.
+L’anteprima del pannello video mostra il file originale; la composizione
+viene applicata all’esportazione.
+
+FORMATI PER SCREENSHOT E VIDEO
+Nel pannello Composizione scegli Formato. La stessa scelta compare come
+Formato di uscita in Incornicia video:
+• Automatico: screenshot nelle proporzioni dell’area di anteprima, base
+  di 1000 pixel in larghezza; video nelle proporzioni della sorgente con
+  spazio per cornice e sfondo, massimo 1920 pixel per lato.
+• Verticale 9:16: base 1080×1920 pixel.
+• Quadrato 1:1: base 1080×1080 pixel.
+• Orizzontale 16:9: base 1920×1080 pixel.
+I tre preset video hanno queste dimensioni esatte. Negli screenshot sono
+le dimensioni a Scala export 1×; 2× e 3× le moltiplicano. Il contenuto viene
+adattato dentro la composizione e gli spazi liberi usano lo sfondo scelto.
+Lo zoom dell’anteprima viene applicato agli screenshot, non ai video.
+
+SCREENSHOT, ANNOTAZIONI E OCR
+Salva un fotogramma originale oppure la composizione in PNG/JPEG. Per la
+trasparenza scegli PNG e sfondo Trasparente. Blocca un fotogramma o importa
+un’immagine per annotare e annullare i tratti. Le annotazioni sono disponibili
+negli screenshot, non nei filmati esportati. Copia testo con OCR usa Vision
+sul Mac e mette il testo riconosciuto negli appunti. La demo è un’illustrazione
+e non rappresenta un collegamento a un dispositivo reale. Anteprima-demo.png
+è stata rigenerata dal canvas incluso: ./test.sh produce la relativa
+immagine in .build/test-results/demo.png.
+
+LIBRERIA E RISERVATEZZA
+La Libreria mostra le acquisizioni recenti e consente di aprirle, trovarle
+nel Finder o condividerle. Immagini, video e OCR vengono elaborati sul Mac.
+L’app non richiede un account o servizi cloud. Le chiavi di abbinamento
+sono conservate nei dati locali dell’app, fuori dal repository. I file
+salvati possono contenere dati personali: controllali prima di condividerli.
+
+LIMITI
+Non sono implementati controllo remoto con mouse/tastiera, ascolto audio
+dal vivo, montaggio multiclip o esportazione video con canale alpha.
+Lo sfondo Trasparente viene reso nero nei video H.264. Il contenuto protetto
+potrebbe non essere acquisibile. L’app è compilata per Apple Silicon.
+iPad fisico, sessioni prolungate, più dispositivi e cambi di orientamento
+fisico durante la registrazione restano da provare sulla build corrente.
+
+VERIFICA
+./test.sh esegue test nativi e Swift con fixture sintetiche. I risultati
+sono in .build/test-results. ./test.sh --build-only compila senza eseguire.
+Un ambiente ristretto può impedire l’accesso ai servizi codec di macOS;
+per i test completi usa un Terminale con accesso ai servizi locali.
+VALIDAZIONE.txt separa risultati attuali e resoconti hardware precedenti.
+
+LICENZE E PUBBLICAZIONE
+Il progetto dichiara GPL-3.0-or-later. Le dipendenze mantengono copyright
+e licenze propri. LICENSE e ThirdParty/NOTICE.txt riportano i dettagli;
+i testi sono anche nel menu Licenze open source dell’app.
+
+La provenienza di tutti i contributi e delle risorse grafiche non è ancora
+confermata. La disponibilità del nome deve essere verificata. UxPlay segnala
+incertezza legale sulla propria libreria FairPlay; prima della pubblicazione
+va valutata anche questa dipendenza, oltre agli obblighi GPL/LGPL/MIT/Apache.
+Riferimento ufficiale:
+https://github.com/FDH2/UxPlay/blob/4e95a9ec013c52d8555d88dbc55abe346e94d56e/README.md#disclaimer
+
+RELEASE_CHECKLIST.txt raccoglie i punti aperti. PROMO.txt è una bozza non
+pubblicata. python3 scripts/release.py prepara pacchetti locali con test e
+build; --source-only prepara solo i sorgenti, senza validare il programma.
+I pacchetti completi sono in .build/releases/1.3.1/; --source-only usa la
+sottocartella source-only/. Per un binario pubblico rendi
+accessibile dalla stessa pagina il sorgente corrispondente della stessa
+build, incluse dipendenze, modifiche e istruzioni di ricompilazione.
+L’archivio sorgenti non contiene .git. La cronologia di main è stata
+sostituita con un solo commit radice della versione revisionata; la
+riscrittura non elimina cache del servizio o cloni precedenti e non
+modifica la provenienza dei contributi.
+
+NOVITÀ 1.3 — FLUSSI COMPLETI
+Oscura dati: blocca un fotogramma e disegna aree opache. Il rilevamento locale
+suggerisce email, telefoni e possibili chiavi: controlla e conferma le aree.
+Crea segnalazione bug: compila descrizione, passaggi e risultato; scegli una
+cartella. Vengono salvati screenshot, annotazioni, OCR sanitizzato e report.
+L’originale non oscurato è incluso solo attivando l’opzione dedicata.
+Pacchetto creator: tre proporzioni più copertina con titolo facoltativo,
+per immagini e video. Stili: salva e riapplica solo l’aspetto della composizione.
+Nel video le maschere sono fisse per tutta la clip, non seguono il movimento.
+Audio, registrazioni originali e campi manuali dei report non vengono oscurati.

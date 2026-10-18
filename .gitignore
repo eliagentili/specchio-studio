@@ -1,0 +1,28 @@
+# Build e risultati locali
+/.build/
+/Specchio Studio.app/
+.build-*.log
+.DS_Store
+__pycache__/
+*.pyc
+
+# Materiale di analisi e registrazioni personali: solo locali
+/Analysis/
+/Prove-iPhone/
+/work/
+/outputs/
+*.mov
+*.mp4
+*.m4v
+!Anteprima-video.mov
+!Tests/Fixtures/synthetic-audio.mov
+
+# Credenziali e stato di abbinamento del ricevitore
+.env
+.env.*
+!.env.example
+pairing.key*
+receiver-id.txt
+connection-stages.txt
+*.p12
+*.p8

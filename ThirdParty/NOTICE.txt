@@ -1,0 +1,75 @@
+COMPONENTI OPEN SOURCE DI SPECCHIO STUDIO 1.3.1
+Aggiornato il 18 ottobre 2026
+
+Il ricevitore integra il protocollo di UxPlay con un adattatore per
+VideoToolbox, CoreMedia e AudioToolbox. Il frontend GStreamer non viene
+compilato nel programma. Le dipendenze indicate sotto sono collegate
+staticamente. I testi delle licenze e le attribuzioni dei file di terze
+parti restano applicabili e sono conservati nei sorgenti distribuiti.
+
+Il progetto dichiara GPL-3.0-or-later; vedi LICENSE. Questa dichiarazione
+non certifica la titolarità di ogni contributo o tutti i diritti necessari
+alla pubblicazione. La revisione della provenienza resta aperta.
+
+UxPlay
+https://github.com/FDH2/UxPlay
+Commit: 4e95a9ec013c52d8555d88dbc55abe346e94d56e
+Licenza del progetto: GNU GPL v3; le intestazioni dei file specificano
+le condizioni applicabili, incluse parti LGPL-2.1-or-later e MIT.
+Sorgenti in UxPlay/, licenza UxPlay/LICENSE. Le modifiche locali sono
+riportate in UxPlay-SPECCHIO-CHANGES.txt e nel file modificato.
+
+Attribuzioni riportate dall’upstream:
+• antimof: adattamento iniziale di RPiPlay per UxPlay.
+• F. Duncanh e contributori: sviluppo e modifiche UxPlay.
+• Florian Draschbacher e contributori: RPiPlay.
+• Juho Vähä-Herttua e contributori: ShairPlay, parti LGPL-2.1-or-later.
+• dsafa22: AirplayServer e parti del protocollo di mirroring.
+• EstebanKubata: PlayFair, licenza GNU GPL; testo in
+  UxPlay/lib/playfair/LICENSE.md.
+• Fedor Indutny e contributori: llhttp, licenza MIT; testo e copyright
+  in UxPlay/lib/llhttp/LICENSE-MIT.
+• Tom Cocagne: SRP6a, licenza MIT in UxPlay/lib/srp.c.
+• Michael G Schwern: time64, licenza MIT in libplist/src/time64.c.
+• Serge A. Zaitsev: jsmn, licenza MIT in libplist/src/jsmn.c.
+I tre avvisi MIT incorporati nei sorgenti sono riprodotti anche in
+NOTICE-EMBEDDED-LICENSES.txt per la distribuzione binaria.
+Gli avvisi di copyright dettagliati restano nei rispettivi sorgenti.
+
+AVVERTENZA UPSTREAM: UxPlay dichiara incerto lo status legale della libreria
+FairPlay utilizzata. La licenza GPL non risolve da sola questo punto.
+Prima della pubblicazione occorre una valutazione separata:
+https://github.com/FDH2/UxPlay/blob/4e95a9ec013c52d8555d88dbc55abe346e94d56e/README.md#disclaimer
+
+libplist 2.8.0
+https://github.com/libimobiledevice/libplist
+Commit: fe3dc34dc3484006e12b403f7ceb06f0ad40b6f4
+Sorgenti in libplist/, licenza LGPL-2.1-or-later. Vedi libplist/COPYING,
+libplist/COPYING.LESSER, libplist/AUTHORS e gli avvisi dei singoli file.
+Il componente libcnary conserva libplist/libcnary/COPYING.
+
+OpenSSL 3.6.5
+https://github.com/openssl/openssl
+Commit: c8bd5a57108599ac650bbae77fcabe3109dab2e8
+Licenza Apache-2.0: OpenSSL/LICENSE.txt. Copyright e attribuzioni sono
+conservati nei sorgenti e nelle intestazioni incluse.
+AUTHORS.md riproduce gli autori del rilascio verificato.
+Archivio ufficiale SHA-256:
+a2157c2830efdec3788939b00c9b0638306d3f0bbb76dc4832ee503bb397df98
+Firma di rilascio verificata rispetto alla chiave primaria OpenSSL:
+B146647E45A7B33947AB226B2A2C87D161692D40.
+La serie 3.6 termina il supporto pubblico il 1 novembre 2026:
+https://openssl-library.org/source/
+La manutenzione successiva richiede una serie ancora supportata.
+La libreria statica inclusa è arm64, target macOS 14. Il sorgente è incluso
+in OpenSSL/openssl-3.6.5-source.tar.gz. Native/build_crypto.sh lo ricompila
+localmente; eseguire quindi build.sh. Sono richiesti gli strumenti di
+sviluppo di macOS, Perl e make.
+
+RICOMPILAZIONE E DISTRIBUZIONE
+Native/build_native.py compila i sorgenti C e l’adattatore Objective-C;
+build.sh collega le librerie e Swift e copia licenze e avvisi nell’app.
+Per distribuire un binario, rendere disponibile accanto ad esso l’archivio
+dei sorgenti corrispondenti della stessa build, con tutte le dipendenze,
+le modifiche locali e gli script necessari. scripts/release.py prepara
+pacchetti locali per revisione e SOURCE-INFO.txt; non pubblica la release.

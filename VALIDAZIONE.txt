@@ -1,0 +1,166 @@
+SPECCHIO STUDIO — RESOCONTO DELLE VERIFICHE
+Aggiornato il 18 ottobre 2026
+Versione corrente: 1.3.1, build 7 · arm64 · target macOS 14
+
+COME LEGGERE QUESTO RESOCONTO
+I risultati sintetici verificano percorsi specifici del programma; non
+certificano tutti i dispositivi, le reti o le durate di utilizzo. Le prove
+hardware del 17 ottobre sono un resoconto precedente, non nuove prove della
+build 7. La verifica funzionale non certifica la provenienza o i diritti.
+
+18 OTTOBRE 2026 — PATCH 1.3.1, BUILD 7
+PASS: ./test.sh completo dopo gli aggiornamenti di libplist e OpenSSL,
+      23 gruppi PASS, codice di uscita 0.
+PASS: ./build.sh, app arm64 ottimizzata e firma ad hoc verificata.
+PASS: quattro gruppi aggiuntivi di regressione PIN con AddressSanitizer,
+      compilando anche il gestore e il codice SRP sottoposti a verifica.
+      Verificati limiti dei blob, tipi plist, ordine delle fasi, prove non
+      valide, errore del tag GCM, reset e recupero; richieste elaborate
+      esclusivamente in memoria, senza avviare servizi di rete.
+PASS: scambio SRP e AES-GCM autenticato completo con client di test
+      indipendente; identità registrata solo dopo autenticazione;
+      64 sessioni valide successive e prova allocata di esattamente 20 byte.
+PASS: regressioni wireless, snapshot, registrazione, maschere, OCR, report,
+      stili e pacchetti creator, inclusi audio, taglio e orientamento video.
+PASS: confronto offline dei sorgenti ufficiali: UxPlay 93 file identici
+      più tre modifiche dichiarate, libplist 288 file identici, archivio
+      ufficiale OpenSSL 5.889 file identici; nessuna differenza inattesa.
+PASS: archivio OpenSSL 3.6.5 verificato con SHA-256 e firma OpenPGP;
+      ricompilazione pulita, libreria collegata e intestazioni concordi;
+      172 header/template corrispondenti a sorgenti e output generato.
+I controlli AddressSanitizer non dimostrano l'assenza di ogni vulnerabilità
+o perdita di memoria. I collaudi fisici, la notarizzazione e i diritti
+restano aperti. I percorsi UI sotto riportati sono della 1.3.0, build 6;
+non sono nuovi collaudi fisici o UI della patch.
+Vedi UPSTREAM_AUDIT.txt per metodo, aggiornamenti e limiti del controllo.
+
+18 OTTOBRE 2026 — REVISIONE DELLA CRONOLOGIA
+La versione 1.3.1 è importata in un solo commit radice, senza genitori.
+Il controllo riguarda ref raggiungibili, messaggio del commit, nomi e
+contenuto dei file, incluso l'archivio OpenSSL. Il codice, le dipendenze,
+le risorse e i test sono invariati rispetto alla build già verificata;
+sono aggiornati soltanto sei documenti sullo stato della cronologia.
+Backup ed evidenze restano fuori dal progetto. Cache del servizio e cloni
+precedenti sono fuori dall'ambito di cancellazione di una riscrittura Git.
+
+18 OTTOBRE 2026 — FLUSSI 1.3.0, BUILD 6
+PASS: suite ./test.sh completa, uscita 0.
+PASS: stili persistenti, validazione e assenza di dati sorgente; proiezione
+      delle annotazioni mantenuta tra canvas con proporzioni diverse.
+PASS: OCR in corso invalidato dopo modifiche privacy, senza scrivere
+      negli appunti di sistema durante il test.
+PASS: maschere sanitizzate, coordinate top-left, pixel completamente opachi,
+      dimensioni e alpha preservati, raster valido dopo riuso della memoria.
+PASS: rilevamento locale email e assenza del testo oscurato nell’OCR esportato.
+PASS: report senza originale di default, originale solo opt-in, OCR sempre
+      oscurato, directory uniche e pulizia dei file temporanei.
+PASS: pacchetti con tre immagini o tre video, copertina, manifest,
+      durata, taglio e audio; annullamento e fallimento senza file parziali.
+PASS: maschere video verificate su frame decodificati lungo la clip,
+      con orientamento nei metadati, quattro rotazioni e specchio.
+PASS: regressioni acquisizione/wireless, snapshot, H.264/HEVC, PNG/OCR/alpha.
+PASS: build ottimizzata arm64 e firma ad hoc verificata.
+PASS interfaccia: apertura immagine sintetica, suggerimento email via OCR,
+      applicazione maschera, report salvato con OCR privo dell’email e senza
+      originale; pacchetti immagini e video salvati nei tre formati.
+PASS interfaccia: stile salvato e ancora disponibile dopo riavvio.
+PASS interfaccia: taglio video con punto e virgola decimale (0.1–0,4),
+      tre output da 0,300 s con una traccia audio ciascuno.
+Corretto un difetto del campo numerico precedente che perdeva la frazione
+      durante l’immissione; ora il testo resta modificabile e i valori
+      non validi disabilitano l’export invece di ripristinare l’intera clip.
+Le maschere video sono statiche; audio e registrazioni originali restano
+non oscurati. Il rilevamento suggerisce aree e non certifica che siano tutte.
+
+18 OTTOBRE 2026 — VERIFICHE PRECEDENTI 1.2
+La suite completa ./test.sh è terminata con codice 0 dopo le modifiche
+correnti. La build dell’app e codesign --verify --deep --strict sono riusciti.
+Il controllo dell’interfaccia ha verificato avvio demo, selettore del formato
+verticale e apertura del documento delle licenze dal menu Aiuto.
+
+PASS automatizzati:
+• Decoder H.264 e HEVC, transizione H.264 → HEVC → H.264 e input malformato.
+  La regressione della transizione codec è stata prima riprodotta come test
+  fallito, poi corretta e verificata nuovamente.
+• AAC-ELD con PCM non silenzioso, rifiuto di input audio malformato,
+  fine flusso, riconnessione e reset.
+• Annullamento del primo fotogramma wireless e nuovo tentativo.
+• Decoder → anteprima/snapshot → registrazione H.264 360×640 finalizzata
+  a fine flusso simulata; durata osservata nell’ultima prova 0,457 secondi.
+• Snapshot e writer H.264/HEVC.
+• Anteprima e screenshot PNG nei formati 9:16, 1:1 e 16:9, dimensioni
+  previste, OCR, trasparenza e rotazione.
+• Esportazione video H.264 con sfondo, cornice, rotazione, specchio e audio;
+  tre preset reali con dimensioni, taglio, durata e audio verificati.
+
+La verifica di firma è locale ad hoc, non Developer ID o notarizzazione.
+Non sono stati provati oggi iPhone/iPad fisici, USB reale, consenso Rete
+locale o selettore di acquisizione macOS. Le nuove risorse e i documenti
+saranno inclusi nei pacchetti definitivi da ricontrollare prima del rilascio.
+
+Comandi ripetibili:
+./test.sh
+./build.sh
+codesign --verify --deep --strict "Specchio Studio.app"
+
+Le fixture sono locali e sintetiche. I file di risultato sono generati in
+.build/test-results; non sono contenuti nei pacchetti sorgenti. Un ambiente
+che impedisce i servizi codec di macOS può causare errori estranei ai codec
+implementati dall’app: eseguire le prove in un normale Terminale macOS.
+
+17 OTTOBRE 2026 — TEST SINTETICI E INTERFACCIA PRECEDENTI
+Host riportato: Mac Apple Silicon, macOS 27.0.1. Build Swift 6.4 in modalità
+Swift 5, arm64, target macOS 14; firma ad hoc verificata all’epoca.
+
+Il resoconto precedente riportava PASS per:
+• Snapshot e registrazione/lettura H.264 e HEVC.
+• Composizione PNG, OCR del titolo demo, rotazione e trasparenza.
+• Esportazione H.264 con cornice, sfondo, rotazione, specchio e audio.
+• Preservazione dell’audio non silenzioso e dell’orientamento sorgente,
+  taglio temporale e annullamento con pulizia del file parziale.
+• Avvio dell’app, demo, esportazione PNG e pannello video via interfaccia.
+• Esportazione MOV H.264/AAC da interfaccia: 464×744, durata 0,500 secondi.
+• Decoder wireless H.264 360×640 e HEVC 640×480, AAC-ELD con PCM non silenzioso,
+  reset e input video malformato.
+• Decoder → anteprima/snapshot → registrazione H.264 finalizzata a fine flusso.
+• Risposta RTSP /info, servizio annunciato e segnale di fine flusso singolo.
+
+17 OTTOBRE 2026 — IPHONE FISICO, VERSIONI PRECEDENTI
+Il resoconto delle prove assistite dall’utente indicava iPhone 17 Pro Max
+con iOS 27.0.1. Consensi Fotocamera e Microfono erano stati confermati
+nei dialoghi di macOS.
+
+USB: mirroring 1320×2868, fluidità confermata dall’utente, registrazione
+H.264/AAC stereo, screenshot, composizione ruotata con alpha, HEVC
+finalizzato alla disconnessione e riconnessione. I file video risultavano
+decodificabili integralmente.
+
+Ricevitore wireless dedicato: abbinamento e video nella finestra dello
+Studio, 498×1080; fluidità e uso di altre app confermati dall’utente.
+Una clip H.264/AAC risultava di 20,153834 secondi, con 852 fotogrammi e audio
+stereo a 48000 Hz non silenzioso; decodifica completa e timestamp crescenti.
+Screenshot PNG 498×1080 e riconnessione dopo riavvio senza nuovo codice
+riportati come riusciti.
+
+Dopo una correzione della gestione di fine flusso, una clip HEVC 498×1080
+di 35,035 secondi veniva finalizzata interrompendo Duplica schermo dal
+telefono, senza premere Stop sul Mac. La clip finale era solo video perché
+il suono di prova era stato fermato prima della registrazione. Il file
+risultava decodificabile e l’app tornava in attesa.
+
+Le registrazioni personali non vengono incluse nell’archivio sorgenti.
+Questi dati storici non sono stati rimisurati durante la revisione attuale.
+
+ANCORA DA VERIFICARE
+• Nuova prova USB e wireless con la build 6 su iPhone fisico.
+• iPad fisico, via USB e wireless, con e senza audio.
+• Sessioni prolungate, rete interrotta e riconnessione ripetuta.
+• Cambio di orientamento e risoluzione durante una registrazione.
+• Più finestre e più dispositivi entro il limite di un ricevitore wireless.
+• Primo avvio e permessi su un altro Mac Apple Silicon compatibile.
+• Firma Developer ID, notarizzazione e apertura del pacchetto distribuito.
+
+La provenienza dei contributi, la disponibilità del nome, gli obblighi delle
+licenze e l’incertezza FairPlay richiedono una revisione separata descritta
+in RELEASE_CHECKLIST.txt. Per la revisione della cronologia e i suoi limiti
+vedi UPSTREAM_AUDIT.txt.

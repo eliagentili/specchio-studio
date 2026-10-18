@@ -1,0 +1,32 @@
+Modifiche locali a UxPlay per Specchio Studio, 17–18 ottobre 2026.
+Base: commit conservato in versions.json.
+
+lib/raop_handlers.h:
+1. Registra l'identità verificata immediatamente dopo il completamento di
+   SRP/AES-GCM in pair-setup-pin, prima di una possibile nuova connessione
+   pair-verify. Il punto originale in SETUP rimane valido come aggiornamento.
+2. Due messaggi di completamento dell'abbinamento passano da DEBUG a INFO
+   per la diagnostica locale di soli stati, senza chiavi o codici.
+3. Dal 18 ottobre, verifica del dizionario plist, metodo PIN esatto,
+   lunghezze della chiave, della prova SHA-1 (20 byte), della chiave cifrata
+   e del tag GCM prima di copiarli. Gli input non validi restituiscono
+   un errore di autenticazione. Liberazione dei buffer temporanei.
+
+lib/pairing.c e lib/pairing.h, 18 ottobre 2026:
+1. Controlli su puntatori, dimensioni, generazione casuale e ordine delle
+   fasi SRP; conferma consentita solo dopo una prova verificata.
+2. Reset dello stato nei nuovi tentativi e negli errori; rilascio dei
+   dati temporanei. La prova copiata ha la dimensione SHA-1 effettiva.
+3. Accettazione delle rappresentazioni BN valide che omettono gli zero
+   iniziali: il salt conserva la propria lunghezza, il verificatore viene
+   allineato a destra, senza leggere oltre i buffer ricevuti o generati.
+
+Le modifiche non costituiscono un audit completo del protocollo. I test
+offline in Tests/PairingTests.c verificano regressioni e flussi sintetici;
+l'abbinamento con dispositivi fisici va ricollaudato sulla build corrente.
+
+Native/WirelessBridge.m e Sources/WirelessSource.swift sono adattatori
+separati dai sorgenti UxPlay. Mantengono un codice casuale stabile
+per la sessione di ascolto e salvano le chiavi pubbliche dei client verificati.
+La diagnostica connection-stages.txt contiene nomi di fase, senza codici,
+chiavi, contenuti dello schermo o contenuti audio.

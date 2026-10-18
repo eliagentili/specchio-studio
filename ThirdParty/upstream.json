@@ -1,0 +1,45 @@
+{
+  "audit_date": "2026-10-18",
+  "components": [
+    {
+      "name": "UxPlay",
+      "repository": "https://github.com/FDH2/UxPlay",
+      "commit": "4e95a9ec013c52d8555d88dbc55abe346e94d56e",
+      "archive_url": "https://codeload.github.com/FDH2/UxPlay/tar.gz/4e95a9ec013c52d8555d88dbc55abe346e94d56e",
+      "archive_sha256": "05eaf780297d52db74395a04e9fbd331edfbbe091956656f3f66ef9c27e4616a",
+      "cache_filename": "UxPlay-official-pin.tar.gz",
+      "local_kind": "directory",
+      "local_path": "ThirdParty/UxPlay",
+      "local_modifications": {
+        "lib/pairing.c": "3dda65f0824ae435907675dfa99e39ad2f75c2d29b2fa91d1791b763585ee701",
+        "lib/pairing.h": "f22f452a7d8aba493a657595373df74c29c89ef771034cea46872f30bec34e83",
+        "lib/raop_handlers.h": "8e1828d2ce6059dd07b2a33408d66cd591fa8b2e90263d95c01a0ca0349ba003"
+      }
+    },
+    {
+      "name": "libplist",
+      "repository": "https://github.com/libimobiledevice/libplist",
+      "commit": "fe3dc34dc3484006e12b403f7ceb06f0ad40b6f4",
+      "archive_url": "https://codeload.github.com/libimobiledevice/libplist/tar.gz/fe3dc34dc3484006e12b403f7ceb06f0ad40b6f4",
+      "archive_sha256": "134aa275d0d223826d717cea950dfa853fe40e12b67988020bd444383670a4d2",
+      "cache_filename": "libplist-2.8.0-official.tar.gz",
+      "local_kind": "directory",
+      "local_path": "ThirdParty/libplist"
+    },
+    {
+      "name": "OpenSSL",
+      "repository": "https://github.com/openssl/openssl",
+      "commit": "c8bd5a57108599ac650bbae77fcabe3109dab2e8",
+      "archive_url": "https://github.com/openssl/openssl/releases/download/openssl-3.6.5/openssl-3.6.5.tar.gz",
+      "archive_sha256": "a2157c2830efdec3788939b00c9b0638306d3f0bbb76dc4832ee503bb397df98",
+      "cache_filename": "openssl-3.6.5-verified-download.tar.gz",
+      "local_kind": "archive",
+      "local_path": "ThirdParty/OpenSSL/openssl-3.6.5-source.tar.gz",
+      "release_signature_url": "https://github.com/openssl/openssl/releases/download/openssl-3.6.5/openssl-3.6.5.tar.gz.asc",
+      "release_signing_primary_fingerprint": "B146647E45A7B33947AB226B2A2C87D161692D40",
+      "release_signature_path": "ThirdParty/OpenSSL/openssl-3.6.5-source.tar.gz.asc",
+      "release_signing_key_path": "ThirdParty/OpenSSL/RELEASE-SIGNING-KEY.asc",
+      "release_signing_key_sha256": "d9d49fb1019efbd49076d266f84ee40b74e41f739480bfdcbdcfa06f0fa9e4dc"
+    }
+  ]
+}

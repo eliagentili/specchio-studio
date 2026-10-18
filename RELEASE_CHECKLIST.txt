@@ -1,0 +1,104 @@
+SPECCHIO STUDIO 1.3.1 — CHECKLIST DI PUBBLICAZIONE
+Aggiornata il 18 ottobre 2026 · build 7
+
+STATO: REVISIONE APERTA. Preparare un archivio non chiude automaticamente
+nessuno dei punti relativi a diritti, hardware o distribuzione pubblica.
+Le caselle sotto indicano attività da documentare prima del rilascio.
+
+DIRITTI, PROVENIENZA E NOME
+[ ] Ricostruire e documentare la provenienza dei contributi di codice,
+    delle risorse grafiche e delle fixture. Icona e demo correnti sono
+    rigenerate da scripts/generate_icon.swift e Tests/StudioTests.swift;
+    verificarne il codice e la corrispondenza nei pacchetti. Le dichiarazioni
+    preesistenti di originalità non sono una verifica degli altri contributi.
+[ ] Verificare chi può autorizzare la distribuzione e l’applicazione delle
+    licenze ai contributi; chiarire eventuali vincoli contrattuali.
+[ ] Valutare con competenza legale la dipendenza FairPlay: l’upstream
+    UxPlay ne dichiara incerto lo status legale. Se il punto non viene
+    risolto, valutare una distribuzione che escluda effettivamente la
+    dipendenza interessata dal codice e dai pacchetti.
+[ ] Verificare la disponibilità del nome “Specchio Studio” e dell’identità
+    grafica nei territori e canali scelti. L’audit attuale non è una ricerca
+    di anteriorità su marchi, nomi commerciali, brevetti o design.
+[ ] Evitare promesse di assenza assoluta di rischi o compatibilità universale.
+
+LICENZE E SORGENTI
+[ ] Verificare applicabilità e adempimenti GPL-3.0-or-later, LGPL-2.1-or-later,
+    MIT e Apache-2.0 rispetto alla combinazione effettivamente distribuita.
+[ ] Controllare che app e archivio contengano testi delle licenze,
+    attribuzioni, copyright e avvisi delle modifiche locali, senza rimuovere
+    gli avvisi dei titolari dei componenti di terze parti.
+[ ] Rendere disponibili dalla stessa pagina del binario i sorgenti
+    corrispondenti della medesima release, incluse dipendenze, modifiche,
+    script di compilazione e istruzioni. Controllare SOURCE-INFO.txt.
+[ ] Ricompilare dal solo archivio sorgenti su un Mac compatibile, inclusa
+    OpenSSL, e verificare che non richieda file privati o esterni non dichiarati.
+[ ] Controllare SOURCE-MANIFEST.json e SHA256SUMS.txt; evitare modifiche
+    al binario dopo aver prodotto i checksum definitivi.
+
+CRONOLOGIA E CONTENUTI PUBBLICI
+[x] Sostituire main con un solo commit radice della versione revisionata
+    e verificare la cronologia raggiungibile da un clone nuovo. Backup
+    ed evidenze sono conservati privatamente fuori dal progetto.
+[ ] Prima di rendere pubblico il repository, ricontrollare ogni ref e
+    artefatto. La riscrittura non elimina cache del servizio, vecchi SHA,
+    fork o cloni preesistenti e non certifica i diritti sui contributi.
+[ ] L’archivio prodotto da scripts/release.py non include .git o Analysis.
+    Distribuire soltanto sorgenti revisionati dopo la valutazione dei
+    diritti. Preparare un archivio non cambia la cronologia o la
+    visibilità del repository remoto.
+[ ] Escludere credenziali, chiavi di abbinamento, registrazioni personali,
+    log privati, cache e materiale estraneo alla distribuzione.
+[ ] Ricontrollare README, immagini e PROMO.txt sul contenuto effettivo della
+    release. PROMO.txt è solo una bozza e non è stato pubblicato o inviato.
+
+COLLAUDO DELLA BUILD DEFINITIVA
+[ ] Eseguire ./test.sh e ./build.sh senza modifiche concorrenti ai sorgenti.
+    Registrare data, ambiente, risultati e limiti in VALIDAZIONE.txt.
+[ ] Provare USB e wireless con iPhone sulla build 7: permessi, PIN, audio,
+    screenshot, H.264, HEVC, stop dal dispositivo e riconnessione.
+[ ] Provare iPad fisico USB/wireless e documentare la compatibilità osservata.
+[ ] Provare orientamento, cambio risoluzione, rete interrotta, sessioni
+    prolungate, più finestre e più dispositivi entro i limiti del ricevitore.
+[ ] Verificare screenshot e video nei tre formati, rotazione, specchio,
+    taglio e audio; provare annullamento e spazio disco insufficiente.
+[ ] Verificare il primo avvio su un altro Mac Apple Silicon, macOS minimo
+    dichiarato e versioni successive disponibili, senza dati preesistenti.
+
+FIRMA, NOTARIZZAZIONE E PACCHETTI
+[ ] Scegliere l’identificativo definitivo dell’app e una firma Developer ID
+    idonea alla distribuzione. L’attuale build usa solo una firma ad hoc.
+[ ] Eseguire notarizzazione e stapling sul pacchetto definitivo secondo
+    le istruzioni Apple, quindi provare apertura e permessi da un altro Mac.
+[ ] Dopo eventuale firma/notarizzazione, rigenerare il pacchetto binario e
+    i suoi checksum mantenendo l’abbinamento al sorgente effettivo.
+[ ] Controllare manualmente il contenuto di ZIP e sorgenti, menu licenze,
+    icona, versione/build e informazioni sui sorgenti.
+[ ] Pubblicare e promuovere soltanto dopo aver chiuso o risolto in modo
+    documentato i punti aperti. Nessuno script locale esegue questa decisione.
+
+RIFERIMENTI UFFICIALI
+UxPlay: avvertenza FairPlay e attribuzioni
+https://github.com/FDH2/UxPlay/blob/4e95a9ec013c52d8555d88dbc55abe346e94d56e/README.md#disclaimer
+GNU GPL v3, in particolare sezioni 4–6
+https://www.gnu.org/licenses/gpl.en.html
+GNU LGPL v2.1, in particolare sezioni 2 e 6
+https://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html
+Compatibilità Apache 2.0 / GPLv3
+https://www.gnu.org/licenses/license-list.en.html#apache2
+Licenza Apache 2.0 e obblighi sugli avvisi
+https://www.apache.org/licenses/LICENSE-2.0
+Licenza delle versioni OpenSSL 3.x
+https://openssl-library.org/source/license/index.html
+Firma Developer ID e notarizzazione Apple
+https://developer.apple.com/developer-id/
+https://developer.apple.com/documentation/security/notarizing-macos-software-before-distribution
+
+COLLAUDO AGGIUNTIVO 1.3
+[ ] Maschere immagine: coordinate, anteprima, export, copia e OCR oscurato.
+[ ] Maschere video: rotazione, metadati, specchio, intera durata e copertina.
+[ ] Report: campi, allegati, OCR, esclusione dell’originale per default,
+    inclusione solo con opzione esplicita, nessun percorso sorgente nel JSON.
+[ ] Pacchetti: tre formati, copertina, audio e taglio, annullamento,
+    errori e pulizia delle cartelle temporanee senza sovrascritture.
+[ ] Stili: riavvio, applicazione, eliminazione e assenza di contenuti sorgente.

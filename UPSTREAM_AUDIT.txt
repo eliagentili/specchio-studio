@@ -1,0 +1,103 @@
+SPECCHIO STUDIO — VERIFICA UPSTREAM
+18 ottobre 2026 · patch 1.3.1, build 7
+
+AMBITO
+Controllo del repository remoto della versione 1.3.1, confronto delle
+dipendenze incluse con i sorgenti ufficiali, revisione dell'integrazione
+nativa e dei pacchetti. La verifica riguarda i percorsi indicati; non è
+una certificazione completa di sicurezza, provenienza o diritti.
+
+REPOSITORY GITHUB
+https://github.com/eliagentili/specchio-studio
+Il controllo della versione 1.3.1 conferma 623 file identici al locale per
+percorso, modalità e hash Git. Mirror scaricato dal remoto e git fsck
+riuscito. Unico branch main, nessun tag, release, issue, PR o fork rilevato.
+Repository privato, wiki e Pages disabilitati; nessuna CI attiva e nessun
+check automatico GitHub da considerare superato. Il branch non risulta
+protetto; alcuni dettagli delle impostazioni non sono accessibili con
+l'attuale piano. Non sono state cambiate visibilità o impostazioni.
+
+Il contenuto corrente non contiene i riferimenti a prodotti terzi cercati
+durante la revisione, anche negli archivi esaminati. I materiali locali
+di analisi sono stati spostati fuori dalla cartella del progetto, dopo
+verifica delle copie. Non sono mai stati inclusi nel push.
+Il 18 ottobre, su autorizzazione del titolare del repository, main è stato
+sostituito con un solo commit radice contenente la versione revisionata.
+La cronologia raggiungibile e i nuovi cloni non includono i commit
+precedenti. La copia di sicurezza e le evidenze della revisione rimangono
+in un archivio privato esterno al progetto, senza ref pubblici di backup.
+Cache del servizio, vecchi SHA e cloni preesistenti non sono controllabili
+con una riscrittura Git. Questa operazione non cambia la provenienza del
+codice, la titolarità dei contributi o gli obblighi di licenza.
+
+La ricerca di credenziali per pattern non ha trovato candidati nei file
+applicativi. I PEM e gli esempi di password dei test ufficiali OpenSSL
+sono fixture upstream, non credenziali personali. La scansione per pattern
+non dimostra l'assenza assoluta di segreti. Il commit contiene i normali
+metadati dell'autore, compreso l'indirizzo email configurato in Git.
+
+DIPENDENZE E MODIFICHE
+UxPlay: commit 4e95a9ec013c52d8555d88dbc55abe346e94d56e.
+https://github.com/FDH2/UxPlay/commit/4e95a9ec013c52d8555d88dbc55abe346e94d56e
+La base coincide con il master verificato il 18 ottobre. È una linea
+diversa dal tag v1.73.7: il tag non è un suo antenato. I controlli del
+relativo avviso GHSA-479c-ww7g-wgp8 sono presenti nella base esaminata.
+https://github.com/FDH2/UxPlay/security/advisories/GHSA-479c-ww7g-wgp8
+Le modifiche locali sono dichiarate in UxPlay-SPECCHIO-CHANGES.txt e nelle
+intestazioni di lib/raop_handlers.h, lib/pairing.c e lib/pairing.h.
+
+La revisione ha individuato copie di lunghezza fissa da dati PIN ricevuti
+senza controllo delle dimensioni, una lettura della prova oltre i byte
+SHA-1 effettivi e accessi a stato SRP non inizializzato. La patch verifica
+tipi, dimensioni e ordine delle fasi, limita le copie, libera i temporanei
+e conserva la corretta rappresentazione dei numeri SRP. I test offline
+verificano sia input non validi sia lo scambio autenticato completo.
+Questi interventi non dimostrano che ogni parser o protocollo sia sicuro.
+
+libplist: aggiornato da 2.7.0 a 2.8.0, commit
+fe3dc34dc3484006e12b403f7ceb06f0ad40b6f4.
+https://github.com/libimobiledevice/libplist/releases/tag/2.8.0
+L'aggiornamento include controlli su allocazioni, offset, profondità e
+conversioni nei parser. I 288 file inclusi coincidono con il commit
+ufficiale. L'integrazione compila i sorgenti C; non usa le API iterator
+modificate della nuova versione. Compilazione e regressioni verificano
+la compatibilità dei percorsi effettivamente utilizzati.
+
+OpenSSL: aggiornato da 3.6.4 a 3.6.5, commit
+c8bd5a57108599ac650bbae77fcabe3109dab2e8.
+https://github.com/openssl/openssl/releases/tag/openssl-3.6.5
+Il pacchetto ufficiale è verificato tramite SHA-256 e firma del rilascio;
+Native/build_crypto.sh ricompila libcrypto e aggiorna le intestazioni.
+SHA-256 openssl-3.6.5.tar.gz:
+a2157c2830efdec3788939b00c9b0638306d3f0bbb76dc4832ee503bb397df98
+Si collega libcrypto; libssl/TLS non è collegata. L'aggiornamento applica
+le correzioni del ramo, senza attribuire automaticamente all'app ogni
+vulnerabilità descritta per funzioni o configurazioni non utilizzate.
+https://openssl-library.org/news/vulnerabilities-3.6/
+Il ramo 3.6 termina il supporto il 1 novembre 2026: pianificare il passaggio
+a un ramo supportato prima di mantenere una distribuzione pubblica.
+https://openssl-library.org/policies/releasestrat/
+
+LICENZE E PACCHETTI
+Copyright, testi delle licenze e avvisi delle modifiche sono conservati.
+NOTICE-EMBEDDED-LICENSES.txt riproduce anche gli avvisi MIT incorporati
+nei sorgenti compilati SRP, time64 e jsmn, ora inclusi nel bundle binario.
+Le prove di corrispondenza dei sorgenti non autorizzano contributi di
+provenienza sconosciuta. Restano aperti gli aspetti FairPlay dichiarati
+dall'upstream, la disponibilità del nome e la revisione dei diritti.
+https://github.com/FDH2/UxPlay/blob/4e95a9ec013c52d8555d88dbc55abe346e94d56e/README.md#disclaimer
+
+RIPETERE LA VERIFICA
+python3 scripts/verify_upstream.py --help
+python3 scripts/verify_upstream.py --download
+python3 scripts/verify_upstream.py --offline
+./test.sh
+./build.sh
+python3 scripts/release.py
+Il verificatore usa pin e impronte dichiarati in ThirdParty/upstream.json;
+le modifiche locali sono confrontate con impronte esplicite. Non è un
+servizio di rilevamento di tutte le vulnerabilità future.
+Con --signatures verifica anche la firma OpenSSL tramite gpg/gpgv, se
+installati. La verifica delle impronte non richiede questi strumenti.
+I pacchetti completi vengono costruiti da una copia isolata dei sorgenti, ricompilando
+anche OpenSSL. Risultati e limiti sono riportati in VALIDAZIONE.txt.

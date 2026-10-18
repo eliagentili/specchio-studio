@@ -1,0 +1,40 @@
+SPECCHIO STUDIO — BOZZA DI PRESENTAZIONE
+Versione 1.3.1, build 7 · 18 ottobre 2026
+NON PUBBLICATA. Usare solo dopo la revisione dei diritti e il collaudo finale
+indicati in RELEASE_CHECKLIST.txt. Inserire il link alla release verificata.
+
+BOZZA LINKEDIN
+Sto sviluppando Specchio Studio, un’app nativa per Mac che porta lo schermo
+di iPhone e iPad in una finestra e aiuta a preparare demo, screenshot e video.
+
+Il progetto unisce mirroring USB e wireless, registrazione H.264/HEVC,
+annotazioni, OCR locale ed esportazione con sfondo e cornice. Nella versione
+1.2 ho aggiunto formati verticali 9:16, quadrati e orizzontali 16:9, per
+preparare lo stesso contenuto in proporzioni diverse.
+
+Lavorare su acquisizione, codec e composizione mi ha permesso di approfondire
+SwiftUI, AVFoundation, VideoToolbox e Vision. L’elaborazione avviene sul Mac,
+senza account o servizi cloud.
+
+Sto preparando la pubblicazione gratuita dei sorgenti con licenza GPL,
+insieme a istruzioni di compilazione, test e limiti verificati.
+
+Link al progetto/release: [inserire dopo la pubblicazione approvata]
+
+DESCRIZIONE BREVE PER GITHUB
+App nativa macOS per mirroring iPhone/iPad, registrazione e composizione di
+screenshot e video, con OCR locale e formati 9:16, 1:1 e 16:9. Apple Silicon,
+macOS 14+. Consulta README e VALIDAZIONE per requisiti e limiti.
+
+PRIMA DI USARE QUESTA BOZZA
+Controllare che ogni funzione citata corrisponda alla build pubblicata,
+chiudere i punti aperti della checklist e usare solo demo revisionate,
+senza dati personali. Le prove hardware documentate al momento risalgono
+al 17 ottobre 2026; non presentarle come nuovi collaudi della build 7.
+
+Aggiornamento funzionale 1.3:
+Ora lo Studio prepara anche segnalazioni bug con screenshot, annotazioni,
+testo OCR e descrizione; genera pacchetti creator nei tre formati con copertina
+e permette di salvare lo stile. Le maschere privacy sono applicate negli export,
+con suggerimenti di rilevamento locali da verificare. Le maschere video sono
+fisse; nessuna promessa di rilevamento completo o esclusività di mercato.
