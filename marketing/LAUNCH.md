@@ -1,18 +1,12 @@
 # Specchio Studio — launch kit
 
-Prepared for **Elia Gentili**, 18 October 2026. Current app: **1.3.1, build 7**. Campaign copy is a draft; no social post or outreach message has been sent. The product page now links to the free experimental prerelease [v1.3.1-preview.1](https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1). The user authorized publication with the stated provenance, naming and wireless-library rights uncertainties still open. This is not a stable release or legal clearance. The app is signed ad hoc and not notarized; Gatekeeper assessment rejects the build.
+Prepared for **Elia Gentili**, 18 October 2026. Current app: **1.4.0, build 8**. The website and public campaign copy are English; the app supports English and Italian. Campaign copy is a draft; no social post or outreach message has been sent. The product page now links to the free experimental prerelease [v1.4.0-preview.1](https://github.com/eliagentili/specchio-studio/releases/tag/v1.4.0-preview.1). The user authorized publication with the stated provenance, naming and wireless-library rights uncertainties still open. This is not a stable release or legal clearance. The app is signed ad hoc and not notarized; Gatekeeper assessment rejects the build.
 
 ## The position to own
 
 **Your device. Ready to share.**
 
 Specchio Studio turns iPhone and iPad captures into product demos, creator assets and clearer bug reports on your Mac.
-
-Italian:
-
-**Il tuo dispositivo. Pronto da condividere.**
-
-Specchio Studio trasforma le acquisizioni di iPhone e iPad in demo di prodotto, contenuti e segnalazioni bug più chiare, dal Mac.
 
 The useful connection is the work after capture: presentation, selected privacy masks and organized exports. Show the actual files these workflows produce. Lead with a concrete task that someone already needs to finish.
 
@@ -26,7 +20,7 @@ The broad product page can cover all three. Each social post should demonstrate 
 
 ## Make the author visible through the work
 
-Use **“Created by Elia Gentili”** / **“Creato da Elia Gentili”** next to the product identity, in the footer and in demonstration end cards. Link to [Elia's GitHub profile](https://github.com/eliagentili). Do not add unverified job titles, employer affiliations, client work, awards or contact links.
+Use **“Created by Elia Gentili”** next to the product identity, in the footer and in demonstration end cards. Link to [Elia's GitHub profile](https://github.com/eliagentili). Do not add unverified job titles, employer affiliations, client work, awards or contact links.
 
 The portfolio story should connect each technical decision to what a user receives:
 
@@ -91,32 +85,7 @@ Record text large enough to read on mobile. Use captions and alt text. Avoid per
 
 ## LinkedIn drafts — experimental release
 
-The drafts below are ready for editorial review, not automatic posting. Attach a real, labeled demonstration. The intended product URL is [the English preview](https://eliagentili.github.io/specchio-studio-site/) and [the Italian preview](https://eliagentili.github.io/specchio-studio-site/it/). Verify that the page is live before using it in a post. These drafts announce an experimental download and must preserve its signing, hardware and rights limitations.
-
-### Italian · initial presentation
-
-> Uno screenshot mostra un’interfaccia. Per farne una demo o spiegare un bug serve anche il lavoro che viene dopo.
->
-> Ho creato **Specchio Studio** per riunire quel lavoro sul Mac: acquisire lo schermo, preparare la composizione, coprire dettagli selezionati ed esportare i file da condividere.
->
-> I tre percorsi su cui ho lavorato:
->
-> - demo video con sfondo, cornice e taglio;
-> - pacchetti creator in 9:16, 1:1 e 16:9, con copertina;
-> - segnalazioni bug con screenshot annotato, OCR e report Markdown/JSON.
->
-> L’elaborazione dei media e l’OCR avvengono sul Mac. Le maschere sono controlli espliciti da verificare; nei video restano fisse e non seguono il movimento.
->
-> Dal lato tecnico, il progetto mi ha portato a lavorare su SwiftUI, AVFoundation, VideoToolbox e Vision, insieme ai casi meno visibili: audio, orientamento, annullamento degli export e integrità dei file.
->
-> Ho pubblicato la prima pre-release gratuita per Mac Apple Silicon con macOS 14+. È sperimentale e non notarizzata: la pagina della release spiega i limiti di avvio, le prove hardware ancora da completare e le incertezze sui diritti tuttora aperte.
->
-> Sviluppate app mobile? Quale di questi passaggi vi fa perdere più tempo oggi?
->
-> Elia Gentili
-> https://eliagentili.github.io/specchio-studio-site/it/
->
-> #SwiftUI #macOS #MobileDevelopment
+The drafts below are ready for editorial review, not automatic posting. Attach a real, labeled demonstration. The intended product URL is [the product website](https://eliagentili.github.io/specchio-studio-site/). Verify that the page is live before using it in a post. These drafts announce an experimental download and must preserve its signing, hardware and rights limitations.
 
 ### English · initial presentation
 
@@ -134,7 +103,7 @@ The drafts below are ready for editorial review, not automatic posting. Attach a
 >
 > Building this brought together SwiftUI, AVFoundation, VideoToolbox and Vision, plus the less visible work around audio, orientation, export cancellation and file integrity.
 >
-> The first free experimental prerelease is available for Apple Silicon Macs on macOS 14+. Its interface is Italian and the app is not notarized. The release notes explain Gatekeeper rejection, pending hardware tests and the rights uncertainties that remain open.
+> A free experimental prerelease is available for Apple Silicon Macs on macOS 14+. Version 1.4 supports English and Italian; the app is not notarized. The release notes explain Gatekeeper rejection, pending hardware tests and the rights uncertainties that remain open.
 >
 > If you build mobile apps, which part of preparing a demo or reporting a bug takes you the most effort today?
 >
@@ -143,27 +112,25 @@ The drafts below are ready for editorial review, not automatic posting. Attach a
 >
 > #SwiftUI #macOS #MobileDevelopment
 
-### Italian · follow-up about one workflow
+### Follow-up · one workflow
 
-> Tre proporzioni, lo stesso contenuto.
+> Three proportions. The same idea.
 >
-> Nel pacchetto creator di Specchio Studio, un’immagine o un video diventa una cartella con versioni 9:16, 1:1 e 16:9, una copertina e un riepilogo dei file.
+> Specchio Studio turns an image or video into a creator folder with 9:16, 1:1 and 16:9 versions, a cover and a file manifest.
 >
-> Nella demo mostro gli export reali da contenuto sintetico: nessun dato personale. Le annotazioni sono per le immagini; i video supportano composizione, taglio e maschere fisse.
+> This demo shows actual exports from synthetic content. Image exports support annotations; video exports support composition, trimming and fixed privacy masks.
 >
-> L’obiettivo è semplice: preparare gli allegati da condividere nello stesso flusso di lavoro.
+> The goal is simple: prepare the files you need to share in one workflow.
 >
-> Un progetto di Elia Gentili. Pre-release sperimentale gratuita per Mac Apple Silicon, macOS 14+, non notarizzata. Requisiti, limiti e incertezze sui diritti sono indicati nella pagina della release.
+> A project by Elia Gentili. Free experimental preview for Apple Silicon Macs, macOS 14+, with English and Italian interface choices. It is not notarized. Requirements, limits and unresolved rights questions are explained on the release page.
 >
-> https://eliagentili.github.io/specchio-studio-site/it/
+> https://eliagentili.github.io/specchio-studio-site/
 
 ## Later stable-release copy — pending completed review
 
 Use this section only after the release checklist has been resolved, a clean-Mac launch has been verified and the actual release URL provides the binary, corresponding source, requirements and known limitations.
 
-**IT opening:** “Ho pubblicato la prima versione stabile di Specchio Studio, un’app gratuita per Mac che trasforma acquisizioni di iPhone e iPad in demo, contenuti e segnalazioni bug.”
-
-**EN opening:** “I've released the first stable version of Specchio Studio, a free Mac app for turning iPhone and iPad captures into demos, creator assets and bug reports.”
+**Opening:** “I've released the first stable version of Specchio Studio, a free Mac app for turning iPhone and iPad captures into demos, creator assets and bug reports.”
 
 Follow with one demonstrated workflow and a real release link. State Apple Silicon, minimum macOS, interface language and signing/notarization status applicable to that release. Do not describe the app as universally compatible, commercially validated or legally risk-free.
 
@@ -187,7 +154,7 @@ After the round, publish a short case study with the task, environment, sample s
 
 | Stage | Deliverable | Condition |
 | --- | --- | --- |
-| Experimental preview | Bilingual product page, README, synthetic visuals and tagged release | Free experimental download with requirements, signing and open rights limitations |
+| Experimental preview | English product page, README, synthetic visuals and tagged release | Free experimental download with requirements, signing and open rights limitations |
 | Product proof | Fresh current-build hardware demos and first-user task observations | Record device/OS, outcome and failures |
 | Stable release | Final package, source, checksums and public documentation | Resolve rights, name, licensing, dependency, signing and distribution checks |
 | Portfolio story | A case study by Elia with one complete workflow | Use observed results and documented decisions |
@@ -200,10 +167,10 @@ Use the product page as the stable destination once public and verified. Choose 
 | Safe statement for this preview | Important boundary |
 | --- | --- |
 | “Free experimental prerelease available” | Signed ad hoc, not notarized; rights and hardware review remain open |
-| “Native macOS app by Elia Gentili” | Apple Silicon, macOS 14+, current interface in Italian; included dependencies retain their authorship |
+| “Native macOS app by Elia Gentili” | Apple Silicon, macOS 14+, English and Italian interface choices; included dependencies retain their authorship |
 | “Local media processing and OCR” | Files and original recordings still need review before sharing |
 | “Opaque masks applied to applicable exports” | Suggestions are incomplete; video masks are static; audio/originals/manual report text are not automatically redacted |
-| “23 automated test groups passed for 1.3.1” | Synthetic fixtures and specific paths; not all devices, networks, durations or UI flows |
+| “Automated media, export and language checks” | Quote the current validation results; synthetic fixtures do not cover all devices, networks, durations or UI flows |
 | “Creator exports in three aspect ratios” | Do not promise that this capability is unique |
 | “Bug reports with organized local attachments” | No automatic issue submission or integration with external trackers |
 

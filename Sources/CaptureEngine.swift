@@ -31,7 +31,7 @@ enum RecordingQuality: String, CaseIterable, Identifiable, Sendable {
 @MainActor
 final class CaptureEngine: ObservableObject {
     @Published private(set) var devices: [DeviceDescriptor] = []
-    @Published private(set) var status = "Collega iPhone o iPad via USB e autorizza il Mac sul dispositivo."
+    @Published private(set) var status = L("Collega iPhone o iPad via USB e autorizza il Mac sul dispositivo.")
     @Published private(set) var errorMessage: String?
     @Published private(set) var isRunning = false
     @Published private(set) var isRecording = false
@@ -89,10 +89,10 @@ final class CaptureEngine: ObservableObject {
         isDiscovering = true
         defer { isDiscovering = false }
         errorMessage = nil
-        status = "Consenti l’accesso Fotocamera per rilevare lo schermo iPhone/iPad…"
+        status = L("Consenti l’accesso Fotocamera per rilevare lo schermo iPhone/iPad…")
         guard await Self.authorization(for:.video) else {
-            errorMessage = "Accesso Fotocamera necessario per rilevare lo schermo iOS. Abilita Specchio Studio in Impostazioni di Sistema → Privacy e sicurezza → Fotocamera."
-            status = "Rilevamento USB non autorizzato"
+            errorMessage = L("Accesso Fotocamera necessario per rilevare lo schermo iOS. Abilita Specchio Studio in Impostazioni di Sistema → Privacy e sicurezza → Fotocamera.")
+            status = L("Rilevamento USB non autorizzato")
             return
         }
         for _ in 0..<20 {
@@ -103,8 +103,8 @@ final class CaptureEngine: ObservableObject {
         }
         if !isRunning {
             status = devices.isEmpty
-                ? "Nessuno schermo iOS rilevato. Sblocca il dispositivo e verifica l’autorizzazione nel Finder."
-                : "Dispositivo rilevato. Selezionalo e premi Connetti."
+                ? L("Nessuno schermo iOS rilevato. Sblocca il dispositivo e verifica l’autorizzazione nel Finder.")
+                : L("Dispositivo rilevato. Selezionalo e premi Connetti.")
         }
     }
 
@@ -112,17 +112,17 @@ final class CaptureEngine: ObservableObject {
         startGeneration += 1
         let generation = startGeneration
         errorMessage = nil
-        status = "Autorizzazione e connessione…"
+        status = L("Autorizzazione e connessione…")
         let videoAllowed = await Self.authorization(for: .video)
         guard generation == startGeneration else { return }
         guard videoAllowed else {
-            errorMessage = "Accesso alla fotocamera negato. Abilitalo in Impostazioni di Sistema → Privacy e sicurezza → Fotocamera."
-            status = "Autorizzazione necessaria"
+            errorMessage = L("Accesso alla fotocamera negato. Abilitalo in Impostazioni di Sistema → Privacy e sicurezza → Fotocamera.")
+            status = L("Autorizzazione necessaria")
             return
         }
         guard let device = CaptureWorker.discoverDevices().first(where: { $0.uniqueID == deviceID }) else {
-            errorMessage = "Dispositivo non disponibile. Verifica il cavo USB, sbloccalo e autorizza questo Mac."
-            status = "Dispositivo non trovato"
+            errorMessage = L("Dispositivo non disponibile. Verifica il cavo USB, sbloccalo e autorizza questo Mac.")
+            status = L("Dispositivo non trovato")
             refreshDevices()
             return
         }
@@ -182,7 +182,7 @@ private final class SampleBox: @unchecked Sendable {
 }
 
 private struct CaptureState {
-    var status = "Pronto"
+    var status = L("Pronto")
     var error: String?
     var running = false
     var recording = false
@@ -231,11 +231,11 @@ private final class CaptureWorker: NSObject, AVCaptureVideoDataOutputSampleBuffe
             guard let device = notification.object as? AVCaptureDevice else { return }
             self?.queue.async { [weak self] in
                 guard let self, device.uniqueID == self.selectedDeviceID else { return }
-                self.stopOnQueue(message: "Dispositivo scollegato. Ricollegalo e premi Avvia.")
+                self.stopOnQueue(message: L("Dispositivo scollegato. Ricollegalo e premi Avvia."))
             }
         })
         observers.append(NotificationCenter.default.addObserver(forName: .AVCaptureSessionRuntimeError, object: session, queue: nil) { [weak self] notification in
-            let detail = (notification.userInfo?[AVCaptureSessionErrorKey] as? Error)?.localizedDescription ?? "Errore della sessione video."
+            let detail = (notification.userInfo?[AVCaptureSessionErrorKey] as? Error)?.localizedDescription ?? L("Errore della sessione video.")
             self?.queue.async { [weak self] in self?.stopOnQueue(message: detail) }
         })
     }
@@ -271,7 +271,7 @@ private final class CaptureWorker: NSObject, AVCaptureVideoDataOutputSampleBuffe
         await withCheckedContinuation { continuation in
             queue.async { [self] in
                 guard !state.finalizing && writer == nil else {
-                    state.error = "Ferma la registrazione prima di cambiare dispositivo."
+                    state.error = L("Ferma la registrazione prima di cambiare dispositivo.")
                     publish()
                     continuation.resume()
                     return
@@ -286,13 +286,13 @@ private final class CaptureWorker: NSObject, AVCaptureVideoDataOutputSampleBuffe
                 session.outputs.forEach(session.removeOutput)
                 do {
                     let input = try AVCaptureDeviceInput(device: device)
-                    guard session.canAddInput(input) else { throw CaptureFailure.message("Questo dispositivo non può essere acquisito. Potrebbe essere già usato da un'altra app.") }
+                    guard session.canAddInput(input) else { throw CaptureFailure.message(L("Questo dispositivo non può essere acquisito. Potrebbe essere già usato da un'altra app.")) }
                     session.addInput(input)
                     if session.canSetSessionPreset(.high) { session.sessionPreset = .high }
                     videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA]
                     videoOutput.alwaysDiscardsLateVideoFrames = true
                     videoOutput.setSampleBufferDelegate(self, queue: queue)
-                    guard session.canAddOutput(videoOutput) else { throw CaptureFailure.message("Uscita video non disponibile.") }
+                    guard session.canAddOutput(videoOutput) else { throw CaptureFailure.message(L("Uscita video non disponibile.")) }
                     session.addOutput(videoOutput)
                     if includeAudio && input.ports.contains(where: { $0.mediaType == .audio }) && session.canAddOutput(audioOutput) {
                         audioOutput.setSampleBufferDelegate(self, queue: queue)
@@ -308,15 +308,15 @@ private final class CaptureWorker: NSObject, AVCaptureVideoDataOutputSampleBuffe
                     state.error = nil
                     state.frameSize = .zero
                     state.fps = 0
-                    state.status = state.running ? "In diretta · \(device.localizedName)" : "Avvio video non riuscito"
-                    if !state.running { state.error = "Il dispositivo non ha avviato il flusso video." }
+                    state.status = state.running ? LF("In diretta · %@", device.localizedName) : L("Avvio video non riuscito")
+                    if !state.running { state.error = L("Il dispositivo non ha avviato il flusso video.") }
                     publish()
                 } catch {
                     session.commitConfiguration()
                     state.running = false
                     state.hasAudio = false
                     state.error = error.localizedDescription
-                    state.status = "Connessione non riuscita"
+                    state.status = L("Connessione non riuscita")
                     publish()
                 }
                 continuation.resume()
@@ -328,7 +328,7 @@ private final class CaptureWorker: NSObject, AVCaptureVideoDataOutputSampleBuffe
         await withCheckedContinuation { continuation in
             queue.async { [self] in
                 guard writer == nil, !state.finalizing else {
-                    state.error = "Ferma la registrazione prima di cambiare sorgente."
+                    state.error = L("Ferma la registrazione prima di cambiare sorgente.")
                     publish(); continuation.resume(returning: false); return
                 }
                 if session.isRunning { session.stopRunning() }
@@ -343,7 +343,7 @@ private final class CaptureWorker: NSObject, AVCaptureVideoDataOutputSampleBuffe
                 clearFrame()
                 state.running = true
                 state.error = nil
-                state.status = "In diretta · \(name)"
+                state.status = LF("In diretta · %@", name)
                 frameCount = 0
                 lastFPSDate = CFAbsoluteTimeGetCurrent()
                 publish()
@@ -372,7 +372,7 @@ private final class CaptureWorker: NSObject, AVCaptureVideoDataOutputSampleBuffe
         clearFrame()
         state.running = false
         state.fps = 0
-        state.status = message == nil ? "Acquisizione interrotta" : "Connessione interrotta"
+        state.status = message == nil ? L("Acquisizione interrotta") : L("Connessione interrotta")
         state.error = message
         finishRecordingOnQueue()
         publish()
@@ -381,7 +381,7 @@ private final class CaptureWorker: NSObject, AVCaptureVideoDataOutputSampleBuffe
     func startRecording(to url: URL, codec: RecordingCodec, quality: RecordingQuality) {
         queue.async { [self] in
             guard state.running, state.frameSize.width > 0 else {
-                state.error = "Attendi il primo fotogramma prima di registrare."
+                state.error = L("Attendi il primo fotogramma prima di registrare.")
                 publish(); return
             }
             guard writer == nil, !state.finalizing else { return }
@@ -395,24 +395,24 @@ private final class CaptureWorker: NSObject, AVCaptureVideoDataOutputSampleBuffe
                 state.recordingURL = nil
                 publish()
             } catch {
-                state.error = "Registrazione non avviata: \(error.localizedDescription)"
+                state.error = LF("Registrazione non avviata: %@", error.localizedDescription)
                 publish()
             }
         }
     }
 
     private func prepareWriter(to url: URL, codec: RecordingCodec, quality: RecordingQuality, audioSettings: [String: Any]?) throws {
-        guard !FileManager.default.fileExists(atPath: url.path) else { throw CaptureFailure.message("Il file di destinazione esiste già. Scegli un nuovo nome.") }
+        guard !FileManager.default.fileExists(atPath: url.path) else { throw CaptureFailure.message(L("Il file di destinazione esiste già. Scegli un nuovo nome.")) }
         let assetWriter = try AVAssetWriter(outputURL: url, fileType: .mov)
         let width = Int(state.frameSize.width), height = Int(state.frameSize.height)
         let bitRate = max(2_000_000, Int(Double(width * height) * max(30, state.fps) * quality.bitsPerPixel))
         let settings: [String: Any] = [AVVideoCodecKey: codec.avCodec, AVVideoWidthKey: width, AVVideoHeightKey: height,
                                       AVVideoCompressionPropertiesKey: [AVVideoAverageBitRateKey: bitRate,
                                                                        AVVideoMaxKeyFrameIntervalKey: 60]]
-        guard assetWriter.canApply(outputSettings: settings, forMediaType: .video) else { throw CaptureFailure.message("Codec non supportato per questa risoluzione. Prova H.264.") }
+        guard assetWriter.canApply(outputSettings: settings, forMediaType: .video) else { throw CaptureFailure.message(L("Codec non supportato per questa risoluzione. Prova H.264.")) }
         let video = AVAssetWriterInput(mediaType: .video, outputSettings: settings)
         video.expectsMediaDataInRealTime = true
-        guard assetWriter.canAdd(video) else { throw CaptureFailure.message("Impossibile creare la traccia video.") }
+        guard assetWriter.canAdd(video) else { throw CaptureFailure.message(L("Impossibile creare la traccia video.")) }
         assetWriter.add(video)
         var audio: AVAssetWriterInput?
         if let settings = audioSettings, assetWriter.canApply(outputSettings: settings, forMediaType: .audio) {
@@ -463,7 +463,7 @@ private final class CaptureWorker: NSObject, AVCaptureVideoDataOutputSampleBuffe
         if assetWriter.status == .completed {
             state.recordingURL = recordingDestination
         } else {
-            state.error = assetWriter.error?.localizedDescription ?? "Nessun fotogramma registrato. Il file vuoto è stato eliminato."
+            state.error = assetWriter.error?.localizedDescription ?? L("Nessun fotogramma registrato. Il file vuoto è stato eliminato.")
             if let destination = recordingDestination { try? FileManager.default.removeItem(at: destination) }
         }
         writer = nil; videoInput = nil; audioInput = nil; writerOrigin = nil; recordingDestination = nil; recordingSize = .zero
@@ -490,7 +490,7 @@ private final class CaptureWorker: NSObject, AVCaptureVideoDataOutputSampleBuffe
             let size = CGSize(width: CVPixelBufferGetWidth(pixelBuffer), height: CVPixelBufferGetHeight(pixelBuffer))
             let changedSize = state.frameSize != size
             if writer != nil, !state.finalizing, recordingSize != .zero, recordingSize != size {
-                state.error = "Risoluzione cambiata: registrazione salvata. Avviane una nuova per la nuova risoluzione."
+                state.error = L("Risoluzione cambiata: registrazione salvata. Avviane una nuova per la nuova risoluzione.")
                 finishRecordingOnQueue()
             }
             state.frameSize = size
@@ -517,7 +517,7 @@ private final class CaptureWorker: NSObject, AVCaptureVideoDataOutputSampleBuffe
         if writerOrigin == nil {
             guard isVideo else { return }
             guard assetWriter.startWriting() else {
-                state.error = assetWriter.error?.localizedDescription ?? "Impossibile avviare il file video."
+                state.error = assetWriter.error?.localizedDescription ?? L("Impossibile avviare il file video.")
                 finishRecordingOnQueue(); return
             }
             assetWriter.startSession(atSourceTime: timestamp)
@@ -526,7 +526,7 @@ private final class CaptureWorker: NSObject, AVCaptureVideoDataOutputSampleBuffe
         guard let origin = writerOrigin, timestamp >= origin, assetWriter.status == .writing else { return }
         let input = isVideo ? videoInput : audioInput
         if let input, input.isReadyForMoreMediaData, !input.append(sample) {
-            state.error = assetWriter.error?.localizedDescription ?? "Scrittura del video non riuscita."
+            state.error = assetWriter.error?.localizedDescription ?? L("Scrittura del video non riuscita.")
             finishRecordingOnQueue()
         }
     }
@@ -581,7 +581,7 @@ private final class CaptureWorker: NSObject, AVCaptureVideoDataOutputSampleBuffe
                         guard CVPixelBufferCreate(kCFAllocatorDefault, 640, 480, kCVPixelFormatType_32BGRA,
                                                   [kCVPixelBufferCGImageCompatibilityKey: true,
                                                    kCVPixelBufferCGBitmapContextCompatibilityKey: true] as CFDictionary, &buffer) == kCVReturnSuccess,
-                              let buffer else { throw CaptureFailure.message("Creazione frame di prova fallita.") }
+                              let buffer else { throw CaptureFailure.message(L("Creazione frame di prova fallita.")) }
                         CVPixelBufferLockBaseAddress(buffer, [])
                         if let address = CVPixelBufferGetBaseAddress(buffer) {
                             memset(address, Int32(index * 7), CVPixelBufferGetDataSize(buffer))
@@ -593,10 +593,10 @@ private final class CaptureWorker: NSObject, AVCaptureVideoDataOutputSampleBuffe
                         var sample: CMSampleBuffer?
                         guard let description, CMSampleBufferCreateReadyWithImageBuffer(allocator: kCFAllocatorDefault, imageBuffer: buffer, formatDescription: description,
                                                                                        sampleTiming: &timing, sampleBufferOut: &sample) == noErr,
-                              let sample else { throw CaptureFailure.message("Creazione sample di prova fallita.") }
+                              let sample else { throw CaptureFailure.message(L("Creazione sample di prova fallita.")) }
                         worker.consume(sample, isVideo: true)
                     }
-                    guard worker.snapshot() != nil else { throw CaptureFailure.message("Snapshot di prova fallito.") }
+                    guard worker.snapshot() != nil else { throw CaptureFailure.message(L("Snapshot di prova fallito.")) }
                     continuation.resume()
                 } catch { continuation.resume(throwing: error) }
             }
@@ -605,7 +605,7 @@ private final class CaptureWorker: NSObject, AVCaptureVideoDataOutputSampleBuffe
         let asset = AVURLAsset(url: destination)
         let duration = try await asset.load(.duration)
         let tracks = try await asset.loadTracks(withMediaType: .video)
-        guard duration.seconds > 0, !tracks.isEmpty else { throw CaptureFailure.message("Il video di prova non contiene fotogrammi.") }
+        guard duration.seconds > 0, !tracks.isEmpty else { throw CaptureFailure.message(L("Il video di prova non contiene fotogrammi.")) }
         return destination
     }
 }

@@ -94,7 +94,7 @@ func render(_ name: String, width: Int, height: Int, draw: () throws -> Void) th
     try data.write(to: destination.appendingPathComponent(name))
 }
 
-func socialCard(_ name: String, italian: Bool) throws {
+func socialCard(_ name: String) throws {
 try render(name, width: 1200, height: 630) {
     navy.setFill(); NSRect(x: 0, y: 0, width: 1200, height: 630).fill()
     // An original geometric accent; no device or application interface is invented.
@@ -104,26 +104,25 @@ try render(name, width: 1200, height: 630) {
     NSGradient(colors: [color(0x183142), color(0x11392F)])!.draw(in: plane, angle: 40)
     try image("Resources/AppIcon.iconset/icon_128x128.png", in: NSRect(x: 62, y: 512, width: 55, height: 55))
     text("Specchio Studio", rect: NSRect(x: 132, y: 519, width: 440, height: 40), size: 27, weight: .semibold)
-    text(italian ? "Il tuo dispositivo.\nPronto da condividere." : "Your device.\nReady to share.",
+    text("Your device.\nReady to share.",
          rect: NSRect(x: 70, y: 298, width: 660, height: 168),
-         size: italian ? 51 : 61, weight: .bold, lineHeight: 72)
-    text(italian ? "Mostra. Spiega. Crea." : "Demo. Explain. Create.",
+         size: 61, weight: .bold, lineHeight: 72)
+    text("Demo. Explain. Create.",
          rect: NSRect(x: 73, y: 250, width: 610, height: 40), size: 28, color: muted)
-    rounded(NSRect(x: 73, y: 195, width: italian ? 255 : 241, height: 33), radius: 16, fill: mint)
-    text(italian ? "macOS · Elaborazione locale" : "macOS · Local processing",
-         rect: NSRect(x: 88, y: 201, width: italian ? 231 : 213, height: 22),
+    rounded(NSRect(x: 73, y: 195, width: 241, height: 33), radius: 16, fill: mint)
+    text("macOS · Local processing",
+         rect: NSRect(x: 88, y: 201, width: 213, height: 22),
          size: 15, weight: .medium, color: navy)
-    text(italian ? "Creato da Elia Gentili" : "Created by Elia Gentili",
+    text("Created by Elia Gentili",
          rect: NSRect(x: 73, y: 76, width: 580, height: 30),
          size: 21, weight: .medium, color: mint)
-    text(italian ? "Un flusso di lavoro per demo e segnalazioni bug." : "A focused workflow for demos and bug reports.",
+    text("A focused workflow for demos and bug reports.",
          rect: NSRect(x: 73, y: 45, width: 610, height: 27),
          size: 16, color: muted)
     try image("Anteprima-demo.png", in: NSRect(x: 755, y: 55, width: 370, height: 520), radius: 22)
 }
 }
-try socialCard("social-card.png", italian: false)
-try socialCard("social-card-it.png", italian: true)
+try socialCard("social-card.png")
 try Data(contentsOf: destination.appendingPathComponent("social-card.png"))
     .write(to: destination.appendingPathComponent("github-banner.png"))
 try Data(contentsOf: root.appendingPathComponent("Resources/AppIcon.iconset/icon_256x256.png"))
@@ -170,7 +169,6 @@ try run(encoder, ["-quiet", "-q", "86", "-m", "6", "-metadata", "none",
 
 let descriptions = [
     "social-card.png": "Specchio Studio: Your device. Ready to share. Created by Elia Gentili, beside the actual generated demo composition.",
-    "social-card-it.png": "Specchio Studio: Il tuo dispositivo. Pronto da condividere. Creato da Elia Gentili, accanto alla composizione demo reale.",
     "github-banner.png": "Specchio Studio by Elia Gentili. A local macOS workflow for demos, explanations and bug reports, with an actual demo composition.",
     "demo-preview.webp": "Actual Specchio Studio demo composition: a framed display with MAKE ROOM artwork on the Aurora background. No physical device is connected.",
     "app-icon.png": "Specchio Studio icon: mint and lavender mirror planes on a dark navy background.",

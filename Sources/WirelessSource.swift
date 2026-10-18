@@ -21,18 +21,18 @@ import Combine
     func start(engine: CaptureEngine) async {
         guard !isStarting, !isListening, !isStopping else { return }
         guard !engine.isRecording, !engine.isFinalizing else {
-            errorMessage = "Ferma la registrazione prima di cambiare sorgente."
+            errorMessage = L("Ferma la registrazione prima di cambiare sorgente.")
             return
         }
         if let owner = Self.owner, owner !== self {
-            errorMessage = "Il ricevitore wireless è già aperto in un’altra finestra di Specchio."
+            errorMessage = L("Il ricevitore wireless è già aperto in un’altra finestra di Specchio.")
             return
         }
         Self.owner = self
         generation += 1
         let token = generation
         isStarting = true; errorMessage = nil; pairingCode = ""
-        status = "Avvio ricevitore wireless…"
+        status = L("Avvio ricevitore wireless…")
         self.engine = engine
         let worker = WirelessWorker(engine: engine)
         self.worker = worker
@@ -40,13 +40,13 @@ import Combine
             Task { @MainActor [weak self] in
                 guard let self, self.generation == token else { return }
                 switch event {
-                case 1: self.pairingCode = text; self.status = "Inserisci questo codice sull’iPhone o iPad"
-                case 2: self.pairingCode = ""; self.status = text
+                case 1: self.pairingCode = text; self.status = L("Inserisci questo codice sull’iPhone o iPad")
+                case 2: self.pairingCode = ""; self.status = Self.localizedReceiverMessage(text)
                 case 3:
                     self.receiving = false
                     self.engine?.endExternalSource()
-                    self.pairingCode = ""; self.status = text
-                case 6: self.errorMessage = text
+                    self.pairingCode = ""; self.status = Self.localizedReceiverMessage(text)
+                case 6: self.errorMessage = Self.localizedReceiverMessage(text)
                 default: break
                 }
             }
@@ -60,7 +60,7 @@ import Combine
                     return
                 }
                 self.startingEngine = true
-                let ready = await engine.beginExternalSource(name:"Wireless · iPhone / iPad",includesAudio:true)
+                let ready = await engine.beginExternalSource(name:L("Wireless · iPhone / iPad"),includesAudio:true)
                 guard self.generation == token else { return }
                 self.startingEngine = false
                 if ready {
@@ -76,12 +76,21 @@ import Combine
         isStarting = false
         if result == 0 {
             isListening = true
-            if pairingCode.isEmpty { status = "Su iPhone/iPad: Centro di Controllo → Duplica schermo → Specchio Studio" }
+            if pairingCode.isEmpty { status = L("Su iPhone/iPad: Centro di Controllo → Duplica schermo → Specchio Studio") }
         } else {
-            errorMessage = "Impossibile avviare il ricevitore wireless (\(result)). Verifica il permesso Rete locale e riprova."
-            status = "Ricevitore non avviato"
+            errorMessage = LF("Impossibile avviare il ricevitore wireless (%d). Verifica il permesso Rete locale e riprova.", result)
+            status = L("Ricevitore non avviato")
             await stop()
         }
+    }
+
+    private static func localizedReceiverMessage(_ text: String) -> String {
+        let decoderPrefix = "Video decoding is unavailable ("
+        if text.hasPrefix(decoderPrefix), text.hasSuffix(")"),
+           let code = Int(text.dropFirst(decoderPrefix.count).dropLast()) {
+            return LF("Decodifica video non disponibile (%d)", code)
+        }
+        return L(text)
     }
 
     func stop() async {

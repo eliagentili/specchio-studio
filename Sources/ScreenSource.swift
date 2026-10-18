@@ -8,7 +8,7 @@ import Combine
 final class ScreenSource: ObservableObject {
     @Published private(set) var isActive = false
     @Published private(set) var isChoosing = false
-    @Published private(set) var status = "Scegli una finestra, Simulator o uno schermo."
+    @Published private(set) var status = L("Scegli una finestra, Simulator o uno schermo.")
     @Published private(set) var errorMessage: String?
 
     // The system picker is a process-wide singleton, even with multiple windows.
@@ -48,11 +48,11 @@ final class ScreenSource: ObservableObject {
     func start(engine: CaptureEngine, includesAudio: Bool = false) {
         guard !isChoosing else { return }
         guard Self.selectionOwner == nil || Self.selectionOwner === self else {
-            errorMessage = "Completa la selezione nell'altra finestra prima di aprirne una nuova."
+            errorMessage = L("Completa la selezione nell'altra finestra prima di aprirne una nuova.")
             return
         }
         guard !engine.isRecording, !engine.isFinalizing else {
-            errorMessage = "Ferma la registrazione prima di cambiare sorgente."
+            errorMessage = L("Ferma la registrazione prima di cambiare sorgente.")
             return
         }
         errorMessage = nil
@@ -71,7 +71,7 @@ final class ScreenSource: ObservableObject {
         picker.defaultConfiguration = configuration
         Self.selectionOwner = self
         isChoosing = true
-        status = "Seleziona la sorgente nel selettore di macOS…"
+        status = L("Seleziona la sorgente nel selettore di macOS…")
         picker.isActive = true
         if let stream {
             picker.setConfiguration(configuration, for: stream)
@@ -95,21 +95,21 @@ final class ScreenSource: ObservableObject {
         unregister()
         oldEngine?.endExternalSource()
         if let oldStream { try? await oldStream.stopCapture() }
-        status = "Acquisizione schermo interrotta"
+        status = L("Acquisizione schermo interrotta")
     }
 
     fileprivate func cancelled(for candidate: SCStream?) {
         guard accepts(candidate) else { return }
         isChoosing = false
         if Self.selectionOwner === self { Self.selectionOwner = nil }
-        status = isActive ? "In diretta · Finestra o schermo" : "Selezione annullata"
+        status = isActive ? L("In diretta · Finestra o schermo") : L("Selezione annullata")
         if !isActive { engine = nil; unregister() }
     }
 
     fileprivate func pickerFailed(_ error: Error) {
         guard Self.selectionOwner === self else { return }
         cancelled(for: stream)
-        errorMessage = "Impossibile aprire il selettore macOS: \(error.localizedDescription)"
+        errorMessage = LF("Impossibile aprire il selettore macOS: %@", error.localizedDescription)
     }
 
     fileprivate func selected(_ filter: SCContentFilter, for candidate: SCStream?) async {
@@ -117,7 +117,7 @@ final class ScreenSource: ObservableObject {
         isChoosing = false
         if Self.selectionOwner === self { Self.selectionOwner = nil }
         guard !engine.isRecording, !engine.isFinalizing else {
-            errorMessage = "Ferma la registrazione prima di cambiare sorgente."
+            errorMessage = L("Ferma la registrazione prima di cambiare sorgente.")
             return
         }
         generation += 1
@@ -125,11 +125,11 @@ final class ScreenSource: ObservableObject {
         let configuration = Self.configuration(filter: filter, includesAudio: includesAudio)
         do {
             externalClaimed = true
-            let accepted = await engine.beginExternalSource(name: "Finestra o schermo", includesAudio: includesAudio)
+            let accepted = await engine.beginExternalSource(name: L("Finestra o schermo"), includesAudio: includesAudio)
             guard token == generation else { return }
             guard accepted else {
                 externalClaimed = isActive
-                errorMessage = "Sorgente occupata: ferma la registrazione e riprova."
+                errorMessage = L("Sorgente occupata: ferma la registrazione e riprova.")
                 if !isActive { self.engine = nil; unregister() }
                 return
             }
@@ -140,7 +140,7 @@ final class ScreenSource: ObservableObject {
                 try await stream.updateConfiguration(configuration)
                 guard token == generation else { return }
             } else {
-                status = "Avvio acquisizione schermo…"
+                status = L("Avvio acquisizione schermo…")
                 let forwarder = ScreenSampleForwarder(engine: engine)
                 let newStream = SCStream(filter: filter, configuration: configuration, delegate: observer)
                 output = forwarder
@@ -154,19 +154,19 @@ final class ScreenSource: ObservableObject {
             }
             isActive = true
             errorMessage = nil
-            status = includesAudio ? "In diretta · Finestra o schermo con audio" : "In diretta · Finestra o schermo"
+            status = includesAudio ? L("In diretta · Finestra o schermo con audio") : L("In diretta · Finestra o schermo")
         } catch {
             guard token == generation else { return }
             await stop()
-            status = "Acquisizione schermo non riuscita"
-            errorMessage = "\(error.localizedDescription) Riapri il selettore; verifica anche Privacy e sicurezza → Registrazione schermo."
+            status = L("Acquisizione schermo non riuscita")
+            errorMessage = LF("%@ Riapri il selettore; verifica anche Privacy e sicurezza → Registrazione schermo.", error.localizedDescription)
         }
     }
 
     fileprivate func stopped(_ candidate: SCStream, error: Error) async {
         guard candidate === stream else { return }
         await stop()
-        status = "Condivisione terminata"
+        status = L("Condivisione terminata")
         errorMessage = error.localizedDescription
     }
 

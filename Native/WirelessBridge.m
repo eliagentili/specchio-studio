@@ -140,7 +140,7 @@ static OSStatus supplyAudio(AudioConverterRef converter, UInt32 *count, AudioBuf
             NSDictionary *attrs = @{(__bridge NSString *)kCVPixelBufferPixelFormatTypeKey:@(kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange),(__bridge NSString *)kCVPixelBufferIOSurfacePropertiesKey:@{}};
             VTDecompressionOutputCallbackRecord callback = {decoded,(__bridge void *)self};
             err = VTDecompressionSessionCreate(NULL,_format,NULL,(__bridge CFDictionaryRef)attrs,&callback,&_decoder);
-            if (err) { sendEvent(self,6,[NSString stringWithFormat:@"Decodifica video non disponibile (%d)",(int)err]); return; }
+            if (err) { sendEvent(self,6,[NSString stringWithFormat:@"Video decoding is unavailable (%d)",(int)err]); return; }
         }
         if (!hasPicture || !_decoder || !avcc.length) return;
         CMBlockBufferRef block = NULL; CMSampleBufferRef sample = NULL;
@@ -149,7 +149,7 @@ static OSStatus supplyAudio(AudioConverterRef converter, UInt32 *count, AudioBuf
         CMSampleTimingInfo timing = {kCMTimeInvalid,presentationTime(time),kCMTimeInvalid};
         size_t sampleSize = avcc.length;
         if (!CMSampleBufferCreateReady(NULL,block,_format,1,1,&timing,1,&sampleSize,&sample)) {
-            if (!_streamActive) { _streamActive=YES; sendEvent(self,2,@"iPhone/iPad collegato in wireless"); }
+            if (!_streamActive) { _streamActive=YES; sendEvent(self,2,@"iPhone/iPad connected wirelessly"); }
             OSStatus err = VTDecompressionSessionDecodeFrame(_decoder,sample,0,NULL,NULL);
             if (err == kVTInvalidSessionErr) { VTDecompressionSessionInvalidate(_decoder); CFRelease(_decoder); _decoder=NULL; }
             CFRelease(sample);
@@ -252,7 +252,7 @@ static bool checkClient(void *ctx,const char *pk) {
 static void admitClient(void *ctx,char *id,char *model,char *name,bool *admit) { *admit=true; }
 static const char *password(void *ctx,int *len) { *len=0; return ""; }
 static void dacp(void *ctx,const char *a,const char *b) {}
-static void playUnsupported(void *ctx,const char *location,float position) { sendEvent(receiver(ctx),6,@"Usa Duplica schermo dal Centro di Controllo per trasmettere il video."); }
+static void playUnsupported(void *ctx,const char *location,float position) { sendEvent(receiver(ctx),6,@"Use Screen Mirroring in Control Center to stream video."); }
 static void seekUnsupported(void *ctx,float position) {}
 static void playbackInfo(void *ctx,playback_info_t *info) { memset(info,0,sizeof(*info)); }
 static float playlistRemove(void *ctx) { return 0; }
@@ -262,7 +262,7 @@ static void videoReset(void *ctx,reset_type_t reason) {
     @synchronized(r) {
         BOOL active=r->_streamActive; r->_streamActive=NO; [r clearDecoder];
         if (r->_audioDecoder) { AudioConverterDispose(r->_audioDecoder); r->_audioDecoder=NULL; }
-        if (active) sendEvent(r,3,@"Duplicazione terminata. Ricevitore pronto per una nuova connessione.");
+        if (active) sendEvent(r,3,@"Mirroring ended. The receiver is ready for a new connection.");
     }
 }
 static void mirrorRunning(void *ctx,bool running) {
@@ -283,7 +283,7 @@ static void *serveDNS(void *ctx) {
         struct timeval timeout={0,100000};
         if (select(max+1,&set,NULL,NULL,&timeout)>0) for(int i=0;i<2;i++) if(fds[i]>=0 && FD_ISSET(fds[i],&set)) {
             int err=dnssd_process_service(r->_dnssd,i);
-            if(err) { sendEvent(r,6,@"Annuncio di rete non disponibile. Verifica il permesso Rete locale."); atomic_store(&r->_dnsStop,true); }
+            if(err) { sendEvent(r,6,@"Network announcement is unavailable. Check Local Network permission."); atomic_store(&r->_dnsStop,true); }
         }
     }
     return NULL;

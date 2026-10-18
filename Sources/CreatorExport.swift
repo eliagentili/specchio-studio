@@ -68,7 +68,7 @@ final class CreatorExport: ObservableObject {
             stage = nil
             progress = 1
             return workspace.destination
-        } catch { errorMessage = error is CancellationError ? "Pacchetto annullato." : error.localizedDescription; throw error }
+        } catch { errorMessage = error is CancellationError ? L("Pacchetto annullato.") : error.localizedDescription; throw error }
     }
 
     func exportImages(image: NSImage, directory: URL, backdrop: Backdrop, showFrame: Bool,
@@ -81,7 +81,7 @@ final class CreatorExport: ObservableObject {
             let workspace = try makeWorkspace(in: directory)
             stage = workspace.stage
             guard let safeImage = PrivacyRenderer.redactedImage(image, masks: privacyMasks) else {
-                throw CreatorExportFailure.message("Impossibile preparare l’immagine con le maschere privacy.")
+                throw CreatorExportFailure.message(L("Impossibile preparare l’immagine con le maschere privacy."))
             }
             var files: [Manifest.Output] = []
             var landscape: NSImage?
@@ -96,7 +96,7 @@ final class CreatorExport: ObservableObject {
                     marks: projectedMarks, annotationMode: false, onPoint: nil, format: entry.0)
                     .frame(width: size.width, height: size.height).preferredColorScheme(.dark))
                 renderer.scale = 1
-                guard let rendered = renderer.nsImage else { throw CreatorExportFailure.message("Impossibile renderizzare il formato \(entry.0.rawValue).") }
+                guard let rendered = renderer.nsImage else { throw CreatorExportFailure.message(LF("Impossibile renderizzare il formato %@.", L(entry.0.rawValue))) }
                 try writePNG(rendered, to: workspace.stage.appendingPathComponent(entry.1 + ".png"))
                 if entry.0 == .landscape { landscape = rendered }
                 files.append(.init(file: entry.1 + ".png", width: Int(size.width), height: Int(size.height), durationSeconds: nil, audioTracks: nil))
@@ -104,7 +104,7 @@ final class CreatorExport: ObservableObject {
                 await Task.yield()
             }
             try checkCancellation()
-            guard let landscape else { throw CreatorExportFailure.message("Copertina non disponibile.") }
+            guard let landscape else { throw CreatorExportFailure.message(L("Copertina non disponibile.")) }
             try writePNG(cover(image: landscape, title: coverTitle), to: workspace.stage.appendingPathComponent("cover.png"))
             files.append(.init(file: "cover.png", width: 1920, height: 1080, durationSeconds: nil, audioTracks: nil))
             try writeManifest(kind: "image", outputs: files, maskCount: privacyMasks.count, coverTitle: coverTitle, to: workspace.stage)
@@ -113,11 +113,11 @@ final class CreatorExport: ObservableObject {
             stage = nil
             progress = 1
             return workspace.destination
-        } catch { errorMessage = error is CancellationError ? "Pacchetto annullato." : error.localizedDescription; throw error }
+        } catch { errorMessage = error is CancellationError ? L("Pacchetto annullato.") : error.localizedDescription; throw error }
     }
 
     private func begin() throws {
-        guard !isExporting else { throw CreatorExportFailure.message("Un pacchetto creator è già in preparazione.") }
+        guard !isExporting else { throw CreatorExportFailure.message(L("Un pacchetto creator è già in preparazione.")) }
         isExporting = true; cancelled = false; progress = 0; errorMessage = nil
     }
     private func finish(stage: URL?) {
@@ -130,7 +130,7 @@ final class CreatorExport: ObservableObject {
         try checkCancellation()
         var isDirectory: ObjCBool = false
         guard directory.isFileURL, FileManager.default.fileExists(atPath: directory.path, isDirectory: &isDirectory), isDirectory.boolValue else {
-            throw CreatorExportFailure.message("Scegli una cartella locale esistente per il pacchetto.")
+            throw CreatorExportFailure.message(L("Scegli una cartella locale esistente per il pacchetto."))
         }
         let identifier = UUID().uuidString.lowercased()
         let stage = directory.appendingPathComponent(".specchio-creator-" + identifier, isDirectory: true)
@@ -142,7 +142,7 @@ final class CreatorExport: ObservableObject {
     private func writePNG(_ image: NSImage, to url: URL) throws {
         guard let tiff = image.tiffRepresentation, let bitmap = NSBitmapImageRep(data: tiff),
               let data = bitmap.representation(using: .png, properties: [:]) else {
-            throw CreatorExportFailure.message("Impossibile scrivere l’immagine PNG.")
+            throw CreatorExportFailure.message(L("Impossibile scrivere l’immagine PNG."))
         }
         try data.write(to: url, options: .atomic)
     }
@@ -157,7 +157,7 @@ final class CreatorExport: ObservableObject {
             }
         }.frame(width: 1920, height: 1080).preferredColorScheme(.dark))
         renderer.scale = 1
-        guard let result = renderer.nsImage else { throw CreatorExportFailure.message("Impossibile creare la copertina.") }
+        guard let result = renderer.nsImage else { throw CreatorExportFailure.message(L("Impossibile creare la copertina.")) }
         return result
     }
     private struct Manifest: Codable {

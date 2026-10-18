@@ -1,0 +1,3 @@
+"NSCameraUsageDescription" = "Specchio Studio displays the screen of a connected iPhone or iPad, which macOS treats as a camera source.";
+"NSLocalNetworkUsageDescription" = "Specchio Studio receives iPhone and iPad screen and audio on the local network to display them in a Mac window.";
+"NSMicrophoneUsageDescription" = "Specchio Studio captures audio from the selected device to include it in recordings.";

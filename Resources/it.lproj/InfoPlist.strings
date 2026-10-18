@@ -1,0 +1,3 @@
+"NSCameraUsageDescription" = "Specchio Studio mostra lo schermo dell’iPhone o iPad collegato, che macOS considera una sorgente fotocamera.";
+"NSLocalNetworkUsageDescription" = "Specchio Studio riceve schermo e audio di iPhone e iPad sulla rete locale per mostrarli in una finestra del Mac.";
+"NSMicrophoneUsageDescription" = "Specchio Studio acquisisce l’audio del dispositivo selezionato per includerlo nelle registrazioni.";

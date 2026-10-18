@@ -1,62 +1,64 @@
-# Stato del progetto
+# Project status
 
-Aggiornato il **18 ottobre 2026**. Versione **1.3.1, build 7**, arm64, target macOS 14. Prima **[pre-release sperimentale gratuita v1.3.1-preview.1](https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1)**, pubblicata su scelta esplicita del titolare con le incertezze dichiarate. La pubblicazione non chiude la revisione dei diritti, i collaudi hardware o la notarizzazione.
+Updated on **18 October 2026**. Published version: **1.3.1, build 7**, arm64, macOS 14 target. The first **[free experimental pre-release v1.3.1-preview.1](https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1)** was published at the owner’s explicit choice with the uncertainties disclosed. Publication does not close the rights review, hardware validation or notarization work.
 
-## Funzionalità
+Development version: **1.4.0, build 8**, adding English and Italian app localization. English is the default, with an explicit language preference and a system-language option. Validation and publication of this development build are still in progress. Public website and first-party documentation are being standardized on English.
 
-Acquisizione USB, wireless dedicato e finestra/schermo; registrazione MOV H.264/HEVC con audio della sorgente quando disponibile; screenshot, composizione, annotazioni, OCR locale ed esportazione video H.264 con audio e taglio temporale.
+## Features
 
-Icona e immagine demo correnti sono riproducibili dal codice incluso: `scripts/generate_icon.swift` e il rendering di `Tests/StudioTests.swift`. Questo non sostituisce la revisione della provenienza dei contributi iniziali.
+USB, dedicated wireless and window/screen capture; H.264/HEVC MOV recording with source audio when available; screenshots, composition, annotations, local OCR, and H.264 video export with audio and time trimming.
 
-Sono disponibili formati Automatico, Verticale 9:16, Quadrato 1:1 e Orizzontale 16:9 condivisi da screenshot e video. I preset video esportano 1080×1920, 1080×1080 e 1920×1080 pixel. Per gli screenshot la scala di esportazione moltiplica queste dimensioni.
+The current icon and demo image are reproducible from included code: `scripts/generate_icon.swift` and the rendering in `Tests/StudioTests.swift`. This does not replace review of the initial contributions’ provenance.
 
-## Punti di ingresso
+Automatic, Portrait 9:16, Square 1:1 and Landscape 16:9 formats are shared by screenshots and videos. Video presets export at 1080×1920, 1080×1080 and 1920×1080 pixels. Screenshot export scale multiplies these dimensions.
 
-- `Sources/App.swift`: avvio e comandi dell’app.
-- `Sources/StudioView.swift`: interfaccia e flussi dello Studio.
-- `Sources/Canvas.swift`: composizione e formati di uscita.
-- `Sources/CaptureEngine.swift`: acquisizione, snapshot e registrazioni.
-- `Sources/WirelessSource.swift` e `Native/WirelessBridge.m`: ricevitore, abbinamento, decoder e ciclo di vita del flusso.
-- `Sources/ScreenSource.swift`: acquisizione tramite selettore nativo macOS.
-- `Sources/VideoExporter.swift`: esportazione dei video con composizione.
-- `scripts/generate_icon.swift`: icona geometrica riproducibile, senza immagini o font esterni.
-- `scripts/bundle_licenses.py`: testi delle licenze nel bundle.
-- `scripts/release.py`: pacchetti locali di sorgenti e binario, informazioni sui sorgenti e checksum.
+## Entry points
 
-## Verifiche
+- `Sources/App.swift`: app startup and commands.
+- `Sources/StudioView.swift`: Studio interface and workflows.
+- `Sources/Canvas.swift`: composition and output formats.
+- `Sources/CaptureEngine.swift`: capture, snapshots and recording.
+- `Sources/WirelessSource.swift` and `Native/WirelessBridge.m`: receiver, pairing, decoders and stream lifecycle.
+- `Sources/ScreenSource.swift`: capture through the native macOS picker.
+- `Sources/VideoExporter.swift`: composed video export.
+- `scripts/generate_icon.swift`: reproducible geometric icon, without external images or fonts.
+- `scripts/bundle_licenses.py`: license texts in the app bundle.
+- `scripts/release.py`: local source and binary packages, source information and checksums.
 
-`VALIDAZIONE.txt` distingue le prove attuali dai risultati storici. La suite completa della 1.3 è passata, compresi oscuramento, report, pacchetti creator e invalidazione OCR. Le verifiche precedenti della 1.2 sono conservate nel resoconto; build ottimizzata, firma e percorsi UI per privacy, report, pacchetti e taglio decimale sono verificati. Le prove USB e wireless con iPhone fisico riportate nei documenti risalgono al **17 ottobre 2026** e non sono state ripetute sulla build 7.
+## Validation
 
-Le verifiche manuali ancora aperte comprendono nuovo collaudo iPhone, iPad, sessioni prolungate, cambi di orientamento, più dispositivi e primo avvio su un altro Mac. Restano assenti controllo remoto e ascolto audio dal vivo.
+`VALIDAZIONE.txt` distinguishes current tests from historical results. The complete 1.3 suite passed, including redaction, reports, creator packs and OCR invalidation. Earlier 1.2 checks are preserved in the report; the optimized build, signature and UI paths for privacy, reports, packs and decimal trimming were verified. The documented USB and wireless tests with a physical iPhone date from **17 October 2026** and were not repeated on build 7.
 
-## Preparazione della distribuzione
+Open manual checks include renewed iPhone testing, iPad, long sessions, orientation changes, multiple devices and first launch on another Mac. Remote control and live audio monitoring remain unavailable. The bilingual development build still needs its own recorded validation results.
 
-`python3 scripts/release.py` esegue test e build e prepara in `.build/releases/1.3.1/` archivio sorgenti senza cronologia Git, ZIP dell’app, `SOURCE-INFO.txt` e checksum. L’opzione `--source-only` prepara solo i sorgenti nella sottocartella `source-only/` e non valida il programma. Nessuna delle due modalità pubblica file o cambia lo stato del repository remoto.
+## Distribution preparation
 
-La pre-release usa una firma ad hoc, senza Developer ID o notarizzazione. L’integrità della firma è verificata; la valutazione locale `spctl --assess` la rifiuta con uscita 3. Un download può quindi essere bloccato da macOS. Restano aperti i punti di `RELEASE_CHECKLIST.txt`: provenienza dei contributi e delle risorse, disponibilità del nome, revisione della dipendenza FairPlay e conformità delle licenze. L’autorizzazione alla pubblicazione sperimentale non certifica questi aspetti.
+`python3 scripts/release.py` runs tests and a build, then prepares a source archive without Git history, an app ZIP, `SOURCE-INFO.txt` and checksums under the version’s directory in `.build/releases/`. The published 1.3.1 packages are in `.build/releases/1.3.1/`. The `--source-only` option prepares only source files in the `source-only/` subdirectory and does not validate the program. Neither mode publishes files or changes the remote repository state.
 
-La pagina della pre-release distribuisce ZIP dell’app, sorgenti corrispondenti senza `.git`, `SOURCE-INFO.txt` e checksum. I pacchetti derivano dal commit `d6e0bd84f334d3064c0e5e4af163254a08611cf4`, prima degli aggiornamenti documentali che ne annunciano la pubblicazione. La nuova preparazione isolata ha ricompilato le dipendenze ed eseguito 23 gruppi di test e build ottimizzata; i 653 hash del manifest sorgenti, i checksum e l’integrità della firma ad hoc sono verificati. Queste prove non sono un nuovo collaudo fisico né una verifica dei diritti.
+The pre-release uses an ad hoc signature, without Developer ID or notarization. Signature integrity is verified; local `spctl --assess` rejects it with exit code 3. macOS may therefore block a download. Items in `RELEASE_CHECKLIST.txt` remain open: contribution and asset provenance, name availability, FairPlay dependency review and license compliance. Authorization for experimental publication does not certify these matters.
 
-`PROMO.txt` e `marketing/LAUNCH.md` contengono testi promozionali e bozze social; nessun post social è stato inviato. Il sito pubblico ora collega il download sperimentale e ne espone i limiti.
+The pre-release page distributes the app ZIP, corresponding source without `.git`, `SOURCE-INFO.txt` and checksums. Packages derive from commit `d6e0bd84f334d3064c0e5e4af163254a08611cf4`, before the documentation updates announcing publication. Fresh isolated preparation rebuilt dependencies and ran 23 test groups and an optimized build; the 653 source manifest hashes, checksums and ad hoc signature integrity were verified. These checks are neither new physical testing nor a rights review.
 
-Le chiavi di abbinamento risiedono nei dati locali dell’app. Build, registrazioni personali e dati di abbinamento devono rimanere esclusi dai sorgenti distribuiti.
+`PROMO.txt` and `marketing/LAUNCH.md` contain promotional copy and social drafts; no social posts have been sent. The public website links the experimental download and states its limitations.
 
-## Funzioni 1.3
+Pairing keys reside in the app’s local data. Builds, personal recordings and pairing data must remain excluded from distributed source.
 
-`Sources/Privacy.swift`: maschere raster, suggerimenti OCR locali, editor.
-`Sources/BugReport.swift`: report locali con allegati e OCR sanitizzato, originale opt-in.
-`Sources/CreatorExport.swift`: pacchetti immagini/video atomici con tre formati e copertina.
-`Sources/StudioTools.swift`: flussi UI, stili persistenti e proiezione delle annotazioni.
-Le maschere immagine e video sono separate; gli stili non persistono dati della sorgente.
+## 1.3 workflows
 
-## Patch 1.3.1 e upstream
+`Sources/Privacy.swift`: raster masks, local OCR suggestions and editor.
+`Sources/BugReport.swift`: local reports with attachments and sanitized OCR; original image opt-in.
+`Sources/CreatorExport.swift`: atomic image/video packs with three formats and a cover.
+`Sources/StudioTools.swift`: UI workflows, persistent styles and annotation reprojection.
+Image and video masks are separate; styles do not persist source data.
 
-Aggiornati libplist 2.8.0 e OpenSSL 3.6.5; controlli sulle dimensioni e sullo stato dell’abbinamento PIN, con regressioni AddressSanitizer e scambio autenticato sintetico completo. Il confronto dei sorgenti ufficiali è ripetibile con `scripts/verify_upstream.py`; pin e impronte sono in `ThirdParty/upstream.json`.
+## Patch 1.3.1 and upstream
 
-`UPSTREAM_AUDIT.txt` registra ambito e limiti del controllo storico. Su autorizzazione del titolare, main è stato inizialmente sostituito con un solo commit radice della versione revisionata; sono poi seguiti commit per marketing e documentazione della pre-release. Backup e materiali di analisi sono conservati privatamente fuori dal progetto. La riscrittura non elimina cache del servizio o cloni precedenti e non cambia la provenienza del codice. Il ramo OpenSSL 3.6 termina il supporto il 1° novembre 2026, quindi va pianificata una migrazione. La pubblicazione sperimentale successiva non modifica l’ambito o i limiti dell’audit precedente.
+Updated to libplist 2.8.0 and OpenSSL 3.6.5; PIN pairing size/state checks added, with AddressSanitizer regressions and a complete synthetic authenticated exchange. Comparison with official source is repeatable through `scripts/verify_upstream.py`; pins and hashes are in `ThirdParty/upstream.json`.
 
-## Presentazione pubblica
+`UPSTREAM_AUDIT.txt` records the historical review’s scope and limits. With the owner’s authorization, main was initially replaced by a single root commit of the reviewed version; marketing and pre-release documentation commits followed. Backups and analysis materials are kept privately outside the project. History rewriting does not remove service caches or previous clones and does not change code provenance. The OpenSSL 3.6 branch reaches end of support on 1 November 2026, so migration needs planning. Subsequent experimental publication does not change the scope or limits of the earlier audit.
 
-Landing bilingue: https://eliagentili.github.io/specchio-studio-site/ (italiano in `/it/`). Il repository pubblico `eliagentili/specchio-studio-site` contiene soltanto sito, immagini originali e licenza del sito, con una cronologia autonoma. Il repository dell’app `eliagentili/specchio-studio` è pubblico e ospita la pre-release sperimentale, i sorgenti e le note sulle verifiche ancora aperte.
+## Public presentation
 
-`docs/` è la sorgente statica del sito; `scripts/build_site.py` rigenera le pagine EN/IT, `scripts/check_site.py` verifica collegamenti, metadati e integrità degli asset, `scripts/package_site.py` prepara una cartella isolata tramite elenco esplicito dei file ammessi. `marketing/SITE.md` descrive la manutenzione; `marketing/LAUNCH.md` raccoglie posizionamento, storyboard e bozze LinkedIn.
+English landing page: [Specchio Studio](https://eliagentili.github.io/specchio-studio-site/). Former `/it/` links are retained for compatibility and lead to English content. The public `eliagentili/specchio-studio-site` repository contains only the website, original images and website license, with independent history. The `eliagentili/specchio-studio` app repository is public and hosts the experimental pre-release, source and notes on open validation work.
+
+`docs/` contains the static website source; `scripts/build_site.py` regenerates English pages, `scripts/check_site.py` checks links, metadata and asset integrity, and `scripts/package_site.py` prepares an isolated directory through an explicit file allowlist. `marketing/SITE.md` describes maintenance; `marketing/LAUNCH.md` contains positioning, storyboards and LinkedIn drafts.

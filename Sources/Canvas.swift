@@ -29,6 +29,7 @@ enum CompositionFormat: String, CaseIterable, Identifiable {
 }
 
 struct StudioCanvas: View {
+    @ObservedObject private var localization = AppLocalization.shared
     var image: NSImage?
     var demo: Bool
     var backdrop: Backdrop
@@ -110,10 +111,10 @@ struct DemoScreen: View {
                 HStack { Text("9:41").fontWeight(.semibold); Spacer(); Image(systemName:"wifi"); Image(systemName:"battery.100percent") }.font(.system(size:12)).padding(.top,16)
                 Spacer(minLength:8)
                 Text("MAKE\nROOM.").font(.system(size:max(24,geo.size.width*0.15),weight:.bold,design:.rounded)).tracking(-1).fixedSize(horizontal:false,vertical:true)
-                Text("Le tue idee meritano\nuno schermo più grande.").font(.system(size:max(10,geo.size.width*0.048))).lineSpacing(5).foregroundStyle(.white.opacity(0.7))
+                Text("Your ideas deserve\na bigger screen.").font(.system(size:max(10,geo.size.width*0.048))).lineSpacing(5).foregroundStyle(.white.opacity(0.7))
                 ZStack { Circle().fill(LinearGradient(colors:[.mint,.cyan.opacity(0.1)],startPoint:.topLeading,endPoint:.bottomTrailing)); Image(systemName:"sparkle").font(.system(size:geo.size.width*0.2,weight:.ultraLight)).foregroundStyle(.white) }.frame(height:geo.size.height*0.28)
                 HStack { Text("SPECCHIO").font(.system(size:11,weight:.bold,design:.monospaced)).tracking(2); Spacer(); Image(systemName:"arrow.up.right") }
-                Text("DEMO · NESSUN DISPOSITIVO").font(.system(size:8,design:.monospaced)).foregroundStyle(.white.opacity(0.5))
+                Text("DEMO · NO DEVICE CONNECTED").font(.system(size:8,design:.monospaced)).foregroundStyle(.white.opacity(0.5))
                 Spacer(minLength:12)
                 Capsule().fill(.white).frame(width:70,height:4).frame(maxWidth:.infinity).padding(.bottom,8)
             }.padding(.horizontal,22).foregroundStyle(.white).background(LinearGradient(colors:[Color(red:0.08,green:0.18,blue:0.21),Color(red:0.04,green:0.075,blue:0.11)],startPoint:.topLeading,endPoint:.bottomTrailing))

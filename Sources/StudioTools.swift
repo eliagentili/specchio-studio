@@ -105,7 +105,7 @@ enum CanvasAnnotations {
     }
 
     func editPrivacy() {
-        guard let source = sourceSnapshot() else { tell("Apri un’immagine o collega una sorgente"); return }
+        guard let source = sourceSnapshot() else { tell(L("Apri un’immagine o collega una sorgente")); return }
         invalidateOCR()
         frozen = source; imported = nil; demo = false; annotationMode = false
         privacyContext = StudioImageContext(image:source)
@@ -113,14 +113,14 @@ enum CanvasAnnotations {
 
     func prepareBugReport() {
         guard let original = sourceSnapshot(), let annotated = compositionSnapshot(source:original) else {
-            tell("Serve un fotogramma per creare una segnalazione"); return
+            tell(L("Serve un fotogramma per creare una segnalazione")); return
         }
         bugReportContext = StudioBugReportContext(original:original,annotated:annotated,masks:privacyMasks)
     }
 
     func saveStyle() {
         let name = String(styleName.trimmingCharacters(in:.whitespacesAndNewlines).prefix(60))
-        guard !name.isEmpty else { tell("Dai un nome allo stile"); return }
+        guard !name.isEmpty else { tell(L("Dai un nome allo stile")); return }
         var style = StudioStyle(name:name,backdrop:backdrop.rawValue,showFrame:showFrame,rotation:rotation,
             flipped:flipped,zoom:zoom,format:compositionFormat.rawValue,exportScale:exportScale)
         if let existing = savedStyles.first(where:{ $0.name.caseInsensitiveCompare(name) == .orderedSame }) {
@@ -131,8 +131,8 @@ enum CanvasAnnotations {
         do {
             try StudioStyleStore.save(updated)
             savedStyles = Array(updated.prefix(20)); selectedStyleID = style.id
-            tell("Stile salvato sul Mac")
-        } catch { tell("Stile: \(error.localizedDescription)") }
+            tell(L("Stile salvato sul Mac"))
+        } catch { tell(LF("Stile: %@", error.localizedDescription)) }
     }
 
     func applySelectedStyle() {
@@ -154,9 +154,9 @@ enum CanvasAnnotations {
 
     private func creatorDirectory() -> URL? {
         let panel = NSOpenPanel()
-        panel.title = "Dove salvare il pacchetto creator?"
-        panel.message = "Verrà creata una nuova cartella con tre formati, copertina e riepilogo."
-        panel.prompt = "Crea pacchetto"; panel.canChooseDirectories = true; panel.canChooseFiles = false
+        panel.title = L("Dove salvare il pacchetto creator?")
+        panel.message = L("Verrà creata una nuova cartella con tre formati, copertina e riepilogo.")
+        panel.prompt = L("Crea pacchetto"); panel.canChooseDirectories = true; panel.canChooseFiles = false
         panel.allowsMultipleSelection = false; panel.canCreateDirectories = true
         return panel.runModal() == .OK ? panel.url : nil
     }
@@ -172,9 +172,9 @@ enum CanvasAnnotations {
                 let url = try await creatorExporter.exportImages(image:source,directory:directory,backdrop:bg,
                     showFrame:frame,quarterTurns:turns,flipped:flip,zoom:currentZoom,marks:currentMarks,
                     privacyMasks:masks,coverTitle:title,annotationCanvasSize:annotationSize)
-                addRecent(url); tell("Pacchetto immagini creato")
-            } catch is CancellationError { tell("Pacchetto annullato") }
-            catch { tell("Pacchetto: \(error.localizedDescription)") }
+                addRecent(url); tell(L("Pacchetto immagini creato"))
+            } catch is CancellationError { tell(L("Pacchetto annullato")) }
+            catch { tell(LF("Pacchetto: %@", error.localizedDescription)) }
         }
     }
 
@@ -188,50 +188,51 @@ enum CanvasAnnotations {
                 let url = try await creatorExporter.exportVideo(source:source,directory:directory,backdrop:bg,
                     showFrame:frame,quarterTurns:turns,flipped:flip,trimStart:start,trimEnd:end == 0 ? nil : end,
                     privacyMasks:masks,coverTitle:title)
-                addRecent(url); showVideoExport = false; tell("Pacchetto video creato")
-            } catch is CancellationError { tell("Pacchetto annullato") }
-            catch { tell("Pacchetto: \(error.localizedDescription)") }
+                addRecent(url); showVideoExport = false; tell(L("Pacchetto video creato"))
+            } catch is CancellationError { tell(L("Pacchetto annullato")) }
+            catch { tell(LF("Pacchetto: %@", error.localizedDescription)) }
         }
     }
 }
 
 struct StudioToolsPanel: View {
+    @ObservedObject private var localization = AppLocalization.shared
     @ObservedObject var model: StudioModel
     var body: some View {
         VStack(alignment:.leading,spacing:12) {
-            Text("PRIVACY & SEGNALAZIONI").font(.system(size:9,weight:.semibold,design:.monospaced)).foregroundStyle(.secondary)
-            Button { model.editPrivacy() } label: { Label("Oscura dati",systemImage:"rectangle.dashed") }
+            Text(L("PRIVACY & SEGNALAZIONI")).font(.system(size:9,weight:.semibold,design:.monospaced)).foregroundStyle(.secondary)
+            Button { model.editPrivacy() } label: { Label(L("Oscura dati"),systemImage:"rectangle.dashed") }
                 .disabled(!model.hasImageContent)
             if !model.privacyMasks.isEmpty {
-                Text(model.privacyMasks.count == 1 ? "1 area oscurata negli screenshot e nel testo OCR" : "\(model.privacyMasks.count) aree oscurate negli screenshot e nel testo OCR").font(.system(size:10)).foregroundStyle(.secondary)
-                Button("Rimuovi maschere") { model.privacyMasks = [] }
+                Text(model.privacyMasks.count == 1 ? L("1 area oscurata negli screenshot e nel testo OCR") : LF("%d aree oscurate negli screenshot e nel testo OCR", model.privacyMasks.count)).font(.system(size:10)).foregroundStyle(.secondary)
+                Button(L("Rimuovi maschere")) { model.privacyMasks = [] }
             }
-            Button { model.prepareBugReport() } label: { Label("Crea segnalazione bug",systemImage:"ladybug") }
+            Button { model.prepareBugReport() } label: { Label(L("Crea segnalazione bug"),systemImage:"ladybug") }
                 .disabled(!model.hasImageContent)
-            Text("Il report include descrizione, immagini e testo. L’originale non oscurato è escluso salvo tua scelta.")
+            Text(L("Il report include descrizione, immagini e testo. L’originale non oscurato è escluso salvo tua scelta."))
                 .font(.system(size:10)).foregroundStyle(.secondary).fixedSize(horizontal:false,vertical:true)
             Divider()
-            Text("PACCHETTO CREATOR").font(.system(size:9,weight:.semibold,design:.monospaced)).foregroundStyle(.secondary)
-            TextField("Titolo copertina (facoltativo)",text:$model.creatorTitle)
-            Button { model.exportCreatorImages() } label: { Label("Esporta 3 formati + copertina",systemImage:"square.stack.3d.up") }
+            Text(L("PACCHETTO CREATOR")).font(.system(size:9,weight:.semibold,design:.monospaced)).foregroundStyle(.secondary)
+            TextField(L("Titolo copertina (facoltativo)"),text:$model.creatorTitle)
+            Button { model.exportCreatorImages() } label: { Label(L("Esporta 3 formati + copertina"),systemImage:"square.stack.3d.up") }
                 .disabled(!model.hasImageContent || model.creatorExporter.isExporting || model.exporter.isExporting)
-            Text("Per i video usa Pacchetto creator nel pannello Incornicia video.").font(.system(size:10)).foregroundStyle(.secondary)
+            Text(L("Per i video usa Pacchetto creator nel pannello Incornicia video.")).font(.system(size:10)).foregroundStyle(.secondary)
             if model.creatorExporter.isExporting {
                 ProgressView(value:model.creatorExporter.progress)
-                Button("Annulla pacchetto") { model.creatorExporter.cancel() }
+                Button(L("Annulla pacchetto")) { model.creatorExporter.cancel() }
             }
             Divider()
-            Text("IL TUO STILE").font(.system(size:9,weight:.semibold,design:.monospaced)).foregroundStyle(.secondary)
-            TextField("Nome stile",text:$model.styleName)
-            Button("Salva stile attuale") { model.saveStyle() }
+            Text(L("IL TUO STILE")).font(.system(size:9,weight:.semibold,design:.monospaced)).foregroundStyle(.secondary)
+            TextField(L("Nome stile"),text:$model.styleName)
+            Button(L("Salva stile attuale")) { model.saveStyle() }
             if !model.savedStyles.isEmpty {
-                Picker("Stile",selection:$model.selectedStyleID) {
-                    Text("Scegli…").tag(UUID?.none)
+                Picker(L("Stile"),selection:$model.selectedStyleID) {
+                    Text(L("Scegli…")).tag(UUID?.none)
                     ForEach(model.savedStyles) { Text($0.name).tag(Optional($0.id)) }
                 }.onChange(of:model.selectedStyleID) { _, _ in model.applySelectedStyle() }
-                Button("Elimina stile selezionato") { model.deleteSelectedStyle() }.disabled(model.selectedStyleID == nil)
+                Button(L("Elimina stile selezionato")) { model.deleteSelectedStyle() }.disabled(model.selectedStyleID == nil)
             }
-            Text("Lo stile salva solo l’aspetto, senza immagini, dati OCR o maschere.").font(.system(size:10)).foregroundStyle(.secondary)
+            Text(L("Lo stile salva solo l’aspetto, senza immagini, dati OCR o maschere.")).font(.system(size:10)).foregroundStyle(.secondary)
         }
     }
 }

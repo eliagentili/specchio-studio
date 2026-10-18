@@ -9,7 +9,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parent.parent
 TOP = {'.nojekyll', '404.html', 'LICENSE', 'index.html', 'privacy.html', 'site.js', 'sitemap.xml', 'styles.css'}
-ASSETS = {'app-icon.png', 'demo-preview.webp', 'favicon.svg', 'format-landscape.png', 'format-portrait.png', 'format-square.png', 'formats-proof.png', 'formats-proof.webp', 'github-banner.png', 'provenance.json', 'social-card-it.png', 'social-card.png'}
+ASSETS = {'app-icon.png', 'demo-preview.webp', 'favicon.svg', 'format-landscape.png', 'format-portrait.png', 'format-square.png', 'formats-proof.png', 'formats-proof.webp', 'github-banner.png', 'provenance.json', 'social-card.png'}
 FILES = TOP | {'it/index.html','it/privacy.html'} | {'assets/'+n for n in ASSETS}
 
 def main():

@@ -8,9 +8,9 @@
     },
     {
       "alt" : "Actual Specchio Studio demo composition: a framed display with MAKE ROOM artwork on the Aurora background. No physical device is connected.",
-      "bytes" : 19786,
+      "bytes" : 19492,
       "file" : "demo-preview.webp",
-      "sha256" : "c48d7951dee63aff192e5c2549a8c872c970e3443493d56319d5bd89314a9e38"
+      "sha256" : "de64c05fa2f395299ffd0cf384d90a96b46c9adf2205e730be8768f80f241d06"
     },
     {
       "alt" : "Simplified original Specchio Studio mirror icon.",
@@ -20,51 +20,45 @@
     },
     {
       "alt" : "Actual landscape 16:9 demo composition rendered by StudioCanvas.",
-      "bytes" : 624502,
+      "bytes" : 623928,
       "file" : "format-landscape.png",
-      "sha256" : "c8d05895e92d3a1b3f63ca437ea240268298d28445a063f33446f8dc675f3a32"
+      "sha256" : "145de1121751be030ce2b6bc441a9650b1ef5fca069e9117c779d54a9d80c967"
     },
     {
       "alt" : "Actual portrait 9:16 demo composition rendered by StudioCanvas.",
-      "bytes" : 627103,
+      "bytes" : 626362,
       "file" : "format-portrait.png",
-      "sha256" : "b7671dc5182359943866f91b21336e841a4083da28b481b286956bc8887b5561"
+      "sha256" : "bd94227aea74143b8ccb5a62acfa7dfe82a10234a82b9a9cb62d1dfeacee4ddc"
     },
     {
       "alt" : "Actual square 1:1 demo composition rendered by StudioCanvas.",
-      "bytes" : 358950,
+      "bytes" : 356503,
       "file" : "format-square.png",
-      "sha256" : "7ad9724d5f04ef7c5e18ff2c1d7ec94d2b62a930c77a228278b7dd643814ff88"
+      "sha256" : "28bf29c3149495f9c42c9dff480b4aa6b40d43e3c90cdc343b111c4c8bc91f21"
     },
     {
       "alt" : "The actual generated demo composition rendered by StudioCanvas in portrait 9:16, square 1:1 and landscape 16:9 formats.",
-      "bytes" : 561760,
+      "bytes" : 559646,
       "file" : "formats-proof.png",
-      "sha256" : "661dfa70554d7bc4d72e51077be7ed84dcb7f2f0914b496a9ed77db45f999856"
+      "sha256" : "b5a5d49aa6f5ecaa5af41cdd771090a27ff6ec1d11dca37126cbc425338267db"
     },
     {
       "alt" : "The actual generated demo composition rendered by StudioCanvas in portrait 9:16, square 1:1 and landscape 16:9 formats.",
-      "bytes" : 27634,
+      "bytes" : 27302,
       "file" : "formats-proof.webp",
-      "sha256" : "6736b7bda56ce1ad8fd38d0b41de9fd1bf8b189d560bfab5a63659776fad191a"
+      "sha256" : "714dd4285ab8cf693abcfb4038b54c404d2729869c38a5660a7f76556df0c3b5"
     },
     {
       "alt" : "Specchio Studio by Elia Gentili. A local macOS workflow for demos, explanations and bug reports, with an actual demo composition.",
-      "bytes" : 334828,
+      "bytes" : 334017,
       "file" : "github-banner.png",
-      "sha256" : "0c2c237cbc03c1c9830d218d8dbff61e4700d2c3f1261af6aac2d3b581018bb8"
-    },
-    {
-      "alt" : "Specchio Studio: Il tuo dispositivo. Pronto da condividere. Creato da Elia Gentili, accanto alla composizione demo reale.",
-      "bytes" : 332353,
-      "file" : "social-card-it.png",
-      "sha256" : "2d3517ea5c0606c731b64d80d41ff7739fdd66ed340a03dff77719fb0fe9b35b"
+      "sha256" : "be435b8626555ddaa14e21bac1f50e2086189f2651bd3b011ae3df60a1b0b9e2"
     },
     {
       "alt" : "Specchio Studio: Your device. Ready to share. Created by Elia Gentili, beside the actual generated demo composition.",
-      "bytes" : 334828,
+      "bytes" : 334017,
       "file" : "social-card.png",
-      "sha256" : "0c2c237cbc03c1c9830d218d8dbff61e4700d2c3f1261af6aac2d3b581018bb8"
+      "sha256" : "be435b8626555ddaa14e21bac1f50e2086189f2651bd3b011ae3df60a1b0b9e2"
     }
   ],
   "creator" : "Elia Gentili",

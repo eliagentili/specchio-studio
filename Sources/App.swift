@@ -6,22 +6,32 @@ import AppKit
 @main
 struct SpecchioStudioApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject private var localization = AppLocalization.shared
     var body: some Scene {
         WindowGroup("Specchio Studio") {
             StudioView().frame(minWidth: 1050, minHeight: 720)
                 .preferredColorScheme(.dark)
+                .environment(\.locale, localization.locale)
         }
         .defaultSize(width: 1280, height: 840)
         .commands {
+            CommandMenu(L("Lingua")) {
+                Picker(L("Lingua dell’app"), selection: $localization.preference) {
+                    ForEach(AppLanguage.allCases) { language in Text(language.label).tag(language) }
+                }
+                Divider()
+                Text(L("Riavvia l’app per applicare la lingua")).font(.caption)
+            }
             CommandGroup(replacing: .help) {
-                Button("Guida di Specchio Studio") { NotificationCenter.default.post(name: .showStudioGuide, object: nil) }
-                Button("Licenze open source") {
+                Button(L("Guida di Specchio Studio")) { NotificationCenter.default.post(name: .showStudioGuide, object: nil) }
+                Button(L("Licenze open source")) {
                     if let notice = Bundle.main.url(forResource: "NOTICE", withExtension: "txt", subdirectory: "Licenses") {
                         NSWorkspace.shared.open(notice)
                     }
                 }
             }
         }
+        Settings { LanguageSettingsView() }
     }
 }
 #endif

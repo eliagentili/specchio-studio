@@ -2,6 +2,7 @@ import SwiftUI
 import AVKit
 
 struct VideoExportSheet: View {
+    @ObservedObject private var localization = AppLocalization.shared
     @ObservedObject var model: StudioModel
     @ObservedObject var exporter: VideoExporter
     @ObservedObject var creatorExporter: CreatorExport
@@ -18,63 +19,63 @@ struct VideoExportSheet: View {
     }
     private var formatDescription: String {
         if let size = model.compositionFormat.exportSize {
-            return "\(Int(size.width)) × \(Int(size.height)) px, senza tagliare il video originale."
+            return LF("%d × %d px, senza tagliare il video originale.", Int(size.width), Int(size.height))
         }
-        return "Formato ricavato dal video originale, con spazio per cornice e sfondo."
+        return L("Formato ricavato dal video originale, con spazio per cornice e sfondo.")
     }
     var body: some View {
         ScrollView {
         VStack(alignment:.leading,spacing:16) {
-            HStack { VStack(alignment:.leading,spacing:7) { Text("Un video, pronto da presentare.").font(.system(size:23,weight:.semibold)); Text(model.videoSource?.lastPathComponent ?? "Video").font(.system(size:12)).foregroundStyle(.secondary).lineLimit(1) }; Spacer() }
+            HStack { VStack(alignment:.leading,spacing:7) { Text(L("Un video, pronto da presentare.")).font(.system(size:23,weight:.semibold)); Text(model.videoSource?.lastPathComponent ?? L("Video")).font(.system(size:12)).foregroundStyle(.secondary).lineLimit(1) }; Spacer() }
             Group {
                 if !model.videoPrivacyMasks.isEmpty {
                     if let image = privacyFrame, let safeImage = PrivacyRenderer.redactedImage(image, masks: model.videoPrivacyMasks) {
                         Image(nsImage: safeImage).resizable().aspectRatio(contentMode: .fit).frame(maxWidth: .infinity)
-                    } else { Text("Anteprima privacy non disponibile").foregroundStyle(.secondary).frame(maxWidth: .infinity) }
+                    } else { Text(L("Anteprima privacy non disponibile")).foregroundStyle(.secondary).frame(maxWidth: .infinity) }
                 } else { NativeVideoPreview(player:player) }
             }.frame(height:170).clipShape(RoundedRectangle(cornerRadius:12))
-            Text(model.videoPrivacyMasks.isEmpty ? "Anteprima del file originale. La composizione viene applicata all’esportazione." : "Primo fotogramma sorgente con privacy; rotazione, cornice e sfondo vengono applicati all’esportazione.").font(.system(size:10)).foregroundStyle(.secondary)
+            Text(model.videoPrivacyMasks.isEmpty ? L("Anteprima del file originale. La composizione viene applicata all’esportazione.") : L("Primo fotogramma sorgente con privacy; rotazione, cornice e sfondo vengono applicati all’esportazione.")).font(.system(size:10)).foregroundStyle(.secondary)
             HStack {
-                Button(model.videoPrivacyMasks.isEmpty ? "Oscura dati sensibili…" : "Modifica \(model.videoPrivacyMasks.count) maschere…") {
+                Button(model.videoPrivacyMasks.isEmpty ? L("Oscura dati sensibili…") : LF("Modifica %d maschere…", model.videoPrivacyMasks.count)) {
                     player.pause(); showPrivacyEditor = true
                 }.disabled(exporting || loadingFrame || privacyFrame == nil)
                 if loadingFrame { ProgressView().controlSize(.small) }
                 if !model.videoPrivacyMasks.isEmpty {
-                    Button("Rimuovi maschere") { model.videoPrivacyMasks = [] }.disabled(exporting)
+                    Button(L("Rimuovi maschere")) { model.videoPrivacyMasks = [] }.disabled(exporting)
                 }
             }.font(.system(size:11))
-            if let frameError { Text(frameError).font(.system(size:11)).foregroundStyle(.orange) }
+            if let frameError { Text(L(frameError)).font(.system(size:11)).foregroundStyle(.orange) }
             if !model.videoPrivacyMasks.isEmpty {
-                Text("Le maschere sono aree fisse per tutto il taglio, non seguono il contenuto. Controlla tutti i fotogrammi prima di condividere.").font(.system(size:11)).foregroundStyle(.secondary)
+                Text(L("Le maschere sono aree fisse per tutto il taglio, non seguono il contenuto. Controlla tutti i fotogrammi prima di condividere.")).font(.system(size:11)).foregroundStyle(.secondary)
             }
-            Picker("Formato di uscita",selection:$model.compositionFormat) {
-                ForEach(CompositionFormat.allCases) { Text($0.rawValue).tag($0) }
+            Picker(L("Formato di uscita"),selection:$model.compositionFormat) {
+                ForEach(CompositionFormat.allCases) { Text(L($0.rawValue)).tag($0) }
             }.disabled(exporting)
             Text(formatDescription).font(.system(size:11)).foregroundStyle(.secondary)
             HStack(alignment:.top,spacing:25) {
                 VStack(alignment:.leading,spacing:14) {
-                    Picker("Sfondo",selection:$model.backdrop) { ForEach(Backdrop.allCases) { Text($0.rawValue).tag($0) } }
-                    Toggle("Cornice dispositivo",isOn:$model.showFrame)
-                    Toggle("Specchia orizzontalmente",isOn:$model.flipped)
+                    Picker(L("Sfondo"),selection:$model.backdrop) { ForEach(Backdrop.allCases) { Text(L($0.rawValue)).tag($0) } }
+                    Toggle(L("Cornice dispositivo"),isOn:$model.showFrame)
+                    Toggle(L("Specchia orizzontalmente"),isOn:$model.flipped)
                 }
                 VStack(alignment:.leading,spacing:14) {
-                    Picker("Rotazione",selection:$model.rotation) { Text("0°").tag(0); Text("90°").tag(1); Text("180°").tag(2); Text("270°").tag(3) }
-                    HStack { Text("Inizio (s)"); VideoSecondsField(title:"Inizio in secondi",value:$model.trimStart).frame(width:80) }
-                    HStack { Text("Fine (s)"); VideoSecondsField(title:"Fine in secondi",value:$model.trimEnd).frame(width:80) }
+                    Picker(L("Rotazione"),selection:$model.rotation) { Text("0°").tag(0); Text("90°").tag(1); Text("180°").tag(2); Text("270°").tag(3) }
+                    HStack { Text(L("Inizio (s)")); VideoSecondsField(title:L("Inizio in secondi"),value:$model.trimStart).frame(width:80) }
+                    HStack { Text(L("Fine (s)")); VideoSecondsField(title:L("Fine in secondi"),value:$model.trimEnd).frame(width:80) }
                 }
             }.font(.system(size:12)).disabled(exporting)
-            HStack { Text("Titolo copertina"); TextField("Facoltativo, per il pacchetto creator",text:$model.creatorTitle) }.font(.system(size:12)).disabled(exporting)
-            Text("MOV H.264, massimo 1920 px per lato, audio originale. Fine = 0 esporta fino al termine. Lo sfondo Trasparente viene reso nero nei video; le annotazioni sono disponibili per gli screenshot.").font(.system(size:11)).foregroundStyle(.secondary).lineSpacing(4)
-            if !validTrim { Text("Usa tempi positivi, con Fine maggiore di Inizio oppure uguale a 0.").font(.system(size:11)).foregroundStyle(.orange) }
-            if exporter.isExporting { ProgressView(value:Double(exporter.progress)); Text("Esportazione \(Int(Double(exporter.progress)*100))%").font(.system(size:11,design:.monospaced)) }
-            if creatorExporter.isExporting { ProgressView(value:creatorExporter.progress); Text("Pacchetto creator \(Int(creatorExporter.progress*100))% · tre formati e copertina").font(.system(size:11,design:.monospaced)) }
-            if let error = exporter.errorMessage { Text(error).font(.system(size:11)).foregroundStyle(.orange).textSelection(.enabled) }
-            if let error = creatorExporter.errorMessage { Text(error).font(.system(size:11)).foregroundStyle(.orange).textSelection(.enabled) }
+            HStack { Text(L("Titolo copertina")); TextField(L("Facoltativo, per il pacchetto creator"),text:$model.creatorTitle) }.font(.system(size:12)).disabled(exporting)
+            Text(L("MOV H.264, massimo 1920 px per lato, audio originale. Fine = 0 esporta fino al termine. Lo sfondo Trasparente viene reso nero nei video; le annotazioni sono disponibili per gli screenshot.")).font(.system(size:11)).foregroundStyle(.secondary).lineSpacing(4)
+            if !validTrim { Text(L("Usa tempi positivi, con Fine maggiore di Inizio oppure uguale a 0.")).font(.system(size:11)).foregroundStyle(.orange) }
+            if exporter.isExporting { ProgressView(value:Double(exporter.progress)); Text(LF("Esportazione %d%%", Int(Double(exporter.progress)*100))).font(.system(size:11,design:.monospaced)) }
+            if creatorExporter.isExporting { ProgressView(value:creatorExporter.progress); Text(LF("Pacchetto creator %d%% · tre formati e copertina", Int(creatorExporter.progress*100))).font(.system(size:11,design:.monospaced)) }
+            if let error = exporter.errorMessage { Text(L(error)).font(.system(size:11)).foregroundStyle(.orange).textSelection(.enabled) }
+            if let error = creatorExporter.errorMessage { Text(L(error)).font(.system(size:11)).foregroundStyle(.orange).textSelection(.enabled) }
             HStack {
-                Button(exporting ? "Annulla esportazione" : "Chiudi") { if exporting { exporter.cancel(); creatorExporter.cancel() } else { model.showVideoExport = false } }
+                Button(exporting ? L("Annulla esportazione") : L("Chiudi")) { if exporting { exporter.cancel(); creatorExporter.cancel() } else { model.showVideoExport = false } }
                 Spacer()
-                Button("Pacchetto creator") { player.pause(); model.exportCreatorVideo() }.disabled(exporting || !validTrim)
-                Button("Esporta video") { player.pause(); model.exportVideo() }.buttonStyle(.borderedProminent).disabled(exporting || !validTrim)
+                Button(L("Pacchetto creator")) { player.pause(); model.exportCreatorVideo() }.disabled(exporting || !validTrim)
+                Button(L("Esporta video")) { player.pause(); model.exportVideo() }.buttonStyle(.borderedProminent).disabled(exporting || !validTrim)
             }
         }.padding(28)
         }.frame(width:620).frame(maxHeight:min(820,max(520,(NSScreen.main?.visibleFrame.height ?? 940)-120))).preferredColorScheme(.dark)
@@ -104,7 +105,7 @@ struct VideoExportSheet: View {
             guard !Task.isCancelled, model.videoSource == source else { return }
             privacyFrame = NSImage(cgImage: frame, size: CGSize(width: frame.width, height: frame.height))
         } catch {
-            if !Task.isCancelled { frameError = "Anteprima privacy non disponibile: \(error.localizedDescription)" }
+            if !Task.isCancelled { frameError = LF("Anteprima privacy non disponibile: %@", error.localizedDescription) }
         }
     }
 }
@@ -120,6 +121,7 @@ enum VideoTrimTime {
 /// Keep the editing buffer intact while a decimal separator is being entered.
 /// Invalid text disables export rather than silently reverting to the full clip.
 struct VideoSecondsField: View {
+    @ObservedObject private var localization = AppLocalization.shared
     let title: String
     @Binding var value: Double
     @StoredState private var text: String

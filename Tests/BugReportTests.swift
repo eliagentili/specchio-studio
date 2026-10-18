@@ -65,7 +65,7 @@ enum BugReportTests {
         let optedInOCR = try String(contentsOf: optedIn.appendingPathComponent("OCR.txt"), encoding: .utf8).lowercased()
         guard !optedInOCR.contains("example.com") else { fatalError("Opt-in original changed the safe OCR source") }
         let optedInMarkdown = try String(contentsOf: optedIn.appendingPathComponent("report.md"), encoding: .utf8)
-        guard optedInMarkdown.contains("senza maschere privacy per scelta esplicita") else {
+        guard optedInMarkdown.contains("without privacy masks by explicit choice") else {
             fatalError("Opt-in report lacks the unredacted original disclosure")
         }
         print("PASS: explicit original opt-in preserves image and keeps OCR redacted")

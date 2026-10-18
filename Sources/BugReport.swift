@@ -21,10 +21,10 @@ enum BugReportError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .missingTitle: return "Aggiungi un titolo alla segnalazione."
-        case .unreadableImage: return "Impossibile preparare le immagini della segnalazione."
-        case .destinationIsNotDirectory: return "Scegli una cartella di destinazione valida."
-        case .textRecognitionFailed: return "Impossibile leggere il testo dell’immagine. La segnalazione non è stata esportata."
+        case .missingTitle: return L("Aggiungi un titolo alla segnalazione.")
+        case .unreadableImage: return L("Impossibile preparare le immagini della segnalazione.")
+        case .destinationIsNotDirectory: return L("Scegli una cartella di destinazione valida.")
+        case .textRecognitionFailed: return L("Impossibile leggere il testo dell’immagine. La segnalazione non è stata esportata.")
         }
     }
 }
@@ -102,7 +102,7 @@ enum BugReportExporter {
         return destination
     }
 
-    private static let privacyReview = "Controlla immagini, testo OCR e descrizione prima di condividere. Le maschere coprono solo le aree selezionate e non rilevano automaticamente tutti i dati sensibili."
+    private static let privacyReview = "Review images, OCR text, and the description before sharing. Masks cover only selected areas and do not automatically detect all sensitive data."
 
     private struct Manifest: Encodable {
         let schemaVersion: Int
@@ -141,7 +141,7 @@ enum BugReportExporter {
         }
         let words = String(safe).split(separator: "-").joined(separator: "-")
         let short = String(words.prefix(60)).trimmingCharacters(in: CharacterSet(charactersIn: "-"))
-        return short.isEmpty ? "segnalazione" : short
+        return short.isEmpty ? "report" : short
     }
 
     private static func pngData(_ image: NSImage) throws -> Data {
@@ -165,51 +165,52 @@ enum BugReportExporter {
     private static func markdown(draft: BugReportDraft, createdAt: String, maskCount: Int) -> String {
         let title = draft.title.components(separatedBy: .newlines).joined(separator: " ")
         let originalNotice = draft.includeOriginal
-            ? "ATTENZIONE: [original.png](original.png) è incluso senza maschere privacy per scelta esplicita. Può contenere dati sensibili."
-            : "Il file separato original.png non è incluso. Screenshot e composizione contengono solo le maschere selezionate: con zero maschere i dati rimangono visibili."
+            ? "WARNING: [original.png](original.png) is included without privacy masks by explicit choice. It may contain sensitive data."
+            : "The separate original.png file is not included. Screenshots and compositions contain only the selected masks: with no masks, data remains visible."
         return """
         # \(markdownText(title))
 
-        Creato con Specchio Studio · \(createdAt)
+        Created with Specchio Studio · \(createdAt)
 
-        ## Riproduzione
+        ## Steps to reproduce
 
         \(markdownText(draft.steps))
 
-        ## Risultato atteso
+        ## Expected result
 
         \(markdownText(draft.expected))
 
-        ## Risultato osservato
+        ## Actual result
 
         \(markdownText(draft.actual))
 
-        ## Contesto inserito dall’autore
+        ## Context supplied by the author
 
-        - Versione dell’app: \(markdownText(draft.appVersion))
-        - Dispositivo / ambiente: \(markdownText(draft.deviceLabel))
+        - App version: \(markdownText(draft.appVersion))
+        - Device / environment: \(markdownText(draft.deviceLabel))
 
-        ## Allegati
+        ## Attachments
 
-        - [Screenshot con maschere privacy applicate](screenshot.png)
-        - [Composizione annotata](annotated.png)
-        - [Testo OCR dello screenshot con maschere applicate](OCR.txt)
-        - [Dati strutturati della segnalazione](report.json)
+        - [Screenshot with privacy masks applied](screenshot.png)
+        - [Annotated composition](annotated.png)
+        - [OCR text from the masked screenshot](OCR.txt)
+        - [Structured report data](report.json)
 
-        ## Verifica prima della condivisione
+        ## Review before sharing
 
         \(privacyReview)
 
-        Maschere selezionate: \(maskCount). L’OCR è stato calcolato esclusivamente da screenshot.png, dopo l’applicazione delle maschere.
+        Selected masks: \(maskCount). OCR was generated exclusively from screenshot.png, after masks were applied.
 
         \(originalNotice)
 
-        Il contesto è stato inserito manualmente. Il pacchetto non raccoglie automaticamente identificativi del dispositivo, nomi host o percorsi dei file sorgenti. Nessun file è stato inviato a servizi esterni.
+        Context was entered manually. The bundle does not automatically collect device identifiers, host names, or source file paths. No files were sent to external services.
         """ + "\n"
     }
 }
 
 struct BugReportSheet: View {
+    @ObservedObject private var localization = AppLocalization.shared
     let original: NSImage
     let annotated: NSImage
     let privacyMasks: [PrivacyMask]
@@ -234,8 +235,8 @@ struct BugReportSheet: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Crea una segnalazione bug").font(.system(size: 23, weight: .semibold))
-            Text("Raccogli screenshot, annotazioni, testo OCR e istruzioni in una cartella pronta da allegare.")
+            Text(L("Crea una segnalazione bug")).font(.system(size: 23, weight: .semibold))
+            Text(L("Raccogli screenshot, annotazioni, testo OCR e istruzioni in una cartella pronta da allegare."))
                 .font(.system(size: 12)).foregroundStyle(.secondary)
             ScrollView {
                 HStack(alignment: .top, spacing: 22) {
@@ -244,40 +245,40 @@ struct BugReportSheet: View {
                             .frame(maxWidth: 240, maxHeight: 310)
                             .background(.black.opacity(0.25))
                             .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .accessibilityLabel("Anteprima della composizione allegata")
-                        Text(privacyMasks.count == 1 ? "1 maschera privacy applicata allo screenshot. L’OCR legge lo screenshot oscurato." : "\(privacyMasks.count) maschere privacy applicate allo screenshot. L’OCR legge lo screenshot oscurato.")
+                            .accessibilityLabel(L("Anteprima della composizione allegata"))
+                        Text(privacyMasks.count == 1 ? L("1 maschera privacy applicata allo screenshot. L’OCR legge lo screenshot oscurato.") : LF("%d maschere privacy applicate allo screenshot. L’OCR legge lo screenshot oscurato.", privacyMasks.count))
                             .font(.system(size: 11)).foregroundStyle(.secondary)
-                        Text("Controlla tutti gli allegati prima di condividerli: le maschere coprono solo le aree che hai selezionato.")
+                        Text(L("Controlla tutti gli allegati prima di condividerli: le maschere coprono solo le aree che hai selezionato."))
                             .font(.system(size: 11)).foregroundStyle(.secondary)
                     }.frame(width: 240)
                     VStack(alignment: .leading, spacing: 12) {
-                        TextField("Titolo della segnalazione", text: $draft.title).textFieldStyle(.roundedBorder)
-                            .accessibilityLabel("Titolo della segnalazione")
-                        editor("Passaggi per riprodurre", text: $draft.steps)
-                        editor("Risultato atteso", text: $draft.expected)
-                        editor("Risultato osservato", text: $draft.actual)
-                        TextField("Versione dell’app (facoltativa)", text: $draft.appVersion).textFieldStyle(.roundedBorder)
-                        TextField("Dispositivo / ambiente (facoltativo)", text: $draft.deviceLabel).textFieldStyle(.roundedBorder)
-                        Text("Inserisci soltanto il contesto utile. Evita password, token, numeri di serie e dati personali.")
+                        TextField(L("Titolo della segnalazione"), text: $draft.title).textFieldStyle(.roundedBorder)
+                            .accessibilityLabel(L("Titolo della segnalazione"))
+                        editor(L("Passaggi per riprodurre"), text: $draft.steps)
+                        editor(L("Risultato atteso"), text: $draft.expected)
+                        editor(L("Risultato osservato"), text: $draft.actual)
+                        TextField(L("Versione dell’app (facoltativa)"), text: $draft.appVersion).textFieldStyle(.roundedBorder)
+                        TextField(L("Dispositivo / ambiente (facoltativo)"), text: $draft.deviceLabel).textFieldStyle(.roundedBorder)
+                        Text(L("Inserisci soltanto il contesto utile. Evita password, token, numeri di serie e dati personali."))
                             .font(.system(size: 10)).foregroundStyle(.secondary)
                     }
                 }
                 .padding(.vertical, 2)
             }.frame(maxHeight: 430)
-            Toggle("Includi anche original.png senza maschere privacy", isOn: $draft.includeOriginal)
+            Toggle(L("Includi anche original.png senza maschere privacy"), isOn: $draft.includeOriginal)
                 .font(.system(size: 12))
             Text(draft.includeOriginal
-                 ? "L’originale non oscurato sarà aggiunto alla cartella e potrebbe rivelare i dati coperti nelle altre immagini. L’OCR continuerà a usare solo lo screenshot oscurato."
-                 : "Il file original.png è escluso. Le altre immagini includeranno solo le maschere selezionate: con zero maschere i dati restano visibili.")
+                 ? L("L’originale non oscurato sarà aggiunto alla cartella e potrebbe rivelare i dati coperti nelle altre immagini. L’OCR continuerà a usare solo lo screenshot oscurato.")
+                 : L("Il file original.png è escluso. Le altre immagini includeranno solo le maschere selezionate: con zero maschere i dati restano visibili."))
                 .font(.system(size: 11)).foregroundStyle(draft.includeOriginal ? .orange : .secondary)
             if let errorMessage {
-                Text(errorMessage).font(.system(size: 11)).foregroundStyle(.orange).textSelection(.enabled)
+                Text(L(errorMessage)).font(.system(size: 11)).foregroundStyle(.orange).textSelection(.enabled)
             }
             HStack {
-                if isExporting { ProgressView().controlSize(.small); Text("Preparazione immagini e OCR…").font(.system(size: 11)).foregroundStyle(.secondary) }
+                if isExporting { ProgressView().controlSize(.small); Text(L("Preparazione immagini e OCR…")).font(.system(size: 11)).foregroundStyle(.secondary) }
                 Spacer()
-                Button("Annulla", action: onCancel).keyboardShortcut(.cancelAction).disabled(isExporting)
-                Button("Esporta segnalazione…", action: chooseDestination).buttonStyle(.borderedProminent)
+                Button(L("Annulla"), action: onCancel).keyboardShortcut(.cancelAction).disabled(isExporting)
+                Button(L("Esporta segnalazione…"), action: chooseDestination).buttonStyle(.borderedProminent)
                     .keyboardShortcut(.defaultAction)
                     .disabled(isExporting || draft.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
             }
@@ -299,9 +300,9 @@ struct BugReportSheet: View {
 
     @MainActor private func chooseDestination() {
         let panel = NSOpenPanel()
-        panel.title = "Scegli dove salvare la segnalazione"
-        panel.message = "Verrà creata una nuova cartella con tutti gli allegati. Nessun file verrà inviato."
-        panel.prompt = "Scegli cartella"
+        panel.title = L("Scegli dove salvare la segnalazione")
+        panel.message = L("Verrà creata una nuova cartella con tutti gli allegati. Nessun file verrà inviato.")
+        panel.prompt = L("Scegli cartella")
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
         panel.canCreateDirectories = true

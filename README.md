@@ -6,15 +6,15 @@ Turn iPhone and iPad captures into **product demos, creator assets and clearer b
 
 Created by [**Elia Gentili**](https://github.com/eliagentili) · Native macOS app · Local media processing
 
-[Explore the product](https://eliagentili.github.io/specchio-studio-site/) · [Italiano](README.it.md) · [Usage guide](LEGGIMI.txt) · [Verification notes](VALIDAZIONE.txt)
+[Explore the product](https://eliagentili.github.io/specchio-studio-site/) · [Usage guide](LEGGIMI.txt) · [Verification notes](VALIDAZIONE.txt)
 
 <p align="center">
   <img src="docs/assets/github-banner.png" alt="Specchio Studio — Your device. Ready to share. Created by Elia Gentili." width="900">
 </p>
 
-**Experimental prerelease · 1.3.1, build 7 · Apple Silicon · macOS 14 or later.** Free to download for testing. This is an early release with known limitations and unresolved provenance and legal review; it is not a stable or notarized release.
+**Experimental prerelease · 1.4.0, build 8 · Apple Silicon · macOS 14 or later.** Free to download for testing. This is an early release with known limitations and unresolved provenance and legal review; it is not a stable or notarized release.
 
-[**Get the experimental prerelease →**](https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1) — app ZIP, corresponding source archive and SHA-256 checksums.
+[**Get the experimental prerelease →**](https://github.com/eliagentili/specchio-studio/releases/tag/v1.4.0-preview.1) — app ZIP, corresponding source archive and SHA-256 checksums.
 
 The app is **ad hoc signed, without Developer ID or notarization**. The local Gatekeeper assessment rejects it; macOS may block a downloaded copy. Read the release notes before downloading. Code and asset provenance, name availability and the receiver's FairPlay status remain under review. Publishing this prerelease does not establish legal clearance.
 
@@ -50,7 +50,7 @@ Review the result before sharing: OCR suggestions can miss sensitive content. Vi
 
 ## Build and try locally
 
-Requires an **Apple Silicon Mac running macOS 14+**, Apple Command Line Tools (`swiftc`, `clang`) and Python 3 available as `python3`. Native dependencies are included; Homebrew is not required. The current interface is in Italian.
+Requires an **Apple Silicon Mac running macOS 14+**, Apple Command Line Tools (`swiftc`, `clang`) and Python 3 available as `python3`. Native dependencies are included; Homebrew is not required. The interface supports **English and Italian**, with English as the default. Choose English, Italian or the system language in the app settings, then quit and reopen the app to apply it. Changing the preference does not interrupt active capture or exports.
 
 ```sh
 ./build.sh
@@ -59,13 +59,13 @@ open "Specchio Studio.app"
 
 The local build uses **ad hoc signing and is not notarized**. To rebuild OpenSSL from the included source, run `./Native/build_crypto.sh` before `./build.sh`; Perl and make are also required.
 
-For USB, unlock the device, trust the Mac and choose **Rileva USB → Connetti**. For wireless, enable **Wireless**, then select **Specchio Studio** from the device's Screen Mirroring menu and enter the displayed code if requested. Start on the same Wi-Fi network. macOS capture permissions depend on the chosen source.
+For USB, unlock the device, trust the Mac and choose **Detect USB → Connect**. For wireless, enable **Wireless**, then select **Specchio Studio** from the device's Screen Mirroring menu and enter the displayed code if requested. Start on the same Wi-Fi network. macOS capture permissions depend on the chosen source.
 
 See [the full usage guide](LEGGIMI.txt) for permissions, recording, composition and export. Only one window per process can activate the wireless receiver.
 
 ## Built with evidence, still under review
 
-The current 1.3.1 suite passed **23 automated test groups** using synthetic fixtures, including capture/codec paths, wireless pairing regressions, masking, OCR, reports and creator exports. These results cover specific paths, not every device, network or session length.
+The automated suite uses synthetic fixtures for capture/codec paths, wireless pairing regressions, masking, OCR, reports, creator exports and language handling. These checks cover specific paths, not every device, network or session length. See the validation record for the results of the current build.
 
 ```sh
 ./test.sh
@@ -73,13 +73,13 @@ The current 1.3.1 suite passed **23 automated test groups** using synthetic fixt
 ./test.sh --build-only
 ```
 
-Results are written to `.build/test-results`. Full tests need access to normal macOS media services. [VALIDAZIONE.txt](VALIDAZIONE.txt) separates current automated checks, earlier UI checks and physical iPhone tests from **17 October 2026**. Those hardware tests have not been repeated on build 7. Current-build iPhone/iPad trials, long sessions, orientation changes, multiple-device scenarios and first launch on another Mac remain open.
+Results are written to `.build/test-results`. Full tests need access to normal macOS media services. [VALIDAZIONE.txt](VALIDAZIONE.txt) separates current automated checks, earlier UI checks and physical iPhone tests from **17 October 2026**. Those hardware tests have not been repeated on build 8. Current-build iPhone/iPad trials, long sessions, orientation changes, multiple-device scenarios and first launch on another Mac remain open.
 
 The app targets **macOS on Apple Silicon**. Windows, Linux and Intel Mac builds are not provided. Remote device control, live audio monitoring, multiclip editing and video alpha export are not implemented. Protected content may not be capturable.
 
 ## Release status, sources and licensing
 
-The first public release is the free **[v1.3.1-preview.1 experimental prerelease](https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1)**. It contains the app ZIP, the corresponding source archive, `SOURCE-INFO.txt` and checksums. Its source snapshot is commit `d6e0bd84f334d3064c0e5e4af163254a08611cf4`; later documentation updates do not change those packaged bytes.
+The current free **[v1.4.0-preview.1 experimental prerelease](https://github.com/eliagentili/specchio-studio/releases/tag/v1.4.0-preview.1)** adds English and Italian interface choices. It contains the app ZIP, the corresponding source archive, `SOURCE-INFO.txt` and checksums. Each release identifies its own source snapshot; later changes on `main` do not change those packaged bytes. The earlier [v1.3.1-preview.1](https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1) remains available with its original Italian interface.
 
 The owner explicitly chose to publish an experimental prerelease with the uncertainties disclosed. Code and asset provenance, name availability, licensing obligations and the receiver's FairPlay dependency remain open: [UxPlay documents legal uncertainty about that library](https://github.com/FDH2/UxPlay/blob/4e95a9ec013c52d8555d88dbc55abe346e94d56e/README.md#disclaimer). Open-source licensing alone does not establish all necessary rights. Developer ID signing, notarization and final hardware validation also remain open. See [RELEASE_CHECKLIST.txt](RELEASE_CHECKLIST.txt).
 
@@ -94,7 +94,7 @@ The project declares **GPL-3.0-or-later**. Third-party components retain their o
 | [RELEASE_CHECKLIST.txt](RELEASE_CHECKLIST.txt) | Remaining distribution checks |
 | [Launch kit](marketing/LAUNCH.md) | Positioning, demonstration plan and unpublished campaign copy |
 
-Local release packaging is available with `python3 scripts/release.py`; it rebuilds dependencies, tests and builds from an isolated source copy. The prerelease packaging run passed all 23 test groups, the optimized build, ad hoc signature integrity and all **653 source-manifest hashes**. These checks do not establish hardware compatibility, notarization or legal clearance. `--source-only` packages source without validating the app. Packages and checksums are placed in `.build/releases/1.3.1/`. Neither command publishes anything. Upstream comparisons are repeatable with `python3 scripts/verify_upstream.py --download` or `--offline`. The pinned OpenSSL 3.6 branch reaches end of support on **1 November 2026**; migration remains a release-maintenance task.
+Local release packaging is available with `python3 scripts/release.py`; it rebuilds dependencies, tests and builds from an isolated source copy. The process checks automated tests, the optimized build, ad hoc signature integrity and the corresponding source manifest. These checks do not establish hardware compatibility, notarization or legal clearance. Read the current release notes and validation record for the actual results. `--source-only` packages source without validating the app. Packages and checksums are placed in `.build/releases/1.4.0/`. Neither command publishes anything. Upstream comparisons are repeatable with `python3 scripts/verify_upstream.py --download` or `--offline`. The pinned OpenSSL 3.6 branch reaches end of support on **1 November 2026**; migration remains a release-maintenance task.
 
 ## A project by Elia Gentili
 

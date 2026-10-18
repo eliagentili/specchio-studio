@@ -205,6 +205,7 @@ enum PrivacyScanner {
 }
 
 struct PrivacyEditorView: View {
+    @ObservedObject private var localization = AppLocalization.shared
     let image: NSImage
     let onApply: ([PrivacyMask]) -> Void
     let onCancel: () -> Void
@@ -230,12 +231,12 @@ struct PrivacyEditorView: View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
                 VStack(alignment: .leading, spacing: 5) {
-                    Text("Oscura dati sensibili").font(.title2.bold())
-                    Text("Trascina sullo schermo per aggiungere maschere nere permanenti agli export.")
+                    Text(L("Oscura dati sensibili")).font(.title2.bold())
+                    Text(L("Trascina sullo schermo per aggiungere maschere nere permanenti agli export."))
                         .font(.callout).foregroundStyle(.secondary)
                 }
                 Spacer()
-                Label("Sul tuo Mac", systemImage: "lock.shield").font(.caption).foregroundStyle(.secondary)
+                Label(L("Sul tuo Mac"), systemImage: "lock.shield").font(.caption).foregroundStyle(.secondary)
             }
             HStack(alignment: .top, spacing: 16) {
                 editorCanvas
@@ -245,11 +246,11 @@ struct PrivacyEditorView: View {
                 inspector.frame(width: 255)
             }
             HStack {
-                Text("Controlla il risultato: il rilevamento automatico può non trovare tutti i dati.")
+                Text(L("Controlla il risultato: il rilevamento automatico può non trovare tutti i dati."))
                     .font(.caption).foregroundStyle(.secondary)
                 Spacer()
-                Button("Annulla", action: onCancel).keyboardShortcut(.cancelAction)
-                Button(masks.count == 1 ? "Applica 1 maschera" : "Applica \(masks.count) maschere") { onApply(masks.filter(\.isUsable)) }
+                Button(L("Annulla"), action: onCancel).keyboardShortcut(.cancelAction)
+                Button(masks.count == 1 ? L("Applica 1 maschera") : LF("Applica %d maschere", masks.count)) { onApply(masks.filter(\.isUsable)) }
                     .buttonStyle(.borderedProminent).keyboardShortcut(.defaultAction)
             }
         }
@@ -272,7 +273,7 @@ struct PrivacyEditorView: View {
                         .frame(width: mask.rect.width * width, height: mask.rect.height * height)
                         .position(x: mask.rect.midX * width, y: mask.rect.midY * height)
                         .onTapGesture { selectedMaskID = mask.id }
-                        .accessibilityLabel("Maschera di oscuramento")
+                        .accessibilityLabel(L("Maschera di oscuramento"))
                 }
                 ForEach(suggestions.filter { selectedSuggestions.contains($0.id) }) { suggestion in
                     let rect = suggestion.mask.rect
@@ -310,24 +311,24 @@ struct PrivacyEditorView: View {
     private var inspector: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("Maschere (\(masks.count))").font(.headline)
+                Text(LF("Maschere (%d)", masks.count)).font(.headline)
                 Spacer()
-                Button("Svuota") { masks.removeAll(); selectedMaskID = nil }.disabled(masks.isEmpty)
+                Button(L("Svuota")) { masks.removeAll(); selectedMaskID = nil }.disabled(masks.isEmpty)
             }
             ScrollView {
                 VStack(alignment: .leading, spacing: 6) {
                     if masks.isEmpty {
-                        Text("Disegna un rettangolo sull’immagine, oppure analizza il testo.")
+                        Text(L("Disegna un rettangolo sull’immagine, oppure analizza il testo."))
                             .font(.callout).foregroundStyle(.secondary).padding(.vertical, 8)
                     }
                     ForEach(Array(masks.enumerated()), id: \.element.id) { index, mask in
                         HStack {
-                            Button("Maschera \(index + 1)") { selectedMaskID = mask.id }
+                            Button(LF("Maschera %d", index + 1)) { selectedMaskID = mask.id }
                                 .buttonStyle(.plain)
                                 .foregroundStyle(selectedMaskID == mask.id ? Color.accentColor : Color.primary)
                             Spacer()
                             Button { masks.removeAll { $0.id == mask.id } } label: { Image(systemName: "trash") }
-                                .buttonStyle(.borderless).accessibilityLabel("Rimuovi maschera \(index + 1)")
+                                .buttonStyle(.borderless).accessibilityLabel(LF("Rimuovi maschera %d", index + 1))
                         }.padding(7).background(Color.primary.opacity(0.045)).clipShape(RoundedRectangle(cornerRadius: 5))
                     }
                 }
@@ -337,29 +338,29 @@ struct PrivacyEditorView: View {
                 HStack {
                     if scanning { ProgressView().controlSize(.small) }
                     else { Image(systemName: "text.viewfinder") }
-                    Text(scanning ? "Analisi in corso…" : "Rileva dati sensibili")
+                    Text(scanning ? L("Analisi in corso…") : L("Rileva dati sensibili"))
                 }.frame(maxWidth: .infinity)
             }.disabled(scanning)
-            Text("Email, telefoni, numeri lunghi e possibili chiavi. Le aree arancioni sono suggerimenti da confermare.")
+            Text(L("Email, telefoni, numeri lunghi e possibili chiavi. Le aree arancioni sono suggerimenti da confermare."))
                 .font(.caption).foregroundStyle(.secondary)
-            if let scanMessage { Text(scanMessage).font(.caption).foregroundStyle(.secondary) }
+            if let scanMessage { Text(L(scanMessage)).font(.caption).foregroundStyle(.secondary) }
             if !suggestions.isEmpty {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 8) {
                         ForEach(Array(suggestions.enumerated()), id: \.element.id) { index, suggestion in
-                            Toggle("\(index + 1). \(suggestion.kind.rawValue)", isOn: Binding(
+                            Toggle("\(index + 1). \(L(suggestion.kind.rawValue))", isOn: Binding(
                                 get: { selectedSuggestions.contains(suggestion.id) },
                                 set: { if $0 { selectedSuggestions.insert(suggestion.id) } else { selectedSuggestions.remove(suggestion.id) } }
                             )).toggleStyle(.checkbox).font(.caption)
                         }
                     }
                 }.frame(maxHeight: 130)
-                Button("Aggiungi selezionate (\(selectedSuggestions.count))") {
+                Button(LF("Aggiungi selezionate (%d)", selectedSuggestions.count)) {
                     let selected = suggestions.filter { selectedSuggestions.contains($0.id) }
                     masks.append(contentsOf: selected.map(\.mask))
                     suggestions.removeAll { selectedSuggestions.contains($0.id) }
                     selectedSuggestions.removeAll()
-                    scanMessage = "Suggerimenti aggiunti alle maschere. Verifica le aree coperte."
+                    scanMessage = L("Suggerimenti aggiunti alle maschere. Verifica le aree coperte.")
                 }.disabled(selectedSuggestions.isEmpty)
             }
             Spacer(minLength: 0)
@@ -386,10 +387,10 @@ struct PrivacyEditorView: View {
                 guard !Task.isCancelled else { return }
                 suggestions = found
                 selectedSuggestions = Set(found.map(\.id))
-                scanMessage = found.isEmpty ? "Nessun suggerimento. Puoi comunque disegnare maschere manuali." : "Verifica le aree arancioni prima di aggiungerle."
+                scanMessage = found.isEmpty ? L("Nessun suggerimento. Puoi comunque disegnare maschere manuali.") : L("Verifica le aree arancioni prima di aggiungerle.")
             } catch {
                 guard !Task.isCancelled else { return }
-                scanMessage = "Analisi non riuscita. Puoi disegnare le maschere manualmente."
+                scanMessage = L("Analisi non riuscita. Puoi disegnare le maschere manualmente.")
             }
             scanning = false
         }

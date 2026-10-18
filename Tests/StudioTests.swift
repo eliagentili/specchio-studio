@@ -7,6 +7,7 @@ import Vision
         let destination = URL(fileURLWithPath:CommandLine.arguments[1])
         try FileManager.default.createDirectory(at:destination,withIntermediateDirectories:true)
         _ = NSApplication.shared
+        try LocalizationTests.run()
         try await StudioStyleTests.run()
         try await PrivacyTests.run(directory:destination)
         try await BugReportTests.run(directory:destination)

@@ -1,63 +1,63 @@
-SPECCHIO STUDIO — IDENTITÀ E PRESENTAZIONE
-Versione 1.3.1, build 7 · 18 ottobre 2026
-Autore: Elia Gentili · https://github.com/eliagentili
+SPECCHIO STUDIO — IDENTITY AND PRESENTATION
+Version 1.4.0, build 8 · 18 October 2026
+Created by Elia Gentili · https://github.com/eliagentili
 
-MESSAGGIO PRINCIPALE
-Il tuo dispositivo. Pronto da condividere.
+MAIN MESSAGE
+Your device. Ready to share.
 
-DESCRIZIONE BREVE
-Specchio Studio trasforma le acquisizioni di iPhone e iPad in demo di
-prodotto, contenuti e segnalazioni bug più chiare, direttamente sul Mac.
-Un progetto di Elia Gentili, disponibile come pre-release sperimentale
-gratuita per Mac Apple Silicon con macOS 14 o successivo.
+SHORT DESCRIPTION
+Specchio Studio turns iPhone and iPad captures into product demos,
+creator assets and clearer bug reports on your Mac.
+A project by Elia Gentili. Free experimental preview for Apple Silicon
+Macs running macOS 14 or later, with English and Italian app interfaces.
 
-DESCRIZIONE GITHUB (EN)
+GITHUB DESCRIPTION
 Native Mac studio for iPhone/iPad captures, demos, creator exports and bug
 reports. Local OCR and opaque masks. By Elia Gentili. Apple Silicon/macOS 14+.
 
-PRESENTAZIONE PERSONALE (IT)
-Ho creato Specchio Studio per riunire il lavoro che viene dopo uno
-screenshot: preparare una demo, coprire dettagli selezionati, esportare
-più formati e spiegare un bug con gli allegati giusti.
-Il progetto combina SwiftUI, acquisizione nativa, pipeline video e OCR
-locale in uno strumento per Mac. La prima pre-release sperimentale è
-gratuita e scaricabile con sorgenti e checksum. Restano aperti i collaudi
-hardware finali, la notarizzazione e la revisione della provenienza e dei
-diritti; le note di rilascio dichiarano queste incertezze.
+AUTHOR PRESENTATION
+I created Specchio Studio to bring together the work after a screenshot:
+preparing a demo, covering selected details, exporting several formats
+and explaining a bug with the right attachments.
+The project combines SwiftUI, native capture, media pipelines and local
+OCR in a Mac app. The experimental prerelease is free, with corresponding
+source and checksums. Final hardware checks, notarization, provenance and
+rights review remain open and are disclosed in the release notes.
 
-PRODUCT LINE (EN)
-Your device. Ready to share.
-Turn iPhone and iPad captures into product demos, creator assets and
-clearer bug reports on your Mac. Created by Elia Gentili.
+LANGUAGE POLICY
+The website, GitHub presentation and public marketing materials use
+English. The app offers English and Italian separately, with English as
+the default and an optional system-language setting. Earlier website
+links under /it/ redirect to English; no parallel Italian site is kept.
+Version 1.3.1 remains an earlier release with an Italian app interface.
 
-STATO E USO
-I testi per i post, il piano delle dimostrazioni, la descrizione GitHub
-completa e la strategia di lancio sono in marketing/LAUNCH.md.
-Sono bozze: nessun post o messaggio è stato inviato.
-La pagina prodotto collega la pre-release sperimentale v1.3.1-preview.1.
-Il titolare ne ha autorizzato la pubblicazione con le incertezze dichiarate.
-Questa scelta non chiude i punti aperti di RELEASE_CHECKLIST.txt.
-Presentarla come versione sperimentale per prove e feedback, con firma
-ad hoc, senza Developer ID o notarizzazione. Gatekeeper rifiuta la build
-nella valutazione locale e macOS può bloccare una copia scaricata.
-La disponibilità del download non certifica provenienza, diritti o nome;
-resta aperta anche l'incertezza FairPlay dichiarata dall'upstream.
+STATUS AND USE
+Draft posts, demonstration plans, the full GitHub description and launch
+strategy are in marketing/LAUNCH.md. No post or message has been sent.
+The product page links to experimental prerelease v1.4.0-preview.1;
+publish that release before updating the public website.
+The owner authorized experimental publication with stated uncertainties.
+This does not close the open items in RELEASE_CHECKLIST.txt.
+Describe the build as experimental, intended for testing and feedback,
+ad hoc signed, without Developer ID or notarization. Gatekeeper rejects
+the build in local assessment; macOS can block a downloaded copy.
+A download does not certify provenance, rights or name availability.
+The upstream FairPlay uncertainty also remains unresolved.
 
-PROMESSE DA MANTENERE ESATTE
-Mac Apple Silicon, macOS 14+, interfaccia attuale italiana.
-Elaborazione media e OCR locali; nessun account nell'app richiesto.
-Maschere video fisse, senza inseguimento del movimento.
-OCR e suggerimenti privacy da controllare, senza rilevamento esaustivo.
-Registrazioni originali, audio e testo manuale dei report non oscurati
-automaticamente. L'originale non oscurato nei report è solo opt-in.
-Nessuna dichiarazione di perfezione, compatibilità universale, esclusività
-di mercato o assenza assoluta di rischi legali.
+KEEP THESE CLAIMS PRECISE
+Apple Silicon Mac, macOS 14+, English and Italian app interfaces.
+Local media processing and OCR; no app account required.
+Fixed video masks, without motion tracking.
+OCR and privacy suggestions require review and are not exhaustive.
+Original recordings, audio and manual report text are not automatically
+redacted. Including an unmasked original in a report requires opt-in.
+Do not claim perfection, universal compatibility, market exclusivity
+or the complete absence of legal risk.
 
-COLLEGAMENTI
-Pagina italiana: https://eliagentili.github.io/specchio-studio-site/it/
-Product page: https://eliagentili.github.io/specchio-studio-site/
-Pre-release: https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1
-Autore: https://github.com/eliagentili
-Guida tecnica: LEGGIMI.txt
-Verifiche e limiti: VALIDAZIONE.txt
-Diritti e distribuzione: RELEASE_CHECKLIST.txt
+LINKS
+Product website: https://eliagentili.github.io/specchio-studio-site/
+Prerelease: https://github.com/eliagentili/specchio-studio/releases/tag/v1.4.0-preview.1
+Creator: https://github.com/eliagentili
+Usage guide: LEGGIMI.txt
+Verification and limits: VALIDAZIONE.txt
+Rights and distribution: RELEASE_CHECKLIST.txt

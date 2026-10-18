@@ -28,7 +28,7 @@ final class VideoExporter: ObservableObject {
     func export(source: URL, destination: URL, backdrop: Backdrop, showFrame: Bool,
                 quarterTurns: Int, flipped: Bool, trimStart: Double? = nil, trimEnd: Double? = nil,
                 format: CompositionFormat = .adaptive, privacyMasks: [PrivacyMask] = []) async throws {
-        guard !isExporting else { throw VideoExportFailure.message("Un'esportazione è già in corso.") }
+        guard !isExporting else { throw VideoExportFailure.message(L("Un'esportazione è già in corso.")) }
         isExporting = true
         progress = 0
         errorMessage = nil
@@ -44,15 +44,15 @@ final class VideoExporter: ObservableObject {
         }
         do {
             guard source.standardizedFileURL != destination.standardizedFileURL else {
-                throw VideoExportFailure.message("Scegli un file diverso dall'originale.")
+                throw VideoExportFailure.message(L("Scegli un file diverso dall'originale."))
             }
             guard !FileManager.default.fileExists(atPath: destination.path) else {
-                throw VideoExportFailure.message("Il file di destinazione esiste già. Scegli un nuovo nome.")
+                throw VideoExportFailure.message(L("Il file di destinazione esiste già. Scegli un nuovo nome."))
             }
             let asset = AVURLAsset(url: source)
             let duration = try await asset.load(.duration)
             let videoTracks = try await asset.loadTracks(withMediaType: .video)
-            guard let sourceVideo = videoTracks.first else { throw VideoExportFailure.message("Il file non contiene una traccia video.") }
+            guard let sourceVideo = videoTracks.first else { throw VideoExportFailure.message(L("Il file non contiene una traccia video.")) }
             let naturalSize = try await sourceVideo.load(.naturalSize)
             let preferredTransform = try await sourceVideo.load(.preferredTransform)
             let sourceVideoRange = try await sourceVideo.load(.timeRange)
@@ -63,23 +63,23 @@ final class VideoExporter: ObservableObject {
                   [preferredTransform.a, preferredTransform.b, preferredTransform.c, preferredTransform.d,
                    preferredTransform.tx, preferredTransform.ty].allSatisfy({ $0.isFinite }),
                   preferredTransform.a * preferredTransform.d - preferredTransform.b * preferredTransform.c != 0 else {
-                throw VideoExportFailure.message("Durata o dimensioni del video non valide.")
+                throw VideoExportFailure.message(L("Durata o dimensioni del video non valide."))
             }
             let start = trimStart ?? 0
             let end = trimEnd ?? assetSeconds
             guard start.isFinite, end.isFinite, start >= 0, end <= assetSeconds + 0.001, end > start else {
-                throw VideoExportFailure.message("Intervallo di taglio non valido.")
+                throw VideoExportFailure.message(L("Intervallo di taglio non valido."))
             }
             let requestedRange = CMTimeRange(start: CMTime(seconds: start, preferredTimescale: 600),
                                              end: CMTime(seconds: min(end, assetSeconds), preferredTimescale: 600))
             let range = CMTimeRangeGetIntersection(requestedRange, otherRange: sourceVideoRange)
             guard range.isValid, !range.isEmpty, range.duration.seconds > 0 else {
-                throw VideoExportFailure.message("L'intervallo selezionato non contiene video.")
+                throw VideoExportFailure.message(L("L'intervallo selezionato non contiene video."))
             }
             try checkCancellation()
             let composition = AVMutableComposition()
             guard let video = composition.addMutableTrack(withMediaType: .video, preferredTrackID: kCMPersistentTrackID_Invalid) else {
-                throw VideoExportFailure.message("Impossibile preparare la traccia video.")
+                throw VideoExportFailure.message(L("Impossibile preparare la traccia video."))
             }
             try video.insertTimeRange(range, of: sourceVideo, at: .zero)
             video.preferredTransform = .identity
@@ -89,7 +89,7 @@ final class VideoExporter: ObservableObject {
                 let intersection = CMTimeRangeGetIntersection(range, otherRange: audioRange)
                 guard intersection.isValid, !intersection.isEmpty else { continue }
                 guard let audio = composition.addMutableTrack(withMediaType: .audio, preferredTrackID: kCMPersistentTrackID_Invalid) else {
-                    throw VideoExportFailure.message("Impossibile conservare una traccia audio.")
+                    throw VideoExportFailure.message(L("Impossibile conservare una traccia audio."))
                 }
                 try audio.insertTimeRange(intersection, of: sourceAudio, at: CMTimeSubtract(intersection.start, range.start))
             }
@@ -114,7 +114,7 @@ final class VideoExporter: ObservableObject {
             try checkCancellation()
             guard let exporter = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetHighestQuality),
                   exporter.supportedFileTypes.contains(.mov) else {
-                throw VideoExportFailure.message("Esportazione H.264 MOV non disponibile per questo video.")
+                throw VideoExportFailure.message(L("Esportazione H.264 MOV non disponibile per questo video."))
             }
             exporter.outputURL = destination
             exporter.outputFileType = .mov
@@ -137,12 +137,12 @@ final class VideoExporter: ObservableObject {
             } onCancel: { exporter.cancelExport() }
             if exporter.status == .cancelled || cancellationRequested || Task.isCancelled { throw CancellationError() }
             guard exporter.status == .completed else {
-                throw exporter.error ?? VideoExportFailure.message("Esportazione video non riuscita.")
+                throw exporter.error ?? VideoExportFailure.message(L("Esportazione video non riuscita."))
             }
             succeeded = true
             progress = 1
         } catch {
-            errorMessage = error is CancellationError ? "Esportazione annullata." : error.localizedDescription
+            errorMessage = error is CancellationError ? L("Esportazione annullata.") : error.localizedDescription
             throw error
         }
     }
@@ -295,7 +295,7 @@ final class VideoExporter: ObservableObject {
                                   quarterTurns: 1, flipped: true)
         let result = AVURLAsset(url: destination)
         guard let track = try await result.loadTracks(withMediaType: .video).first else {
-            throw VideoExportFailure.message("Test: traccia video assente.")
+            throw VideoExportFailure.message(L("Test: traccia video assente."))
         }
         let size = try await track.load(.naturalSize)
         let descriptions = try await track.load(.formatDescriptions)
@@ -305,7 +305,7 @@ final class VideoExporter: ObservableObject {
               abs(duration.seconds - sourceDuration.seconds) < 0.1,
               outputAudio.count == sourceAudio.count,
               descriptions.first.map({ CMFormatDescriptionGetMediaSubType($0) == kCMVideoCodecType_H264 }) == true else {
-            throw VideoExportFailure.message("Test: dimensioni, durata, audio o codec non corretti.")
+            throw VideoExportFailure.message(L("Test: dimensioni, durata, audio o codec non corretti."))
         }
         let trimStart = min(0.1,sourceDuration.seconds / 4)
         let trimEnd = min(trimStart + 0.3,sourceDuration.seconds)
@@ -315,16 +315,16 @@ final class VideoExporter: ObservableObject {
                                       quarterTurns:0,flipped:false,trimStart:trimStart,trimEnd:trimEnd,format:format)
             let presetAsset = AVURLAsset(url:presetDestination)
             guard let presetTrack = try await presetAsset.loadTracks(withMediaType:.video).first else {
-                throw VideoExportFailure.message("Test: traccia del formato social assente.")
+                throw VideoExportFailure.message(L("Test: traccia del formato social assente."))
             }
             let presetSize = try await presetTrack.load(.naturalSize)
             let presetDuration = try await presetAsset.load(.duration)
             let presetAudio = try await presetAsset.loadTracks(withMediaType:.audio)
             guard presetSize == format.exportSize, abs(presetDuration.seconds - (trimEnd - trimStart)) < 0.1,
                   presetAudio.count == sourceAudio.count else {
-                throw VideoExportFailure.message("Test: formato social, taglio o audio non corretti.")
+                throw VideoExportFailure.message(L("Test: formato social, taglio o audio non corretti."))
             }
         }
-        return "PASS: H.264, rotazione, specchio, cornice e sfondo; \(Int(size.width))×\(Int(size.height)), \(outputAudio.count) tracce audio; formati 9:16, 1:1, 16:9 con taglio e audio; \(destination.lastPathComponent)"
+        return "PASS: H.264, rotation, mirroring, frame and background; \(Int(size.width))×\(Int(size.height)), \(outputAudio.count) audio tracks; 9:16, 1:1, 16:9 formats with trim and audio; \(destination.lastPathComponent)"
     }
 }

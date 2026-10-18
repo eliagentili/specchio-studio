@@ -1,186 +1,204 @@
-SPECCHIO STUDIO — RESOCONTO DELLE VERIFICHE
-Aggiornato il 18 ottobre 2026
-Versione corrente: 1.3.1, build 7 · arm64 · target macOS 14
+SPECCHIO STUDIO — VALIDATION REPORT
+Updated on 18 October 2026
+Published preview: 1.3.1, build 7 · arm64 · macOS 14 target
+Release candidate: 1.4.0, build 8 · English/Italian localization
+Validation and publication of the development build are not yet recorded here.
 
-COME LEGGERE QUESTO RESOCONTO
-I risultati sintetici verificano percorsi specifici del programma; non
-certificano tutti i dispositivi, le reti o le durate di utilizzo. Le prove
-hardware del 17 ottobre sono un resoconto precedente, non nuove prove della
-build 7. La verifica funzionale non certifica la provenienza o i diritti.
+READING THIS REPORT
+Synthetic results verify specific program paths; they do not certify every
+device, network or session duration. Hardware tests from 17 October are a
+historical report, not new tests of build 7. Functional testing does not
+certify provenance or rights.
 
-18 OTTOBRE 2026 — PATCH 1.3.1, BUILD 7
-PASS: ./test.sh completo dopo gli aggiornamenti di libplist e OpenSSL,
-      23 gruppi PASS, codice di uscita 0.
-PASS: ./build.sh, app arm64 ottimizzata e firma ad hoc verificata.
-PASS: quattro gruppi aggiuntivi di regressione PIN con AddressSanitizer,
-      compilando anche il gestore e il codice SRP sottoposti a verifica.
-      Verificati limiti dei blob, tipi plist, ordine delle fasi, prove non
-      valide, errore del tag GCM, reset e recupero; richieste elaborate
-      esclusivamente in memoria, senza avviare servizi di rete.
-PASS: scambio SRP e AES-GCM autenticato completo con client di test
-      indipendente; identità registrata solo dopo autenticazione;
-      64 sessioni valide successive e prova allocata di esattamente 20 byte.
-PASS: regressioni wireless, snapshot, registrazione, maschere, OCR, report,
-      stili e pacchetti creator, inclusi audio, taglio e orientamento video.
-PASS: confronto offline dei sorgenti ufficiali: UxPlay 93 file identici
-      più tre modifiche dichiarate, libplist 288 file identici, archivio
-      ufficiale OpenSSL 5.889 file identici; nessuna differenza inattesa.
-PASS: archivio OpenSSL 3.6.5 verificato con SHA-256 e firma OpenPGP;
-      ricompilazione pulita, libreria collegata e intestazioni concordi;
-      172 header/template corrispondenti a sorgenti e output generato.
-I controlli AddressSanitizer non dimostrano l'assenza di ogni vulnerabilità
-o perdita di memoria. I collaudi fisici, la notarizzazione e i diritti
-restano aperti. I percorsi UI sotto riportati sono della 1.3.0, build 6;
-non sono nuovi collaudi fisici o UI della patch.
-Vedi UPSTREAM_AUDIT.txt per metodo, aggiornamenti e limiti del controllo.
+18 OCTOBER 2026 — 1.4.0 LOCALIZATION CANDIDATE, BUILD 8
+PASS: initial complete test run, 24 groups including the new localization
+      catalog/fallback/format/permission checks and all previous regressions.
+PASS: optimized arm64 app build, ad hoc signature integrity and both bundled
+      language resources. English is the default; English, Italian and the
+      macOS language can be selected. A selection applies after reopening.
+PASS interface: English → Italian → English across app relaunches; preference
+      retained, localized source/composition/export/style controls and native
+      menus verified. Changing the preference kept the current demo intact.
+PASS: static catalog coverage, matching format placeholders and English/Italian
+      Camera, Microphone and Local Network permission descriptions.
+PASS: website pages, README, first-party guides and actual canvas demo artwork
+      standardized on English. Legacy /it/ links redirect to the English site.
+Final isolated packaging validation is performed after this source snapshot;
+its outcome and exact source commit are recorded in the corresponding release
+notes. These checks do not repeat physical iPhone/iPad tests or resolve rights.
 
-18 OTTOBRE 2026 — PACCHETTI DELLA PRE-RELEASE SPERIMENTALE
+18 OCTOBER 2026 — PATCH 1.3.1, BUILD 7
+PASS: complete ./test.sh after the libplist and OpenSSL updates,
+      23 groups PASS, exit code 0.
+PASS: ./build.sh, optimized arm64 app and verified ad hoc signature.
+PASS: four additional PIN regression groups with AddressSanitizer,
+      compiling both the handler and the SRP code under review.
+      Checked blob limits, plist types, phase ordering, invalid proofs,
+      GCM tag errors, reset and recovery; requests were processed
+      exclusively in memory, without starting network services.
+PASS: complete authenticated SRP and AES-GCM exchange with an independent
+      test client; identity registered only after authentication;
+      64 successive valid sessions and an exactly 20-byte allocated proof.
+PASS: wireless, snapshot, recording, mask, OCR, report, style and creator
+      pack regressions, including audio, trimming and video orientation.
+PASS: offline comparison with official source: 93 identical UxPlay files
+      plus three declared changes, 288 identical libplist files, 5,889
+      identical files in the official OpenSSL archive; no unexpected changes.
+PASS: OpenSSL 3.6.5 archive verified by SHA-256 and OpenPGP signature;
+      clean rebuild, matching linked library and headers;
+      172 headers/templates matching source and generated output.
+AddressSanitizer checks do not demonstrate the absence of every vulnerability
+or memory leak. Physical testing, notarization and rights review remain open.
+UI paths below concern 1.3.0, build 6; they are not new physical or UI tests
+of the patch. See UPSTREAM_AUDIT.txt for methods, updates and audit limits.
+
+18 OCTOBER 2026 — EXPERIMENTAL PRE-RELEASE PACKAGES
 Release: v1.3.1-preview.1
 https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1
-Snapshot sorgenti: d6e0bd84f334d3064c0e5e4af163254a08611cf4.
-PASS: nuova preparazione isolata dei pacchetti, con ricompilazione delle
-      dipendenze, 23 gruppi di test e build ottimizzata arm64.
-PASS: 653 hash del manifest sorgenti, checksum di sorgenti e ZIP,
-      integrità della firma ad hoc dell'app confezionata.
-LIMITAZIONE CONFERMATA: spctl --assess rifiuta la build, codice di uscita 3.
-      La firma è ad hoc, senza Developer ID o notarizzazione; macOS può
-      bloccare un'app scaricata. L'integrità non equivale all'approvazione
-      di Gatekeeper o alla notarizzazione.
-La pubblicazione sperimentale è stata autorizzata esplicitamente dal
-titolare con le incertezze dichiarate. Non sono nuovi collaudi fisici,
-una verifica della provenienza o una certificazione dei diritti.
-Sorgenti corrispondenti, ZIP, SOURCE-INFO.txt e checksum sono forniti
-dalla stessa pagina. Gli aggiornamenti documentali successivi descrivono
-il rilascio e non modificano lo snapshot dei pacchetti.
+Source snapshot: d6e0bd84f334d3064c0e5e4af163254a08611cf4.
+PASS: fresh isolated package preparation, rebuilding dependencies,
+      running 23 test groups and producing an optimized arm64 build.
+PASS: 653 source manifest hashes, source and ZIP checksums,
+      ad hoc signature integrity of the packaged app.
+CONFIRMED LIMITATION: spctl --assess rejects the build, exit code 3.
+      The signature is ad hoc, without Developer ID or notarization;
+      macOS may block a downloaded app. Integrity does not amount to
+      Gatekeeper approval or notarization.
+Experimental publication was explicitly authorized by the owner with the
+uncertainties disclosed. These are not new physical tests, provenance
+verification or certification of rights.
+Corresponding source, ZIP, SOURCE-INFO.txt and checksums are provided on
+the same page. Later documentation updates describe publication and do
+not modify the package snapshot.
 
-18 OTTOBRE 2026 — REVISIONE DELLA CRONOLOGIA
-La versione 1.3.1 è stata inizialmente importata in un solo commit radice,
-senza genitori; sono poi seguiti commit per marketing e documentazione.
-Il controllo storico riguardava ref raggiungibili, messaggio del commit,
-nomi e contenuto dei file, incluso l'archivio OpenSSL. In quell'importazione
-codice, dipendenze, risorse e test erano invariati rispetto alla build già
-verificata; erano aggiornati soltanto sei documenti sulla cronologia.
-Backup ed evidenze restano fuori dal progetto. Cache del servizio e cloni
-precedenti sono fuori dall'ambito di cancellazione di una riscrittura Git.
+18 OCTOBER 2026 — HISTORY REVIEW
+Version 1.3.1 was initially imported as a single parentless root commit;
+marketing and documentation commits followed. The history check covered
+reachable refs, commit message, file names and file contents, including
+the OpenSSL archive. In that import, code, dependencies, assets and tests
+were unchanged from the already verified build; only six history-related
+documents were updated. Backups and evidence remain outside the project.
+Service caches and previous clones are outside the deletion scope of a
+Git history rewrite.
 
-18 OTTOBRE 2026 — FLUSSI 1.3.0, BUILD 6
-PASS: suite ./test.sh completa, uscita 0.
-PASS: stili persistenti, validazione e assenza di dati sorgente; proiezione
-      delle annotazioni mantenuta tra canvas con proporzioni diverse.
-PASS: OCR in corso invalidato dopo modifiche privacy, senza scrivere
-      negli appunti di sistema durante il test.
-PASS: maschere sanitizzate, coordinate top-left, pixel completamente opachi,
-      dimensioni e alpha preservati, raster valido dopo riuso della memoria.
-PASS: rilevamento locale email e assenza del testo oscurato nell’OCR esportato.
-PASS: report senza originale di default, originale solo opt-in, OCR sempre
-      oscurato, directory uniche e pulizia dei file temporanei.
-PASS: pacchetti con tre immagini o tre video, copertina, manifest,
-      durata, taglio e audio; annullamento e fallimento senza file parziali.
-PASS: maschere video verificate su frame decodificati lungo la clip,
-      con orientamento nei metadati, quattro rotazioni e specchio.
-PASS: regressioni acquisizione/wireless, snapshot, H.264/HEVC, PNG/OCR/alpha.
-PASS: build ottimizzata arm64 e firma ad hoc verificata.
-PASS interfaccia: apertura immagine sintetica, suggerimento email via OCR,
-      applicazione maschera, report salvato con OCR privo dell’email e senza
-      originale; pacchetti immagini e video salvati nei tre formati.
-PASS interfaccia: stile salvato e ancora disponibile dopo riavvio.
-PASS interfaccia: taglio video con punto e virgola decimale (0.1–0,4),
-      tre output da 0,300 s con una traccia audio ciascuno.
-Corretto un difetto del campo numerico precedente che perdeva la frazione
-      durante l’immissione; ora il testo resta modificabile e i valori
-      non validi disabilitano l’export invece di ripristinare l’intera clip.
-Le maschere video sono statiche; audio e registrazioni originali restano
-non oscurati. Il rilevamento suggerisce aree e non certifica che siano tutte.
+18 OCTOBER 2026 — WORKFLOWS 1.3.0, BUILD 6
+PASS: complete ./test.sh suite, exit code 0.
+PASS: persistent styles, validation and absence of source data; annotation
+      placement preserved between canvases with different aspect ratios.
+PASS: in-progress OCR invalidated after privacy changes, without writing
+      to the system clipboard during the test.
+PASS: sanitized masks, top-left coordinates, fully opaque pixels,
+      preserved dimensions and alpha, valid raster after memory reuse.
+PASS: local email detection and absence of redacted text in exported OCR.
+PASS: reports exclude the original by default, include it only by opt-in,
+      always redact OCR, use unique directories and clean temporary files.
+PASS: packs with three images or three videos, a cover and a manifest;
+      duration, trimming and audio; cancellation/failure without partial files.
+PASS: video masks checked on decoded frames throughout the clip,
+      including metadata orientation, four rotations and horizontal flip.
+PASS: capture/wireless, snapshot, H.264/HEVC and PNG/OCR/alpha regressions.
+PASS: optimized arm64 build and verified ad hoc signature.
+PASS UI: opening a synthetic image, OCR email suggestion, applying a mask,
+      saving a report with no email in its OCR and no original image;
+      image and video packs saved in all three formats.
+PASS UI: saved style still available after relaunch.
+PASS UI: video trimming with dot and comma decimal separators (0.1–0,4),
+      three 0.300-second outputs with one audio track each.
+Fixed a defect in the previous numeric field that lost the fractional part
+      during entry; text now stays editable, and invalid values disable
+      export rather than resetting the entire clip.
+Video masks are static; audio and original recordings remain unredacted.
+Detection suggests areas and does not certify that it finds all of them.
 
-18 OTTOBRE 2026 — VERIFICHE PRECEDENTI 1.2
-La suite completa ./test.sh è terminata con codice 0 dopo le modifiche
-correnti. La build dell’app e codesign --verify --deep --strict sono riusciti.
-Il controllo dell’interfaccia ha verificato avvio demo, selettore del formato
-verticale e apertura del documento delle licenze dal menu Aiuto.
+18 OCTOBER 2026 — EARLIER 1.2 CHECKS
+The complete ./test.sh suite exited with code 0 after the changes at that
+time. The app build and codesign --verify --deep --strict succeeded.
+UI review verified demo launch, the portrait format picker and opening
+the license document from the Help menu.
 
-PASS automatizzati:
-• Decoder H.264 e HEVC, transizione H.264 → HEVC → H.264 e input malformato.
-  La regressione della transizione codec è stata prima riprodotta come test
-  fallito, poi corretta e verificata nuovamente.
-• AAC-ELD con PCM non silenzioso, rifiuto di input audio malformato,
-  fine flusso, riconnessione e reset.
-• Annullamento del primo fotogramma wireless e nuovo tentativo.
-• Decoder → anteprima/snapshot → registrazione H.264 360×640 finalizzata
-  a fine flusso simulata; durata osservata nell’ultima prova 0,457 secondi.
-• Snapshot e writer H.264/HEVC.
-• Anteprima e screenshot PNG nei formati 9:16, 1:1 e 16:9, dimensioni
-  previste, OCR, trasparenza e rotazione.
-• Esportazione video H.264 con sfondo, cornice, rotazione, specchio e audio;
-  tre preset reali con dimensioni, taglio, durata e audio verificati.
+Automated PASS results:
+• H.264 and HEVC decoders, H.264 → HEVC → H.264 transitions and malformed
+  input. The codec transition regression was first reproduced as a failing
+  test, then fixed and tested again.
+• AAC-ELD with nonsilent PCM, rejection of malformed audio input,
+  end of stream, reconnection and reset.
+• Cancellation of the first wireless frame and a new attempt.
+• Decoder → preview/snapshot → H.264 recording at 360×640, finalized on
+  simulated end of stream; duration observed in the last test: 0.457 seconds.
+• Snapshot and H.264/HEVC writer.
+• Preview and PNG screenshots at 9:16, 1:1 and 16:9, expected dimensions,
+  OCR, transparency and rotation.
+• H.264 video export with background, frame, rotation, flip and audio;
+  three actual presets with verified dimensions, trim, duration and audio.
 
-La verifica di firma è locale ad hoc, non Developer ID o notarizzazione.
-Non sono stati provati oggi iPhone/iPad fisici, USB reale, consenso Rete
-locale o selettore di acquisizione macOS. Le nuove risorse e i documenti
-saranno inclusi nei pacchetti definitivi da ricontrollare prima del rilascio.
+Signature verification was local ad hoc verification, not Developer ID or
+notarization. No physical iPhone/iPad, real USB connection, Local Network
+consent or macOS capture picker was tested in that round. New assets and
+documents were to be included in final packages for rechecking before release.
 
-Comandi ripetibili:
+Repeatable commands:
 ./test.sh
 ./build.sh
 codesign --verify --deep --strict "Specchio Studio.app"
 
-Le fixture sono locali e sintetiche. I file di risultato sono generati in
-.build/test-results; non sono contenuti nei pacchetti sorgenti. Un ambiente
-che impedisce i servizi codec di macOS può causare errori estranei ai codec
-implementati dall’app: eseguire le prove in un normale Terminale macOS.
+Fixtures are local and synthetic. Result files are generated under
+.build/test-results and are not included in source packages. An environment
+that blocks macOS codec services can cause failures unrelated to the app’s
+codec implementations: run tests in a normal macOS Terminal.
 
-17 OTTOBRE 2026 — TEST SINTETICI E INTERFACCIA PRECEDENTI
-Host riportato: Mac Apple Silicon, macOS 27.0.1. Build Swift 6.4 in modalità
-Swift 5, arm64, target macOS 14; firma ad hoc verificata all’epoca.
+17 OCTOBER 2026 — EARLIER SYNTHETIC AND UI TESTS
+Reported host: Mac Apple Silicon, macOS 27.0.1. Swift 6.4 build in Swift 5
+mode, arm64, macOS 14 target; ad hoc signature verified at that time.
 
-Il resoconto precedente riportava PASS per:
-• Snapshot e registrazione/lettura H.264 e HEVC.
-• Composizione PNG, OCR del titolo demo, rotazione e trasparenza.
-• Esportazione H.264 con cornice, sfondo, rotazione, specchio e audio.
-• Preservazione dell’audio non silenzioso e dell’orientamento sorgente,
-  taglio temporale e annullamento con pulizia del file parziale.
-• Avvio dell’app, demo, esportazione PNG e pannello video via interfaccia.
-• Esportazione MOV H.264/AAC da interfaccia: 464×744, durata 0,500 secondi.
-• Decoder wireless H.264 360×640 e HEVC 640×480, AAC-ELD con PCM non silenzioso,
-  reset e input video malformato.
-• Decoder → anteprima/snapshot → registrazione H.264 finalizzata a fine flusso.
-• Risposta RTSP /info, servizio annunciato e segnale di fine flusso singolo.
+The previous report recorded PASS for:
+• Snapshot and H.264/HEVC recording and reading.
+• PNG composition, OCR of the demo title, rotation and transparency.
+• H.264 export with frame, background, rotation, flip and audio.
+• Preservation of nonsilent audio and source orientation,
+  time trimming and cancellation with partial file cleanup.
+• App launch, demo, PNG export and video panel through the UI.
+• H.264/AAC MOV export through the UI: 464×744, duration 0.500 seconds.
+• Wireless H.264 decoder at 360×640 and HEVC at 640×480, AAC-ELD with
+  nonsilent PCM, reset and malformed video input.
+• Decoder → preview/snapshot → H.264 recording finalized at end of stream.
+• RTSP /info response, advertised service and a single end-of-stream signal.
 
-17 OTTOBRE 2026 — IPHONE FISICO, VERSIONI PRECEDENTI
-Il resoconto delle prove assistite dall’utente indicava iPhone 17 Pro Max
-con iOS 27.0.1. Consensi Fotocamera e Microfono erano stati confermati
-nei dialoghi di macOS.
+17 OCTOBER 2026 — PHYSICAL IPHONE, EARLIER VERSIONS
+The report of user-assisted tests identified an iPhone 17 Pro Max running
+iOS 27.0.1. Camera and Microphone consents had been confirmed in macOS dialogs.
 
-USB: mirroring 1320×2868, fluidità confermata dall’utente, registrazione
-H.264/AAC stereo, screenshot, composizione ruotata con alpha, HEVC
-finalizzato alla disconnessione e riconnessione. I file video risultavano
-decodificabili integralmente.
+USB: mirroring at 1320×2868, smoothness confirmed by the user, stereo
+H.264/AAC recording, screenshots, rotated composition with alpha, HEVC
+finalized on disconnection and reconnection. The video files were fully
+decodable.
 
-Ricevitore wireless dedicato: abbinamento e video nella finestra dello
-Studio, 498×1080; fluidità e uso di altre app confermati dall’utente.
-Una clip H.264/AAC risultava di 20,153834 secondi, con 852 fotogrammi e audio
-stereo a 48000 Hz non silenzioso; decodifica completa e timestamp crescenti.
-Screenshot PNG 498×1080 e riconnessione dopo riavvio senza nuovo codice
-riportati come riusciti.
+Dedicated wireless receiver: pairing and video in the Studio window at
+498×1080; smoothness and use of other apps confirmed by the user.
+An H.264/AAC clip measured 20.153834 seconds, with 852 frames and nonsilent
+stereo audio at 48000 Hz; full decoding and increasing timestamps.
+PNG screenshots at 498×1080 and reconnection after relaunch without a new
+code were reported successful.
 
-Dopo una correzione della gestione di fine flusso, una clip HEVC 498×1080
-di 35,035 secondi veniva finalizzata interrompendo Duplica schermo dal
-telefono, senza premere Stop sul Mac. La clip finale era solo video perché
-il suono di prova era stato fermato prima della registrazione. Il file
-risultava decodificabile e l’app tornava in attesa.
+After an end-of-stream handling fix, a 35.035-second HEVC clip at 498×1080
+was finalized by stopping Screen Mirroring on the phone, without pressing
+Stop on the Mac. The final clip contained only video because the test
+sound had been stopped before recording. The file was decodable and the
+app returned to its waiting state.
 
-Le registrazioni personali non vengono incluse nell’archivio sorgenti.
-Questi dati storici non sono stati rimisurati durante la revisione attuale.
+Personal recordings are not included in the source archive. These
+historical measurements were not repeated during the current review.
 
-ANCORA DA VERIFICARE
-• Nuova prova USB e wireless con la build 7 su iPhone fisico.
-• iPad fisico, via USB e wireless, con e senza audio.
-• Sessioni prolungate, rete interrotta e riconnessione ripetuta.
-• Cambio di orientamento e risoluzione durante una registrazione.
-• Più finestre e più dispositivi entro il limite di un ricevitore wireless.
-• Primo avvio e permessi su un altro Mac Apple Silicon compatibile.
-• Firma Developer ID, notarizzazione e apertura del pacchetto distribuito.
+STILL TO VERIFY
+• New USB and wireless testing with build 7 on a physical iPhone.
+• A physical iPad, via USB and wireless, with and without audio.
+• Long sessions, interrupted networks and repeated reconnection.
+• Orientation and resolution changes during recording.
+• Multiple windows and devices within the one-wireless-receiver limit.
+• First launch and permissions on another compatible Apple Silicon Mac.
+• Developer ID signing, notarization and opening the distributed package.
+• Full validation and release packaging of the bilingual 1.4 development build.
 
-La provenienza dei contributi, la disponibilità del nome, gli obblighi delle
-licenze e l’incertezza FairPlay richiedono una revisione separata descritta
-in RELEASE_CHECKLIST.txt. Per la revisione della cronologia e i suoi limiti
-vedi UPSTREAM_AUDIT.txt.
+Contribution provenance, name availability, license obligations and the
+FairPlay uncertainty require the separate review described in
+RELEASE_CHECKLIST.txt. See UPSTREAM_AUDIT.txt for the history review and
+its limitations.
