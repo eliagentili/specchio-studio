@@ -10,16 +10,17 @@ DEST = ROOT / 'docs'
 BASE = 'https://eliagentili.github.io/specchio-studio-site/'
 PROFILE = 'https://github.com/eliagentili'
 REPO = PROFILE + '/specchio-studio-site'
+RELEASE = PROFILE + '/specchio-studio/releases/tag/v1.3.1-preview.1'
 COPY = {
 'en': {
  'title': 'Specchio Studio — Your device. Ready to share.',
- 'description': 'A native Mac workflow by Elia Gentili for iPhone and iPad demos, annotated bug reports and creator exports. Preview of a free release in preparation.',
+ 'description': 'A native Mac workflow by Elia Gentili for iPhone and iPad demos, annotated bug reports and creator exports. Free experimental preview for Apple Silicon Macs.',
  'nav': ['Workflow', 'Made by Elia', 'Questions'], 'skip':'Skip to content', 'other':'Italiano',
- 'badge':'A native Mac app · Free release in preparation',
+ 'badge':'A native Mac app · Free experimental preview',
  'headline':'Your device.<br><em>Ready to share.</em>',
  'intro':'Turn iPhone and iPad captures into product demos, creator assets and clearer bug reports. All on your Mac.',
- 'cta':'See what you can make', 'authorlink':'Meet the maker',
- 'requirements':'macOS 14+ · Apple Silicon · Local processing',
+ 'cta':'Get the experimental preview', 'authorlink':'Explore the workflow',
+ 'requirements':'macOS 14+ · Apple Silicon · Not notarized',
  'imagealt':'Actual app-generated demo composition: MAKE ROOM artwork in a generic device frame on a green and navy background.',
  'caption':'Rendered by the real app canvas. Demo artwork, not a connected device or a full app screenshot.',
  'stage_label':'A little more than a recording.', 'stage_bottom':'Capture → Compose → Share',
@@ -47,34 +48,34 @@ COPY = {
  'maker_cta':'Explore my work on GitHub',
  'faq_label':'Before you ask', 'faq_title':'The useful details.',
  'faqs':[
- ['Can I download it now?', 'This is a preview. A free release is being prepared; there is no public app download yet. Release review and further physical-device testing are still in progress.'],
+ ['Can I download it now?', 'Yes. The free experimental preview v1.3.1-preview.1 includes the app ZIP, corresponding source and checksums. It is signed ad hoc and is not notarized; Gatekeeper assessment rejects this build. Read the requirements, known limits and open rights questions on the <a href="'+RELEASE+'">release page</a> before downloading.'],
  ['Which systems does it support?', 'The current target is macOS 14 or later on Apple Silicon. The app captures iPhone, iPad and Mac sources. There are no Windows or Linux versions. The current app interface is in Italian.'],
  ['Does my content go to a cloud service?', 'Capture, OCR and composition run locally on your Mac, without an app account. This website has no analytics, advertising, remote fonts or third-party embeds. GitHub hosts it and handles ordinary request data.'],
  ['Can I edit the recording as I capture?', 'The app records the source first. You then open the video composition tool to add framing, backgrounds, trim and fixed privacy masks. Composed video exports use H.264.'],
- ['What is still being checked?', 'More tests with physical devices, long sessions and first launch on another Mac are pending. The current local build is not notarized. Code and asset provenance, name availability and distribution rights also need review before an app release.'],
+ ['What is still being checked?', 'More tests with physical devices, long sessions and first launch on another Mac are pending. The current local build is not notarized. Code and asset provenance, name availability and distribution rights also need review before a stable release.'],
  ['How can I share feedback?', 'Use the public website repository for suggestions about the project and its presentation. Do not include personal data or private recordings in a public issue.']
  ],
  'closing_title':'Good work deserves<br><em>a clear presentation.</em>',
- 'closing_body':'Follow the project, explore the work behind it, or tell me where this workflow would help you.',
- 'closing_cta':'Join the conversation on GitHub',
- 'status':'Project preview · Free release in preparation',
+ 'closing_body':'Try the experimental Mac build, read its known limits, and tell me where the workflow could help you.',
+ 'closing_cta':'Get the free experimental preview',
+ 'status':'Free experimental preview · v1.3.1-preview.1',
  'footer':['Website source','Privacy','Made by Elia Gentili'],
  'privacy_page_title':'Privacy, simply.',
  'privacy_page_body':'This static website does not use analytics, advertising, tracking cookies, third-party embeds or remotely loaded fonts. All website assets are served from the same GitHub Pages site. Interactive examples run in your browser and do not send their state to a server.',
  'privacy_host':'GitHub Pages hosts this site. GitHub may process request information, such as IP addresses and browser details, under its own privacy statement. Opening a GitHub link takes you to a separate service with its own policies.',
- 'privacy_app':'The app preview describes local capture, OCR and composition. This page does not distribute the app, collect recordings, offer accounts or accept payments.',
+ 'privacy_app':'The app uses local capture, OCR and composition. App downloads are hosted separately in GitHub Releases. This website does not collect recordings, offer accounts or accept payments.',
  'back':'Back to Specchio Studio', 'host_policy':'GitHub privacy statement',
  'notfound':'This page is out of frame.', 'notfound_body':'The link may have changed. Head back to the project preview.'
 },
 'it': {
  'title':'Specchio Studio — Il tuo dispositivo. Pronto da condividere.',
- 'description':'Un’app Mac di Elia Gentili per demo di iPhone e iPad, segnalazioni bug annotate e pacchetti creator. Anteprima di un rilascio gratuito in preparazione.',
+ 'description':'Un’app Mac di Elia Gentili per demo di iPhone e iPad, segnalazioni bug annotate e pacchetti creator. Anteprima sperimentale gratuita per Mac Apple Silicon.',
  'nav':['Come funziona','Chi c’è dietro','Domande'], 'skip':'Vai al contenuto', 'other':'English',
- 'badge':'Un’app nativa per Mac · Rilascio gratuito in preparazione',
+ 'badge':'Un’app nativa per Mac · Anteprima sperimentale gratuita',
  'headline':'Il tuo dispositivo.<br><em>Pronto da condividere.</em>',
  'intro':'Trasforma le acquisizioni di iPhone e iPad in demo di prodotto, contenuti e segnalazioni bug più chiare. Tutto sul tuo Mac.',
- 'cta':'Scopri cosa puoi creare','authorlink':'Conosci Elia',
- 'requirements':'macOS 14+ · Apple Silicon · Elaborazione locale',
+ 'cta':'Scarica l’anteprima sperimentale','authorlink':'Scopri come funziona',
+ 'requirements':'macOS 14+ · Apple Silicon · Non notarizzata',
  'imagealt':'Composizione demo generata dall’app: grafica MAKE ROOM in una cornice generica su uno sfondo verde e blu.',
  'caption':'Render del vero canvas dell’app. Grafica dimostrativa, non un dispositivo collegato o uno screenshot dell’interfaccia completa.',
  'stage_label':'Qualcosa in più di una registrazione.', 'stage_bottom':'Acquisisci → Componi → Condividi',
@@ -102,21 +103,21 @@ COPY = {
  'maker_cta':'Esplora il mio lavoro su GitHub',
  'faq_label':'Prima di chiedertelo','faq_title':'I dettagli utili.',
  'faqs':[
- ['Posso già scaricarla?', 'Questa è un’anteprima. È in preparazione un rilascio gratuito; il download pubblico dell’app non è ancora disponibile. Sono in corso la revisione del rilascio e altre prove su dispositivi fisici.'],
+ ['Posso già scaricarla?', 'Sì. L’anteprima sperimentale gratuita v1.3.1-preview.1 include ZIP dell’app, sorgenti corrispondenti e checksum. Ha firma ad hoc e non è notarizzata; la verifica Gatekeeper rifiuta questa build. Prima di scaricarla, leggi requisiti, limiti e punti aperti sui diritti nella <a href="'+RELEASE+'">pagina della release</a>.'],
  ['Su quali sistemi funziona?', 'Il target attuale è macOS 14 o successivo su Apple Silicon. L’app acquisisce sorgenti iPhone, iPad e Mac. Non ci sono versioni per Windows o Linux. L’interfaccia attuale dell’app è in italiano.'],
  ['I miei contenuti vengono inviati a un servizio cloud?', 'Acquisizione, OCR e composizione avvengono localmente sul Mac, senza account nell’app. Questo sito non ha analytics, pubblicità, font remoti o contenuti incorporati di terzi. GitHub lo ospita e gestisce i normali dati delle richieste.'],
  ['Posso comporre il video mentre registro?', 'L’app registra prima la sorgente. Poi apri lo strumento di composizione video per aggiungere cornici, sfondi, taglio e maschere privacy fisse. I video composti vengono esportati in H.264.'],
- ['Cosa manca ancora da verificare?', 'Restano altre prove con dispositivi fisici, sessioni lunghe e primo avvio su un altro Mac. La build locale attuale non è notarizzata. Prima del rilascio dell’app vanno inoltre completate le verifiche su provenienza di codice e risorse, disponibilità del nome e diritti di distribuzione.'],
+ ['Cosa manca ancora da verificare?', 'Restano altre prove con dispositivi fisici, sessioni lunghe e primo avvio su un altro Mac. La build locale attuale non è notarizzata. Prima di un rilascio stabile vanno inoltre completate le verifiche su provenienza di codice e risorse, disponibilità del nome e diritti di distribuzione.'],
  ['Come posso lasciare un suggerimento?', 'Usa il repository pubblico del sito per suggerimenti sul progetto e sulla sua presentazione. Non inserire dati personali o registrazioni private in una issue pubblica.']
  ],
  'closing_title':'Un buon lavoro merita<br><em>di essere raccontato bene.</em>',
- 'closing_body':'Segui il progetto, esplora il lavoro che c’è dietro o raccontami dove questo flusso ti sarebbe utile.',
- 'closing_cta':'Parliamone su GitHub', 'status':'Anteprima del progetto · Rilascio gratuito in preparazione',
+ 'closing_body':'Prova la build sperimentale per Mac, leggi i suoi limiti e raccontami dove questo flusso ti sarebbe utile.',
+ 'closing_cta':'Scarica l’anteprima gratuita', 'status':'Anteprima sperimentale gratuita · v1.3.1-preview.1',
  'footer':['Sorgenti del sito','Privacy','Creato da Elia Gentili'],
  'privacy_page_title':'Privacy, con semplicità.',
  'privacy_page_body':'Questo sito statico non utilizza analytics, pubblicità, cookie di tracciamento, contenuti incorporati di terzi o font caricati da servizi esterni. Tutte le risorse provengono dallo stesso sito GitHub Pages. Gli esempi interattivi funzionano nel browser e non inviano il loro stato a un server.',
  'privacy_host':'Il sito è ospitato da GitHub Pages. GitHub può elaborare informazioni delle richieste, come indirizzi IP e dettagli del browser, secondo la propria informativa. Aprendo un link GitHub accedi a un servizio separato con le proprie regole.',
- 'privacy_app':'L’anteprima dell’app descrive acquisizione, OCR e composizione locali. Questa pagina non distribuisce l’app, non raccoglie registrazioni, non offre account e non accetta pagamenti.',
+ 'privacy_app':'L’app usa acquisizione, OCR e composizione locali. I download dell’app sono ospitati separatamente su GitHub Releases. Questo sito non raccoglie registrazioni, non offre account e non accetta pagamenti.',
  'back':'Torna a Specchio Studio','host_policy':'Informativa privacy di GitHub',
  'notfound':'Questa pagina è fuori inquadratura.', 'notfound_body':'Il collegamento potrebbe essere cambiato. Torna all’anteprima del progetto.'
 }}
@@ -147,14 +148,14 @@ def build(lang,c):
     content=head(lang,c)+f'''<body><a class="skip" href="#main">{c['skip']}</a>
 <header class="shell header"><a class="brand" href="./" aria-label="Specchio Studio"><img src="{prefix}assets/app-icon.png" width="38" height="38" alt=""><span>Specchio Studio</span></a><nav aria-label="{'Navigazione principale' if lang=='it' else 'Main navigation'}"><a href="#workflow">{c['nav'][0]}</a><a href="#maker">{c['nav'][1]}</a><a href="#questions">{c['nav'][2]}</a><a class="language" href="{altlang}" lang="{'en' if lang=='it' else 'it'}" hreflang="{'en' if lang=='it' else 'it'}">{c['other']} <span aria-hidden="true">↗</span></a></nav></header>
 <main id="main">
-<section class="shell hero"><div class="hero-copy"><p class="eyebrow status"><span></span>{c['badge']}</p><h1>{c['headline']}</h1><p class="hero-intro">{c['intro']}</p><div class="actions"><a class="button" href="#workflow">{c['cta']} <span aria-hidden="true">↗</span></a><a class="text-link" href="#maker">{c['authorlink']} <span aria-hidden="true">→</span></a></div><p class="requirements">{c['requirements']}</p></div><figure class="hero-figure"><div class="stage"><p class="stage-label">{c['stage_label']}</p><div class="stage-orbit" aria-hidden="true"></div><img class="hero-art" src="{prefix}assets/demo-preview.webp" width="1000" height="1200" alt="{c['imagealt']}" fetchpriority="high"><div class="stage-bottom"><span class="stage-dot"></span>{c['stage_bottom']}<span aria-hidden="true">↗</span></div></div><figcaption>{c['caption']}</figcaption></figure></section>
+<section class="shell hero"><div class="hero-copy"><p class="eyebrow status"><span></span>{c['badge']}</p><h1>{c['headline']}</h1><p class="hero-intro">{c['intro']}</p><div class="actions"><a class="button" href="{RELEASE}">{c['cta']} <span aria-hidden="true">↗</span></a><a class="text-link" href="#workflow">{c['authorlink']} <span aria-hidden="true">→</span></a></div><p class="requirements">{c['requirements']}</p></div><figure class="hero-figure"><div class="stage"><p class="stage-label">{c['stage_label']}</p><div class="stage-orbit" aria-hidden="true"></div><img class="hero-art" src="{prefix}assets/demo-preview.webp" width="1000" height="1200" alt="{c['imagealt']}" fetchpriority="high"><div class="stage-bottom"><span class="stage-dot"></span>{c['stage_bottom']}<span aria-hidden="true">↗</span></div></div><figcaption>{c['caption']}</figcaption></figure></section>
 <div class="shell bridge"><span class="asterisk" aria-hidden="true">✳</span><h2>{c['bridge']}</h2><p>{c['bridge_body']}</p></div>
 <section class="workflow-wrap" id="workflow"><div class="shell"><p class="eyebrow">{c['workflow_label']}</p><h2 class="section-title">{c['workflow_title']}</h2><div class="workflow"><div class="workflow-tabs" role="tablist" aria-label="{'Flussi di lavoro' if lang=='it' else 'Workflows'}">{tabs}</div><div class="workflow-panels">{panels}</div></div></div></section>
 <section class="shell formats"><div class="split-heading"><div><p class="eyebrow">{c['formats_label']}</p><h2 class="section-title">{c['formats_title']}</h2></div><p>{c['formats_body']}</p></div><figure><img src="{prefix}assets/formats-proof.webp" width="1440" height="840" alt="{c['formats_alt']}" loading="lazy"><figcaption>{c['formats_caption']}</figcaption></figure></section>
 <section class="privacy-wrap"><div class="shell privacy-grid"><div><p class="eyebrow">{c['privacy_label']}</p><h2 class="section-title">{c['privacy_title']}</h2><p class="section-body">{c['privacy_body']}</p><p class="fine">{c['privacy_note']}</p></div><div class="privacy-example"><p class="eyebrow">{c['privacy_try']}</p><div class="sample-card"><div class="sample-bar"><span></span><span></span><span></span><span class="sample-title">{c['sample_title']}</span></div><div class="sample-content"><span class="avatar" aria-hidden="true">A</span><h3>{c['sample_name']}</h3><p>{c['sample_label']}</p><div class="sample-value" aria-live="polite"><span class="mask-placeholder">{c['masked']}</span><span class="example-email" hidden>demo@example.invalid</span></div></div></div><button class="mask-toggle" type="button" aria-pressed="false" data-show="{c['privacy_toggle']}" data-hide="{c['privacy_hidden']}">{c['privacy_toggle']} <span aria-hidden="true">↗</span></button></div></div></section>
 <section class="shell maker" id="maker"><div class="maker-mark" aria-hidden="true"><div class="mirror-one"></div><div class="mirror-two"></div><span>EG<span>↗</span></span></div><div><p class="eyebrow">{c['maker_label']}</p><h2 class="section-title">{c['maker_title']}</h2><p class="section-body">{c['maker_body']}</p><p class="maker-stack">{c['maker_stack']}</p><a class="text-link" href="{PROFILE}">{c['maker_cta']} ↗</a></div></section>
 <section class="shell questions" id="questions"><div><p class="eyebrow">{c['faq_label']}</p><h2 class="section-title">{c['faq_title']}</h2></div><div class="faq-list">{faqs}</div></section>
-<section class="closing"><div class="shell"><p class="eyebrow">Specchio Studio × Elia Gentili</p><h2 class="section-title">{c['closing_title']}</h2><p>{c['closing_body']}</p><a class="button light" href="{REPO}/issues">{c['closing_cta']} ↗</a><p class="closing-status"><span></span>{c['status']}</p></div></section></main>{footer(lang,c)}</body></html>'''
+<section class="closing"><div class="shell"><p class="eyebrow">Specchio Studio × Elia Gentili</p><h2 class="section-title">{c['closing_title']}</h2><p>{c['closing_body']}</p><a class="button light" href="{RELEASE}">{c['closing_cta']} ↗</a><p class="closing-status"><span></span>{c['status']}</p></div></section></main>{footer(lang,c)}</body></html>'''
     directory = DEST / ('it' if lang=='it' else '')
     directory.mkdir(parents=True,exist_ok=True)
     (directory/'index.html').write_text(content,encoding='utf-8')

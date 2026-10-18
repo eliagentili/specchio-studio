@@ -2,7 +2,7 @@
 
 The public preview is https://eliagentili.github.io/specchio-studio-site/ with Italian at `/it/`.
 
-Its public repository is https://github.com/eliagentili/specchio-studio-site. The website has a separate history and contains no app sources, binary, native receiver, dependency archive or private audit material. The application repository stays private. Website publication is not app-release approval.
+Its public repository is https://github.com/eliagentili/specchio-studio-site. The website has a separate history and contains no app sources, binary, native receiver, dependency archive or private audit material. The application repository is public, with experimental release v1.3.1-preview.1 at https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1. The first release was authorized with provenance, naming and wireless-library rights questions explicitly unresolved. The release remains experimental, signed ad hoc and not notarized.
 
 ## Update and preview
 
@@ -44,4 +44,4 @@ The public repo uses GitHub Pages from `main`, repository root, with HTTPS. `.no
 - Five HTML pages, local paths/fragments, bilingual SEO, script syntax and all 12 asset hashes passed `scripts/check_site.py`.
 - Independent static review confirmed the website-only publication boundary.
 
-These checks validate the website and its presentation. They do not validate hardware capture or establish app distribution rights. Real device demos and any future download CTA must reflect the current app verification and release status.
+These checks validate the website and its presentation. They do not validate hardware capture or establish app distribution rights. Real device demos and download CTAs must reflect the current app verification and release status. The CTA links to the release notes, which explain Gatekeeper rejection and the open rights questions before the user selects an asset.

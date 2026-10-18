@@ -12,7 +12,11 @@ Created by [**Elia Gentili**](https://github.com/eliagentili) · Native macOS ap
   <img src="docs/assets/github-banner.png" alt="Specchio Studio — Your device. Ready to share. Created by Elia Gentili." width="900">
 </p>
 
-**Preview · 1.3.1, build 7 · Apple Silicon · macOS 14 or later.** Intended for a free release. The app is currently under review; no public app download is available.
+**Experimental prerelease · 1.3.1, build 7 · Apple Silicon · macOS 14 or later.** Free to download for testing. This is an early release with known limitations and unresolved provenance and legal review; it is not a stable or notarized release.
+
+[**Get the experimental prerelease →**](https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1) — app ZIP, corresponding source archive and SHA-256 checksums.
+
+The app is **ad hoc signed, without Developer ID or notarization**. The local Gatekeeper assessment rejects it; macOS may block a downloaded copy. Read the release notes before downloading. Code and asset provenance, name availability and the receiver's FairPlay status remain under review. Publishing this prerelease does not establish legal clearance.
 
 ## One capture. Three useful outcomes.
 
@@ -75,9 +79,9 @@ The app targets **macOS on Apple Silicon**. Windows, Linux and Intel Mac builds 
 
 ## Release status, sources and licensing
 
-The planned release is **free**. Publishing a product preview does not make the app a public release or close its release checks.
+The first public release is the free **[v1.3.1-preview.1 experimental prerelease](https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1)**. It contains the app ZIP, the corresponding source archive, `SOURCE-INFO.txt` and checksums. Its source snapshot is commit `d6e0bd84f334d3064c0e5e4af163254a08611cf4`; later documentation updates do not change those packaged bytes.
 
-Before distributing the app, the open review must address code and asset provenance, name availability, licensing obligations and the receiver's FairPlay dependency: [UxPlay documents legal uncertainty about that library](https://github.com/FDH2/UxPlay/blob/4e95a9ec013c52d8555d88dbc55abe346e94d56e/README.md#disclaimer). Open-source licensing alone does not establish all necessary rights. Developer ID signing, notarization and final hardware validation also remain open. See [RELEASE_CHECKLIST.txt](RELEASE_CHECKLIST.txt).
+The owner explicitly chose to publish an experimental prerelease with the uncertainties disclosed. Code and asset provenance, name availability, licensing obligations and the receiver's FairPlay dependency remain open: [UxPlay documents legal uncertainty about that library](https://github.com/FDH2/UxPlay/blob/4e95a9ec013c52d8555d88dbc55abe346e94d56e/README.md#disclaimer). Open-source licensing alone does not establish all necessary rights. Developer ID signing, notarization and final hardware validation also remain open. See [RELEASE_CHECKLIST.txt](RELEASE_CHECKLIST.txt).
 
 The project declares **GPL-3.0-or-later**. Third-party components retain their own copyrights and licenses. See [LICENSE](LICENSE) and [ThirdParty/NOTICE.txt](ThirdParty/NOTICE.txt); license texts are also bundled in the app. A distributed binary must be accompanied by the corresponding source for that build as required by the applicable licenses.
 
@@ -90,7 +94,7 @@ The project declares **GPL-3.0-or-later**. Third-party components retain their o
 | [RELEASE_CHECKLIST.txt](RELEASE_CHECKLIST.txt) | Remaining distribution checks |
 | [Launch kit](marketing/LAUNCH.md) | Positioning, demonstration plan and unpublished campaign copy |
 
-Local release packaging is available with `python3 scripts/release.py`; it rebuilds dependencies, tests and builds from an isolated source copy. `--source-only` packages source without validating the app. Packages and checksums are placed in `.build/releases/1.3.1/`. Neither command publishes anything. Upstream comparisons are repeatable with `python3 scripts/verify_upstream.py --download` or `--offline`. The pinned OpenSSL 3.6 branch reaches end of support on **1 November 2026**; migration remains a release-maintenance task.
+Local release packaging is available with `python3 scripts/release.py`; it rebuilds dependencies, tests and builds from an isolated source copy. The prerelease packaging run passed all 23 test groups, the optimized build, ad hoc signature integrity and all **653 source-manifest hashes**. These checks do not establish hardware compatibility, notarization or legal clearance. `--source-only` packages source without validating the app. Packages and checksums are placed in `.build/releases/1.3.1/`. Neither command publishes anything. Upstream comparisons are repeatable with `python3 scripts/verify_upstream.py --download` or `--offline`. The pinned OpenSSL 3.6 branch reaches end of support on **1 November 2026**; migration remains a release-maintenance task.
 
 ## A project by Elia Gentili
 

@@ -10,7 +10,11 @@ esegui prima ./Native/build_crypto.sh; occorrono anche Perl e make.
 L’app locale è firmata ad hoc, senza firma Developer ID né notarizzazione.
 L’icona geometrica è generata dal codice incluso: per riprodurla esegui
 swift scripts/generate_icon.swift dalla cartella del progetto.
-Un pacchetto preparato localmente non è ancora una release pubblica approvata.
+La pre-release pubblica gratuita v1.3.1-preview.1 è sperimentale.
+Download, sorgenti e checksum:
+https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1
+La valutazione Gatekeeper rifiuta questa build: non è una distribuzione
+notarizzata. Leggi limiti e incertezze nelle note prima di scaricarla.
 
 COLLEGARE UNA SORGENTE
 USB: collega iPhone/iPad con un cavo dati, sbloccalo e autorizza il Mac.
@@ -104,20 +108,22 @@ i testi sono anche nel menu Licenze open source dell’app.
 
 La provenienza di tutti i contributi e delle risorse grafiche non è ancora
 confermata. La disponibilità del nome deve essere verificata. UxPlay segnala
-incertezza legale sulla propria libreria FairPlay; prima della pubblicazione
-va valutata anche questa dipendenza, oltre agli obblighi GPL/LGPL/MIT/Apache.
+incertezza legale sulla propria libreria FairPlay. La pubblicazione
+sperimentale è stata scelta con queste incertezze ancora aperte; resta
+da valutare la dipendenza, oltre agli obblighi GPL/LGPL/MIT/Apache.
 Riferimento ufficiale:
 https://github.com/FDH2/UxPlay/blob/4e95a9ec013c52d8555d88dbc55abe346e94d56e/README.md#disclaimer
 
-RELEASE_CHECKLIST.txt raccoglie i punti aperti. PROMO.txt è una bozza non
-pubblicata. python3 scripts/release.py prepara pacchetti locali con test e
+RELEASE_CHECKLIST.txt raccoglie i punti aperti. PROMO.txt descrive
+l’anteprima; i testi social restano bozze, senza post inviati. python3 scripts/release.py prepara pacchetti locali con test e
 build; --source-only prepara solo i sorgenti, senza validare il programma.
 I pacchetti completi sono in .build/releases/1.3.1/; --source-only usa la
 sottocartella source-only/. Per un binario pubblico rendi
 accessibile dalla stessa pagina il sorgente corrispondente della stessa
 build, incluse dipendenze, modifiche e istruzioni di ricompilazione.
 L’archivio sorgenti non contiene .git. La cronologia di main è stata
-sostituita con un solo commit radice della versione revisionata; la
+inizialmente sostituita con un solo commit radice della versione
+revisionata, seguito dai commit di marketing e documentazione. La
 riscrittura non elimina cache del servizio o cloni precedenti e non
 modifica la provenienza dei contributi.
 

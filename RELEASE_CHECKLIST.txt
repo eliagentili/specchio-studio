@@ -1,9 +1,14 @@
 SPECCHIO STUDIO 1.3.1 — CHECKLIST DI PUBBLICAZIONE
 Aggiornata il 18 ottobre 2026 · build 7
 
-STATO: REVISIONE APERTA. Preparare un archivio non chiude automaticamente
-nessuno dei punti relativi a diritti, hardware o distribuzione pubblica.
-Le caselle sotto indicano attività da documentare prima del rilascio.
+STATO: PRE-RELEASE SPERIMENTALE v1.3.1-preview.1.
+https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1
+Il titolare ha scelto esplicitamente di pubblicarla con le incertezze
+dichiarate. Tale autorizzazione non certifica la provenienza, i diritti,
+il nome o la compatibilità e non chiude le relative caselle.
+Le attività aperte restano nel percorso verso un rilascio stabile.
+I pacchetti pubblicati derivano da d6e0bd84f334d3064c0e5e4af163254a08611cf4;
+i successivi commit documentali ne descrivono la pubblicazione.
 
 DIRITTI, PROVENIENZA E NOME
 [ ] Ricostruire e documentare la provenienza dei contributi di codice,
@@ -20,7 +25,8 @@ DIRITTI, PROVENIENZA E NOME
 [ ] Verificare la disponibilità del nome “Specchio Studio” e dell’identità
     grafica nei territori e canali scelti. L’audit attuale non è una ricerca
     di anteriorità su marchi, nomi commerciali, brevetti o design.
-[ ] Evitare promesse di assenza assoluta di rischi o compatibilità universale.
+[x] Testi della pre-release senza promesse di assenza assoluta di rischi
+    o compatibilità universale; limiti dichiarati nelle note.
 
 LICENZE E SORGENTI
 [ ] Verificare applicabilità e adempimenti GPL-3.0-or-later, LGPL-2.1-or-later,
@@ -28,33 +34,39 @@ LICENZE E SORGENTI
 [ ] Controllare che app e archivio contengano testi delle licenze,
     attribuzioni, copyright e avvisi delle modifiche locali, senza rimuovere
     gli avvisi dei titolari dei componenti di terze parti.
-[ ] Rendere disponibili dalla stessa pagina del binario i sorgenti
+[x] Rendere disponibili dalla stessa pagina del binario i sorgenti
     corrispondenti della medesima release, incluse dipendenze, modifiche,
     script di compilazione e istruzioni. Controllare SOURCE-INFO.txt.
-[ ] Ricompilare dal solo archivio sorgenti su un Mac compatibile, inclusa
-    OpenSSL, e verificare che non richieda file privati o esterni non dichiarati.
-[ ] Controllare SOURCE-MANIFEST.json e SHA256SUMS.txt; evitare modifiche
-    al binario dopo aver prodotto i checksum definitivi.
+[x] Ricompilare lo snapshot sorgenti isolato su un Mac compatibile,
+    inclusa OpenSSL, ed eseguire test e build senza usare dati privati.
+    Questo controllo non sostituisce il primo avvio su un altro Mac.
+[x] Controllare SOURCE-MANIFEST.json (653 hash) e SHA256SUMS.txt;
+    mantenere invariati i pacchetti dopo i checksum definitivi.
 
 CRONOLOGIA E CONTENUTI PUBBLICI
-[x] Sostituire main con un solo commit radice della versione revisionata
-    e verificare la cronologia raggiungibile da un clone nuovo. Backup
-    ed evidenze sono conservati privatamente fuori dal progetto.
-[ ] Prima di rendere pubblico il repository, ricontrollare ogni ref e
-    artefatto. La riscrittura non elimina cache del servizio, vecchi SHA,
+[x] Importazione iniziale di main in un solo commit radice della versione
+    revisionata e verifica della cronologia da un clone nuovo. Sono poi
+    seguiti commit per marketing e documentazione della pre-release.
+    Backup ed evidenze sono conservati privatamente fuori dal progetto.
+[x] Ref remoti main e v1.3.1-preview.1 verificati; quattro allegati
+    riscaricati senza autenticazione con hash identici ai file locali.
+    La riscrittura non elimina cache del servizio, vecchi SHA,
     fork o cloni preesistenti e non certifica i diritti sui contributi.
-[ ] L’archivio prodotto da scripts/release.py non include .git o Analysis.
-    Distribuire soltanto sorgenti revisionati dopo la valutazione dei
-    diritti. Preparare un archivio non cambia la cronologia o la
-    visibilità del repository remoto.
-[ ] Escludere credenziali, chiavi di abbinamento, registrazioni personali,
-    log privati, cache e materiale estraneo alla distribuzione.
-[ ] Ricontrollare README, immagini e PROMO.txt sul contenuto effettivo della
-    release. PROMO.txt è solo una bozza e non è stato pubblicato o inviato.
+[x] L’archivio prodotto da scripts/release.py non include .git o Analysis.
+    La pubblicazione sperimentale è una scelta separata del titolare e
+    non risolve la provenienza o i diritti. Lo script prepara i pacchetti,
+    senza cambiare cronologia o visibilità del repository remoto.
+[x] Elenco dei file e pacchetti controllato: escluse chiavi di abbinamento,
+    registrazioni personali, log privati e cache. Scansione per pattern
+    senza candidati ai riferimenti e token cercati; non è una garanzia
+    generale di assenza di ogni segreto.
+[x] Ricontrollare README, immagini e PROMO.txt sul contenuto effettivo della
+    release. I testi social restano bozze: nessun post è stato inviato.
 
 COLLAUDO DELLA BUILD DEFINITIVA
-[ ] Eseguire ./test.sh e ./build.sh senza modifiche concorrenti ai sorgenti.
-    Registrare data, ambiente, risultati e limiti in VALIDAZIONE.txt.
+[x] Eseguire ./test.sh e ./build.sh dallo snapshot isolato: 23 gruppi PASS,
+    build ottimizzata arm64 e firma ad hoc integra. Risultati e limiti
+    sono registrati in VALIDAZIONE.txt; nessun nuovo collaudo fisico.
 [ ] Provare USB e wireless con iPhone sulla build 7: permessi, PIN, audio,
     screenshot, H.264, HEVC, stop dal dispositivo e riconnessione.
 [ ] Provare iPad fisico USB/wireless e documentare la compatibilità osservata.
@@ -70,12 +82,17 @@ FIRMA, NOTARIZZAZIONE E PACCHETTI
     idonea alla distribuzione. L’attuale build usa solo una firma ad hoc.
 [ ] Eseguire notarizzazione e stapling sul pacchetto definitivo secondo
     le istruzioni Apple, quindi provare apertura e permessi da un altro Mac.
+    La pre-release non è notarizzata e non ha Developer ID; spctl --assess
+    la rifiuta con uscita 3. La firma ad hoc verifica soltanto l’integrità.
 [ ] Dopo eventuale firma/notarizzazione, rigenerare il pacchetto binario e
     i suoi checksum mantenendo l’abbinamento al sorgente effettivo.
 [ ] Controllare manualmente il contenuto di ZIP e sorgenti, menu licenze,
     icona, versione/build e informazioni sui sorgenti.
-[ ] Pubblicare e promuovere soltanto dopo aver chiuso o risolto in modo
-    documentato i punti aperti. Nessuno script locale esegue questa decisione.
+[x] Pubblicare come pre-release sperimentale, su scelta esplicita del
+    titolare, dichiarando i punti ancora aperti nelle note e nel README.
+    La decisione non è stata presa dallo script di packaging.
+[ ] Prima di presentarla come release stabile, completare i collaudi,
+    la distribuzione firmata e la revisione di provenienza e diritti.
 
 RIFERIMENTI UFFICIALI
 UxPlay: avvertenza FairPlay e attribuzioni

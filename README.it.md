@@ -12,7 +12,11 @@ Creato da [**Elia Gentili**](https://github.com/eliagentili) · App nativa macOS
   <img src="docs/assets/github-banner.png" alt="Specchio Studio — Il tuo dispositivo. Pronto da condividere. Creato da Elia Gentili." width="900">
 </p>
 
-**Anteprima · 1.3.1, build 7 · Apple Silicon · macOS 14 o successivo.** Il rilascio previsto è gratuito. L’app è in revisione e non è ancora disponibile un download pubblico.
+**Pre-release sperimentale · 1.3.1, build 7 · Apple Silicon · macOS 14 o successivo.** Scaricabile gratuitamente per le prove. È una prima versione con limiti noti e revisione di provenienza e diritti ancora aperta; non è una release stabile o notarizzata.
+
+[**Scarica la pre-release sperimentale →**](https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1) — ZIP dell’app, archivio sorgenti corrispondenti e checksum SHA-256.
+
+L’app usa una **firma ad hoc, senza Developer ID o notarizzazione**. La valutazione locale di Gatekeeper la rifiuta; macOS può bloccare la copia scaricata. Leggi le note prima del download. Provenienza di codice e risorse, disponibilità del nome e stato FairPlay del ricevitore restano da verificare. La pubblicazione della pre-release non certifica i diritti.
 
 ## Un’acquisizione. Tre risultati utili.
 
@@ -75,9 +79,9 @@ L’app è destinata a **macOS su Apple Silicon**. Non sono disponibili build Wi
 
 ## Rilascio, sorgenti e licenze
 
-Il rilascio previsto è **gratuito**. La pubblicazione di un’anteprima del prodotto non equivale al rilascio pubblico dell’app e non chiude le verifiche necessarie.
+La prima versione pubblica è la **[pre-release sperimentale gratuita v1.3.1-preview.1](https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1)**. Comprende ZIP dell’app, archivio sorgenti corrispondenti, `SOURCE-INFO.txt` e checksum. Lo snapshot dei sorgenti è il commit `d6e0bd84f334d3064c0e5e4af163254a08611cf4`; i successivi aggiornamenti alla documentazione non modificano i pacchetti pubblicati.
 
-Prima di distribuire l’app vanno risolti i punti aperti sulla provenienza di codice e risorse, disponibilità del nome, obblighi di licenza e dipendenza FairPlay del ricevitore: [UxPlay documenta un’incertezza legale sulla libreria](https://github.com/FDH2/UxPlay/blob/4e95a9ec013c52d8555d88dbc55abe346e94d56e/README.md#disclaimer). Le licenze open source da sole non dimostrano tutti i diritti necessari. Restano aperti anche firma Developer ID, notarizzazione e collaudi hardware finali. Vedi [RELEASE_CHECKLIST.txt](RELEASE_CHECKLIST.txt).
+Il titolare ha scelto esplicitamente di pubblicare una pre-release sperimentale dichiarando le incertezze. Restano aperti provenienza di codice e risorse, disponibilità del nome, obblighi di licenza e dipendenza FairPlay del ricevitore: [UxPlay documenta un’incertezza legale sulla libreria](https://github.com/FDH2/UxPlay/blob/4e95a9ec013c52d8555d88dbc55abe346e94d56e/README.md#disclaimer). Le licenze open source da sole non dimostrano tutti i diritti necessari. Restano aperti anche firma Developer ID, notarizzazione e collaudi hardware finali. Vedi [RELEASE_CHECKLIST.txt](RELEASE_CHECKLIST.txt).
 
 Il progetto dichiara **GPL-3.0-or-later**. I componenti di terze parti conservano copyright e licenze propri. Vedi [LICENSE](LICENSE) e [ThirdParty/NOTICE.txt](ThirdParty/NOTICE.txt); i testi sono inclusi anche nell’app. Per distribuire un binario occorre rendere disponibili i sorgenti corrispondenti di quella build secondo le licenze applicabili.
 
@@ -90,7 +94,7 @@ Il progetto dichiara **GPL-3.0-or-later**. I componenti di terze parti conservan
 | [RELEASE_CHECKLIST.txt](RELEASE_CHECKLIST.txt) | Verifiche ancora aperte per la distribuzione |
 | [Kit di lancio](marketing/LAUNCH.md) | Posizionamento, piano demo e bozze non pubblicate |
 
-`python3 scripts/release.py` prepara pacchetti locali ricompilando le dipendenze ed eseguendo test e build da una copia isolata. `--source-only` prepara i soli sorgenti senza validare l’app. Pacchetti e checksum vengono salvati in `.build/releases/1.3.1/`. Nessun comando pubblica file. Il confronto upstream è ripetibile con `python3 scripts/verify_upstream.py --download` oppure `--offline`. Il ramo OpenSSL 3.6 incluso termina il supporto il **1° novembre 2026**; la migrazione resta un’attività di manutenzione da chiudere per il rilascio.
+`python3 scripts/release.py` prepara pacchetti locali ricompilando le dipendenze ed eseguendo test e build da una copia isolata. La preparazione della pre-release ha superato i 23 gruppi di test, la build ottimizzata, l’integrità della firma ad hoc e tutti i **653 hash del manifest sorgenti**. Queste verifiche non certificano compatibilità hardware, notarizzazione o diritti. `--source-only` prepara i soli sorgenti senza validare l’app. Pacchetti e checksum vengono salvati in `.build/releases/1.3.1/`. Nessun comando pubblica file. Il confronto upstream è ripetibile con `python3 scripts/verify_upstream.py --download` oppure `--offline`. Il ramo OpenSSL 3.6 incluso termina il supporto il **1° novembre 2026**; la migrazione resta un’attività di manutenzione del rilascio.
 
 ## Un progetto di Elia Gentili
 

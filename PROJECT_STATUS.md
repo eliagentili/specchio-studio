@@ -1,6 +1,6 @@
 # Stato del progetto
 
-Aggiornato il **18 ottobre 2026**. Versione **1.3.1, build 7**, arm64, target macOS 14. Preparazione locale per revisione; pubblicazione ancora da approvare dopo la chiusura dei punti aperti.
+Aggiornato il **18 ottobre 2026**. Versione **1.3.1, build 7**, arm64, target macOS 14. Prima **[pre-release sperimentale gratuita v1.3.1-preview.1](https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1)**, pubblicata su scelta esplicita del titolare con le incertezze dichiarate. La pubblicazione non chiude la revisione dei diritti, i collaudi hardware o la notarizzazione.
 
 ## Funzionalità
 
@@ -33,9 +33,11 @@ Le verifiche manuali ancora aperte comprendono nuovo collaudo iPhone, iPad, sess
 
 `python3 scripts/release.py` esegue test e build e prepara in `.build/releases/1.3.1/` archivio sorgenti senza cronologia Git, ZIP dell’app, `SOURCE-INFO.txt` e checksum. L’opzione `--source-only` prepara solo i sorgenti nella sottocartella `source-only/` e non valida il programma. Nessuna delle due modalità pubblica file o cambia lo stato del repository remoto.
 
-La build locale è firmata ad hoc e non notarizzata. Per il rilascio devono essere chiusi i punti di `RELEASE_CHECKLIST.txt`: provenienza dei contributi e delle risorse, disponibilità del nome, revisione della dipendenza FairPlay, conformità delle licenze e distribuzione dei sorgenti corrispondenti.
+La pre-release usa una firma ad hoc, senza Developer ID o notarizzazione. L’integrità della firma è verificata; la valutazione locale `spctl --assess` la rifiuta con uscita 3. Un download può quindi essere bloccato da macOS. Restano aperti i punti di `RELEASE_CHECKLIST.txt`: provenienza dei contributi e delle risorse, disponibilità del nome, revisione della dipendenza FairPlay e conformità delle licenze. L’autorizzazione alla pubblicazione sperimentale non certifica questi aspetti.
 
-L’archivio senza `.git` può essere valutato per una futura distribuzione pubblica solo dopo la revisione dei diritti. La sua preparazione non modifica il repository. `PROMO.txt` e `marketing/LAUNCH.md` contengono testi promozionali e bozze social; nessun post social è stato inviato. La presentazione pubblica è distinta dalla distribuzione dell’app.
+La pagina della pre-release distribuisce ZIP dell’app, sorgenti corrispondenti senza `.git`, `SOURCE-INFO.txt` e checksum. I pacchetti derivano dal commit `d6e0bd84f334d3064c0e5e4af163254a08611cf4`, prima degli aggiornamenti documentali che ne annunciano la pubblicazione. La nuova preparazione isolata ha ricompilato le dipendenze ed eseguito 23 gruppi di test e build ottimizzata; i 653 hash del manifest sorgenti, i checksum e l’integrità della firma ad hoc sono verificati. Queste prove non sono un nuovo collaudo fisico né una verifica dei diritti.
+
+`PROMO.txt` e `marketing/LAUNCH.md` contengono testi promozionali e bozze social; nessun post social è stato inviato. Il sito pubblico ora collega il download sperimentale e ne espone i limiti.
 
 Le chiavi di abbinamento risiedono nei dati locali dell’app. Build, registrazioni personali e dati di abbinamento devono rimanere esclusi dai sorgenti distribuiti.
 
@@ -51,10 +53,10 @@ Le maschere immagine e video sono separate; gli stili non persistono dati della 
 
 Aggiornati libplist 2.8.0 e OpenSSL 3.6.5; controlli sulle dimensioni e sullo stato dell’abbinamento PIN, con regressioni AddressSanitizer e scambio autenticato sintetico completo. Il confronto dei sorgenti ufficiali è ripetibile con `scripts/verify_upstream.py`; pin e impronte sono in `ThirdParty/upstream.json`.
 
-`UPSTREAM_AUDIT.txt` registra ambito e limiti del controllo. Su autorizzazione del titolare, main è stato sostituito con un solo commit radice della versione revisionata. Backup e materiali di analisi sono conservati privatamente fuori dal progetto. La riscrittura non elimina cache del servizio o cloni precedenti e non cambia la provenienza del codice. Il ramo OpenSSL 3.6 termina il supporto il 1° novembre 2026, quindi va pianificata una migrazione. Non è stata pubblicata una release o modificata la visibilità del repository.
+`UPSTREAM_AUDIT.txt` registra ambito e limiti del controllo storico. Su autorizzazione del titolare, main è stato inizialmente sostituito con un solo commit radice della versione revisionata; sono poi seguiti commit per marketing e documentazione della pre-release. Backup e materiali di analisi sono conservati privatamente fuori dal progetto. La riscrittura non elimina cache del servizio o cloni precedenti e non cambia la provenienza del codice. Il ramo OpenSSL 3.6 termina il supporto il 1° novembre 2026, quindi va pianificata una migrazione. La pubblicazione sperimentale successiva non modifica l’ambito o i limiti dell’audit precedente.
 
 ## Presentazione pubblica
 
-Landing bilingue: https://eliagentili.github.io/specchio-studio-site/ (italiano in `/it/`). Il repository pubblico `eliagentili/specchio-studio-site` contiene soltanto sito, immagini originali e licenza del sito, con una cronologia autonoma. Il repository dell’app resta privato: non è stata pubblicata una release o un’app scaricabile.
+Landing bilingue: https://eliagentili.github.io/specchio-studio-site/ (italiano in `/it/`). Il repository pubblico `eliagentili/specchio-studio-site` contiene soltanto sito, immagini originali e licenza del sito, con una cronologia autonoma. Il repository dell’app `eliagentili/specchio-studio` è pubblico e ospita la pre-release sperimentale, i sorgenti e le note sulle verifiche ancora aperte.
 
 `docs/` è la sorgente statica del sito; `scripts/build_site.py` rigenera le pagine EN/IT, `scripts/check_site.py` verifica collegamenti, metadati e integrità degli asset, `scripts/package_site.py` prepara una cartella isolata tramite elenco esplicito dei file ammessi. `marketing/SITE.md` descrive la manutenzione; `marketing/LAUNCH.md` raccoglie posizionamento, storyboard e bozze LinkedIn.

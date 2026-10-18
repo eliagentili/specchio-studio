@@ -1,6 +1,6 @@
 # Specchio Studio — launch kit
 
-Prepared for **Elia Gentili**, 18 October 2026. Current app: **1.3.1, build 7**. Campaign copy is a draft; no social post or outreach message has been sent. The product page presents a preview. The planned app release is free, with no public app download currently available.
+Prepared for **Elia Gentili**, 18 October 2026. Current app: **1.3.1, build 7**. Campaign copy is a draft; no social post or outreach message has been sent. The product page now links to the free experimental prerelease [v1.3.1-preview.1](https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1). The user authorized publication with the stated provenance, naming and wireless-library rights uncertainties still open. This is not a stable release or legal clearance. The app is signed ad hoc and not notarized; Gatekeeper assessment rejects the build.
 
 ## The position to own
 
@@ -46,9 +46,9 @@ Describe the work and its tests. Do not imply every included dependency was auth
 3. Show the actual workflow and the files it creates.
 4. Explain local processing and reviewable masks, with the static-video-mask limitation nearby.
 5. Introduce Elia and the technical work behind the experience.
-6. Close with the free-release plan and current review status. During preview, the action is to explore the workflow or Elia's projects. After release, it becomes downloading the verified release and its matching source.
+6. Close with the free-release plan and current review status. For this experimental release, the action links to release notes with requirements, limitations, app ZIP, matching source and checksums. Elia's projects remain linked in the maker section.
 
-Use the same wording in the README, page metadata and social card. A public product preview can coexist with a private app repository; do not expose private-source links as if visitors can use them. Do not add a disabled download button, fabricated waiting list, invented testimonials or a suggested price.
+Use the same wording in the README, page metadata and social card. The app and website repositories are now public. Keep the download link on the tagged release so visitors receive the correct app, source and signing information together. Do not add a disabled download button, fabricated waiting list, invented testimonials or a suggested price.
 
 ## GitHub presentation
 
@@ -60,7 +60,7 @@ Use the same wording in the README, page metadata and social card. A public prod
 
 **Preview-page description:**
 
-> Specchio Studio by Elia Gentili. Turn device captures into demos, creator assets and clearer bug reports on your Mac. A preview of a planned free app.
+> Specchio Studio by Elia Gentili. Turn device captures into demos, creator assets and clearer bug reports on your Mac. Free experimental preview for Apple Silicon Macs.
 
 The README should give visitors the result first, then setup, evidence and limits. Keep current version, platform and availability accurate. Do not add stars, download counts, review scores or performance numbers without a verifiable source.
 
@@ -77,7 +77,7 @@ Create one concise visual walkthrough with synthetic data, then three smaller de
 | 15–25 s | Draw a mask over a fake email; review the result | “Cover selected details.” |
 | 25–38 s | Export a creator package and open all three actual outputs | “Portrait. Square. Landscape.” |
 | 38–50 s | Annotate the image, enter a short bug description, export and open report.md | “Give the issue context.” |
-| 50–60 s | Product name, author and platform/status | “Specchio Studio · Created by Elia Gentili · Mac preview · Planned free release” |
+| 50–60 s | Product name, author and platform/status | “Specchio Studio · Created by Elia Gentili · Mac preview · Free experimental release” |
 
 An import-based walkthrough must be labeled as imported/synthetic content. To demonstrate real device capture, record a fresh USB/wireless session on the current build and document the tested device, OS and path first.
 
@@ -89,9 +89,9 @@ An import-based walkthrough must be labeled as imported/synthetic content. To de
 
 Record text large enough to read on mobile. Use captions and alt text. Avoid personal device names, real notifications, pairing keys and private source paths. Original recordings and audio may contain data even when the composed visual is masked.
 
-## LinkedIn drafts — preview stage
+## LinkedIn drafts — experimental release
 
-The drafts below are ready for editorial review, not automatic posting. Attach a real, labeled demonstration. The intended product URL is [the English preview](https://eliagentili.github.io/specchio-studio-site/) and [the Italian preview](https://eliagentili.github.io/specchio-studio-site/it/). Verify that the page is live before using it in a post. These drafts do not announce a downloadable app.
+The drafts below are ready for editorial review, not automatic posting. Attach a real, labeled demonstration. The intended product URL is [the English preview](https://eliagentili.github.io/specchio-studio-site/) and [the Italian preview](https://eliagentili.github.io/specchio-studio-site/it/). Verify that the page is live before using it in a post. These drafts announce an experimental download and must preserve its signing, hardware and rights limitations.
 
 ### Italian · initial presentation
 
@@ -109,7 +109,7 @@ The drafts below are ready for editorial review, not automatic posting. Attach a
 >
 > Dal lato tecnico, il progetto mi ha portato a lavorare su SwiftUI, AVFoundation, VideoToolbox e Vision, insieme ai casi meno visibili: audio, orientamento, annullamento degli export e integrità dei file.
 >
-> Il rilascio previsto è gratuito. Per ora condivido un’anteprima: l’app è ancora in revisione e non ha un download pubblico.
+> Ho pubblicato la prima pre-release gratuita per Mac Apple Silicon con macOS 14+. È sperimentale e non notarizzata: la pagina della release spiega i limiti di avvio, le prove hardware ancora da completare e le incertezze sui diritti tuttora aperte.
 >
 > Sviluppate app mobile? Quale di questi passaggi vi fa perdere più tempo oggi?
 >
@@ -134,7 +134,7 @@ The drafts below are ready for editorial review, not automatic posting. Attach a
 >
 > Building this brought together SwiftUI, AVFoundation, VideoToolbox and Vision, plus the less visible work around audio, orientation, export cancellation and file integrity.
 >
-> I plan to release it for free. This is a preview: the app is still under review, with no public download yet. Its current interface is Italian, targeting Apple Silicon Macs on macOS 14+.
+> The first free experimental prerelease is available for Apple Silicon Macs on macOS 14+. Its interface is Italian and the app is not notarized. The release notes explain Gatekeeper rejection, pending hardware tests and the rights uncertainties that remain open.
 >
 > If you build mobile apps, which part of preparing a demo or reporting a bug takes you the most effort today?
 >
@@ -153,17 +153,17 @@ The drafts below are ready for editorial review, not automatic posting. Attach a
 >
 > L’obiettivo è semplice: preparare gli allegati da condividere nello stesso flusso di lavoro.
 >
-> Un progetto di Elia Gentili. Anteprima per Mac, rilascio gratuito previsto; download pubblico non ancora disponibile.
+> Un progetto di Elia Gentili. Pre-release sperimentale gratuita per Mac Apple Silicon, macOS 14+, non notarizzata. Requisiti, limiti e incertezze sui diritti sono indicati nella pagina della release.
 >
 > https://eliagentili.github.io/specchio-studio-site/it/
 
-## Later release copy — blocked on a verified release
+## Later stable-release copy — pending completed review
 
 Use this section only after the release checklist has been resolved, a clean-Mac launch has been verified and the actual release URL provides the binary, corresponding source, requirements and known limitations.
 
-**IT opening:** “Ho pubblicato Specchio Studio, un’app gratuita per Mac che trasforma acquisizioni di iPhone e iPad in demo, contenuti e segnalazioni bug.”
+**IT opening:** “Ho pubblicato la prima versione stabile di Specchio Studio, un’app gratuita per Mac che trasforma acquisizioni di iPhone e iPad in demo, contenuti e segnalazioni bug.”
 
-**EN opening:** “I've released Specchio Studio, a free Mac app for turning iPhone and iPad captures into demos, creator assets and bug reports.”
+**EN opening:** “I've released the first stable version of Specchio Studio, a free Mac app for turning iPhone and iPad captures into demos, creator assets and bug reports.”
 
 Follow with one demonstrated workflow and a real release link. State Apple Silicon, minimum macOS, interface language and signing/notarization status applicable to that release. Do not describe the app as universally compatible, commercially validated or legally risk-free.
 
@@ -187,9 +187,9 @@ After the round, publish a short case study with the task, environment, sample s
 
 | Stage | Deliverable | Condition |
 | --- | --- | --- |
-| Preview | Bilingual product page, README and synthetic workflow visuals | Accurate status; no app download promises |
+| Experimental preview | Bilingual product page, README, synthetic visuals and tagged release | Free experimental download with requirements, signing and open rights limitations |
 | Product proof | Fresh current-build hardware demos and first-user task observations | Record device/OS, outcome and failures |
-| Release | Verified package, source, checksums and public documentation | Resolve rights, name, licensing, dependency and distribution checks |
+| Stable release | Final package, source, checksums and public documentation | Resolve rights, name, licensing, dependency, signing and distribution checks |
 | Portfolio story | A case study by Elia with one complete workflow | Use observed results and documented decisions |
 | Follow-up | One focused demonstration per post | Answer actual questions and show improvements |
 
@@ -199,7 +199,7 @@ Use the product page as the stable destination once public and verified. Choose 
 
 | Safe statement for this preview | Important boundary |
 | --- | --- |
-| “Designed for a free release” | No public app download currently available |
+| “Free experimental prerelease available” | Signed ad hoc, not notarized; rights and hardware review remain open |
 | “Native macOS app by Elia Gentili” | Apple Silicon, macOS 14+, current interface in Italian; included dependencies retain their authorship |
 | “Local media processing and OCR” | Files and original recordings still need review before sharing |
 | “Opaque masks applied to applicable exports” | Suggestions are incomplete; video masks are static; audio/originals/manual report text are not automatically redacted |

@@ -8,7 +8,8 @@ Il tuo dispositivo. Pronto da condividere.
 DESCRIZIONE BREVE
 Specchio Studio trasforma le acquisizioni di iPhone e iPad in demo di
 prodotto, contenuti e segnalazioni bug più chiare, direttamente sul Mac.
-Un progetto di Elia Gentili, pensato per un rilascio gratuito.
+Un progetto di Elia Gentili, disponibile come pre-release sperimentale
+gratuita per Mac Apple Silicon con macOS 14 o successivo.
 
 DESCRIZIONE GITHUB (EN)
 Native Mac studio for iPhone/iPad captures, demos, creator exports and bug
@@ -19,8 +20,10 @@ Ho creato Specchio Studio per riunire il lavoro che viene dopo uno
 screenshot: preparare una demo, coprire dettagli selezionati, esportare
 più formati e spiegare un bug con gli allegati giusti.
 Il progetto combina SwiftUI, acquisizione nativa, pipeline video e OCR
-locale in uno strumento per Mac. Il rilascio previsto è gratuito;
-l'app è ancora in revisione e non ha un download pubblico.
+locale in uno strumento per Mac. La prima pre-release sperimentale è
+gratuita e scaricabile con sorgenti e checksum. Restano aperti i collaudi
+hardware finali, la notarizzazione e la revisione della provenienza e dei
+diritti; le note di rilascio dichiarano queste incertezze.
 
 PRODUCT LINE (EN)
 Your device. Ready to share.
@@ -31,9 +34,14 @@ STATO E USO
 I testi per i post, il piano delle dimostrazioni, la descrizione GitHub
 completa e la strategia di lancio sono in marketing/LAUNCH.md.
 Sono bozze: nessun post o messaggio è stato inviato.
-La pagina prodotto è un'anteprima; non annuncia un'app già scaricabile.
-Usare i testi di rilascio soltanto quando esiste una release pubblica
-verificata e sono risolti i punti di RELEASE_CHECKLIST.txt.
+La pagina prodotto collega la pre-release sperimentale v1.3.1-preview.1.
+Il titolare ne ha autorizzato la pubblicazione con le incertezze dichiarate.
+Questa scelta non chiude i punti aperti di RELEASE_CHECKLIST.txt.
+Presentarla come versione sperimentale per prove e feedback, con firma
+ad hoc, senza Developer ID o notarizzazione. Gatekeeper rifiuta la build
+nella valutazione locale e macOS può bloccare una copia scaricata.
+La disponibilità del download non certifica provenienza, diritti o nome;
+resta aperta anche l'incertezza FairPlay dichiarata dall'upstream.
 
 PROMESSE DA MANTENERE ESATTE
 Mac Apple Silicon, macOS 14+, interfaccia attuale italiana.
@@ -46,8 +54,9 @@ Nessuna dichiarazione di perfezione, compatibilità universale, esclusività
 di mercato o assenza assoluta di rischi legali.
 
 COLLEGAMENTI
-Anteprima italiana: https://eliagentili.github.io/specchio-studio-site/it/
-Product preview: https://eliagentili.github.io/specchio-studio-site/
+Pagina italiana: https://eliagentili.github.io/specchio-studio-site/it/
+Product page: https://eliagentili.github.io/specchio-studio-site/
+Pre-release: https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1
 Autore: https://github.com/eliagentili
 Guida tecnica: LEGGIMI.txt
 Verifiche e limiti: VALIDAZIONE.txt
