@@ -1,31 +1,43 @@
 SPECCHIO STUDIO — VALIDATION REPORT
 Updated on 18 October 2026
-Published preview: 1.3.1, build 7 · arm64 · macOS 14 target
-Release candidate: 1.4.0, build 8 · English/Italian localization
-Validation and publication of the development build are not yet recorded here.
+Published preview: 1.4.0, build 8 · arm64 · macOS 14 target
+Release: v1.4.0-preview.1 · English/Italian localization
 
 READING THIS REPORT
 Synthetic results verify specific program paths; they do not certify every
 device, network or session duration. Hardware tests from 17 October are a
-historical report, not new tests of build 7. Functional testing does not
+historical report, not new tests of build 8. Functional testing does not
 certify provenance or rights.
 
-18 OCTOBER 2026 — 1.4.0 LOCALIZATION CANDIDATE, BUILD 8
-PASS: initial complete test run, 24 groups including the new localization
-      catalog/fallback/format/permission checks and all previous regressions.
+18 OCTOBER 2026 — BILINGUAL PRE-RELEASE 1.4.0, BUILD 8
+Release: v1.4.0-preview.1
+https://github.com/eliagentili/specchio-studio/releases/tag/v1.4.0-preview.1
+Frozen source snapshot: 1b78d6eedd7a11d054efcb996aef64e31d4ee92f.
+PASS: final isolated package preparation rebuilt the dependencies and ran
+      all 24 test groups, including localization catalog/fallback/format/
+      permission checks and all previous regressions; exit code 0.
 PASS: optimized arm64 app build, ad hoc signature integrity and both bundled
-      language resources. English is the default; English, Italian and the
-      macOS language can be selected. A selection applies after reopening.
-PASS interface: English → Italian → English across app relaunches; preference
-      retained, localized source/composition/export/style controls and native
-      menus verified. Changing the preference kept the current demo intact.
-PASS: static catalog coverage, matching format placeholders and English/Italian
-      Camera, Microphone and Local Network permission descriptions.
+      English/Italian language resources.
+PASS: 659 source-manifest hashes, source archive and ZIP checksums.
+PASS UI: English → Italian → English across app relaunches; language
+      preference retained, source/composition/export/style controls and
+      native menus verified. The current demo remained intact when the
+      preference changed. A selection applies after reopening, not instantly.
+PASS UI: English guide and report screens checked, including their labels
+      and explanatory text.
+PASS: static catalog coverage, matching format placeholders and English/
+      Italian Camera, Microphone and Local Network permission descriptions.
 PASS: website pages, README, first-party guides and actual canvas demo artwork
       standardized on English. Legacy /it/ links redirect to the English site.
-Final isolated packaging validation is performed after this source snapshot;
-its outcome and exact source commit are recorded in the corresponding release
-notes. These checks do not repeat physical iPhone/iPad tests or resolve rights.
+CONFIRMED LIMITATION: spctl --assess rejects the build with exit code 3.
+      The signature remains ad hoc, without Developer ID or notarization;
+      macOS may block the downloaded app. Signature integrity is not
+      Gatekeeper approval or notarization.
+Corresponding source, ZIP, SOURCE-INFO.txt and checksums are provided on the
+release page. Documentation commits after the frozen snapshot describe the
+release without changing its tag or packages. These results do not repeat
+physical iPhone/iPad tests, prove compatibility on every supported Mac, or
+resolve provenance, name, FairPlay or license-compliance questions.
 
 18 OCTOBER 2026 — PATCH 1.3.1, BUILD 7
 PASS: complete ./test.sh after the libplist and OpenSSL updates,
@@ -52,7 +64,7 @@ or memory leak. Physical testing, notarization and rights review remain open.
 UI paths below concern 1.3.0, build 6; they are not new physical or UI tests
 of the patch. See UPSTREAM_AUDIT.txt for methods, updates and audit limits.
 
-18 OCTOBER 2026 — EXPERIMENTAL PRE-RELEASE PACKAGES
+18 OCTOBER 2026 — HISTORICAL 1.3.1 PRE-RELEASE PACKAGES
 Release: v1.3.1-preview.1
 https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1
 Source snapshot: d6e0bd84f334d3064c0e5e4af163254a08611cf4.
@@ -189,14 +201,13 @@ Personal recordings are not included in the source archive. These
 historical measurements were not repeated during the current review.
 
 STILL TO VERIFY
-• New USB and wireless testing with build 7 on a physical iPhone.
+• New USB and wireless testing with build 8 on a physical iPhone.
 • A physical iPad, via USB and wireless, with and without audio.
 • Long sessions, interrupted networks and repeated reconnection.
 • Orientation and resolution changes during recording.
 • Multiple windows and devices within the one-wireless-receiver limit.
 • First launch and permissions on another compatible Apple Silicon Mac.
 • Developer ID signing, notarization and opening the distributed package.
-• Full validation and release packaging of the bilingual 1.4 development build.
 
 Contribution provenance, name availability, license obligations and the
 FairPlay uncertainty require the separate review described in

@@ -1,16 +1,17 @@
 SPECCHIO STUDIO — RELEASE CHECKLIST
 Updated on 18 October 2026
-Published preview: 1.3.1, build 7 · Development: 1.4.0, build 8
+Published preview: 1.4.0, build 8 · English/Italian app
 
-STATUS: EXPERIMENTAL PRE-RELEASE v1.3.1-preview.1.
-https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1
+STATUS: EXPERIMENTAL PRE-RELEASE v1.4.0-preview.1.
+https://github.com/eliagentili/specchio-studio/releases/tag/v1.4.0-preview.1
 The owner explicitly chose to publish with the uncertainties disclosed.
 That authorization does not certify provenance, rights, name availability
 or compatibility, and does not close the related checklist items.
 Open work remains on the path to a stable release.
-Published packages derive from d6e0bd84f334d3064c0e5e4af163254a08611cf4;
-subsequent documentation commits describe their publication. The bilingual
-1.4.0 build 8 is in development; its validation and release are still pending.
+Current 1.4.0 packages derive from 1b78d6eedd7a11d054efcb996aef64e31d4ee92f;
+subsequent documentation commits describe publication without changing the
+frozen tag or packages. The earlier 1.3.1 preview derives from
+d6e0bd84f334d3064c0e5e4af163254a08611cf4 and remains historical.
 
 RIGHTS, PROVENANCE AND NAME
 [ ] Reconstruct and document the provenance of code contributions, graphic
@@ -42,15 +43,16 @@ LICENSES AND SOURCE
 [x] Rebuild the isolated source snapshot on a compatible Mac, including
     OpenSSL, and run tests and a build without using private data.
     This check does not replace first launch on another Mac.
-[x] Check SOURCE-MANIFEST.json (653 hashes) and SHA256SUMS.txt;
-    keep packages unchanged after final checksums are generated.
+[x] Check SOURCE-MANIFEST.json (659 hashes for 1.4.0) and SHA256SUMS.txt;
+    keep packages unchanged after final checksums are generated. The
+    historical 1.3.1 source manifest contains 653 hashes.
 
 HISTORY AND PUBLIC CONTENT
 [x] Initial import of main as a single root commit of the reviewed version
     and history verification from a fresh clone. Marketing and pre-release
     documentation commits followed. Backups and evidence are kept
     privately outside the project.
-[x] Remote refs main and v1.3.1-preview.1 verified; four attachments
+[x] Historical 1.3.1: remote refs main and v1.3.1-preview.1 verified; four attachments
     downloaded again without authentication with hashes identical to
     local files. Rewriting does not remove service caches, old SHAs,
     forks or pre-existing clones and does not certify contribution rights.
@@ -66,10 +68,10 @@ HISTORY AND PUBLIC CONTENT
     Social copy remains in draft form: no posts have been sent.
 
 FINAL BUILD VALIDATION
-[x] Run ./test.sh and ./build.sh from the isolated snapshot: 23 groups PASS,
+[x] Run ./test.sh and ./build.sh from the isolated 1.4.0 snapshot: 24 groups PASS,
     optimized arm64 build and intact ad hoc signature. Results and limits
     are recorded in VALIDAZIONE.txt; no new physical testing.
-[ ] Test USB and wireless with iPhone on build 7: permissions, PIN, audio,
+[ ] Test USB and wireless with iPhone on build 8: permissions, PIN, audio,
     screenshots, H.264, HEVC, stopping from the device and reconnection.
 [ ] Test a physical iPad via USB/wireless and document observed compatibility.
 [ ] Test orientation, resolution changes, network interruption, long sessions,
@@ -78,8 +80,12 @@ FINAL BUILD VALIDATION
     trimming and audio; test cancellation and insufficient disk space.
 [ ] Check first launch on another Apple Silicon Mac, the declared minimum
     macOS version and available later versions, without pre-existing data.
-[ ] Validate English/Italian switching, persistence, source sessions and
-    packaging for 1.4.0 build 8 before publishing the bilingual preview.
+[x] Validate English → Italian → English across relaunches, preference
+    persistence, native menus, localized controls, and English guide/report
+    screens. Preference changes retained the current demo; language applies
+    on the next launch. Both language resources are packaged in build 8.
+[ ] Repeat language-preference/session checks with real hardware sources
+    and exports as part of the remaining physical validation.
 
 SIGNING, NOTARIZATION AND PACKAGES
 [ ] Choose the final app identifier and a Developer ID signature suitable

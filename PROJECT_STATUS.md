@@ -1,8 +1,8 @@
 # Project status
 
-Updated on **18 October 2026**. Published version: **1.3.1, build 7**, arm64, macOS 14 target. The first **[free experimental pre-release v1.3.1-preview.1](https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1)** was published at the owner’s explicit choice with the uncertainties disclosed. Publication does not close the rights review, hardware validation or notarization work.
+Updated on **18 October 2026**. Published version: **1.4.0, build 8**, arm64, macOS 14 target. The **[free experimental pre-release v1.4.0-preview.1](https://github.com/eliagentili/specchio-studio/releases/tag/v1.4.0-preview.1)** adds English and Italian app localization. English is the default, with an explicit language preference and a system-language option. A language change applies after quitting and reopening the app; changing the preference does not restart the current Studio session.
 
-Development version: **1.4.0, build 8**, adding English and Italian app localization. English is the default, with an explicit language preference and a system-language option. Validation and publication of this development build are still in progress. Public website and first-party documentation are being standardized on English.
+The public website and first-party documentation are in English; legacy `/it/` website links redirect to English content. The earlier **[v1.3.1-preview.1](https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1)** remains available as a historical release. Experimental publication was the owner’s explicit choice with the uncertainties disclosed. It does not close the rights review, hardware validation or notarization work.
 
 ## Features
 
@@ -27,17 +27,21 @@ Automatic, Portrait 9:16, Square 1:1 and Landscape 16:9 formats are shared by sc
 
 ## Validation
 
-`VALIDAZIONE.txt` distinguishes current tests from historical results. The complete 1.3 suite passed, including redaction, reports, creator packs and OCR invalidation. Earlier 1.2 checks are preserved in the report; the optimized build, signature and UI paths for privacy, reports, packs and decimal trimming were verified. The documented USB and wireless tests with a physical iPhone date from **17 October 2026** and were not repeated on build 7.
+`VALIDAZIONE.txt` distinguishes current tests from historical results. Final isolated 1.4.0 packaging rebuilt dependencies, passed **24 test groups**, produced the optimized arm64 app, and verified **659 source-manifest hashes**, both bundled language resources and ad hoc signature integrity. Localization checks cover catalog completeness, format placeholders, fallback and permission descriptions. UI checks verified English → Italian → English across relaunches, saved preference, native menus, localized controls, and the English guide and report screens.
 
-Open manual checks include renewed iPhone testing, iPad, long sessions, orientation changes, multiple devices and first launch on another Mac. Remote control and live audio monitoring remain unavailable. The bilingual development build still needs its own recorded validation results.
+The historical 1.3 suite and earlier 1.2 checks remain in the report, including redaction, reports, creator packs, OCR invalidation and decimal trimming. The documented USB and wireless tests with a physical iPhone date from **17 October 2026** and were not repeated on build 8.
+
+Open manual checks include renewed iPhone testing, iPad, long sessions, orientation changes, multiple devices and first launch on another Mac. Remote control and live audio monitoring remain unavailable.
 
 ## Distribution preparation
 
-`python3 scripts/release.py` runs tests and a build, then prepares a source archive without Git history, an app ZIP, `SOURCE-INFO.txt` and checksums under the version’s directory in `.build/releases/`. The published 1.3.1 packages are in `.build/releases/1.3.1/`. The `--source-only` option prepares only source files in the `source-only/` subdirectory and does not validate the program. Neither mode publishes files or changes the remote repository state.
+`python3 scripts/release.py` runs tests and a build, then prepares a source archive without Git history, an app ZIP, `SOURCE-INFO.txt` and checksums under the version’s directory in `.build/releases/`. The published 1.4.0 packages are in `.build/releases/1.4.0/`. The `--source-only` option prepares only source files in the `source-only/` subdirectory and does not validate the program. Neither mode publishes files or changes the remote repository state.
 
 The pre-release uses an ad hoc signature, without Developer ID or notarization. Signature integrity is verified; local `spctl --assess` rejects it with exit code 3. macOS may therefore block a download. Items in `RELEASE_CHECKLIST.txt` remain open: contribution and asset provenance, name availability, FairPlay dependency review and license compliance. Authorization for experimental publication does not certify these matters.
 
-The pre-release page distributes the app ZIP, corresponding source without `.git`, `SOURCE-INFO.txt` and checksums. Packages derive from commit `d6e0bd84f334d3064c0e5e4af163254a08611cf4`, before the documentation updates announcing publication. Fresh isolated preparation rebuilt dependencies and ran 23 test groups and an optimized build; the 653 source manifest hashes, checksums and ad hoc signature integrity were verified. These checks are neither new physical testing nor a rights review.
+The current pre-release page distributes the app ZIP, corresponding source without `.git`, `SOURCE-INFO.txt` and checksums. The 1.4.0 packages derive from frozen commit `1b78d6eedd7a11d054efcb996aef64e31d4ee92f`, before the documentation updates announcing publication. The release tag and published packages are not changed by those later updates. The final isolated run passed 24 test groups, verified 659 source-manifest hashes, and checked package checksums and ad hoc signature integrity. These checks are neither new physical testing nor a rights review.
+
+For the historical 1.3.1 preview, packages derive from `d6e0bd84f334d3064c0e5e4af163254a08611cf4`; its isolated preparation passed 23 test groups and verified 653 source-manifest hashes. Those historical packages remain unchanged.
 
 `PROMO.txt` and `marketing/LAUNCH.md` contain promotional copy and social drafts; no social posts have been sent. The public website links the experimental download and states its limitations.
 

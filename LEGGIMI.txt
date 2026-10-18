@@ -2,9 +2,9 @@ SPECCHIO STUDIO — BUILD AND USER GUIDE
 Mac Apple Silicon · macOS 14 or later
 Updated on 18 October 2026
 
-Published preview: 1.3.1, build 7 (v1.3.1-preview.1).
-Development: 1.4.0, build 8, with English and Italian app localization.
-Validation and publication of the development build are still in progress.
+Published preview: 1.4.0, build 8 (v1.4.0-preview.1), with English and
+Italian app localization. The earlier 1.3.1, build 7 preview remains
+available as a historical release.
 
 STARTING AND BUILDING
 From this directory, run ./build.sh and open “Specchio Studio.app”.
@@ -14,19 +14,20 @@ as well, first run ./Native/build_crypto.sh; Perl and make are also needed.
 The local app is signed ad hoc, without Developer ID signing or notarization.
 The geometric icon is generated from the included code: to reproduce it,
 run swift scripts/generate_icon.swift from the project directory.
-The free public pre-release v1.3.1-preview.1 is experimental.
+The free public pre-release v1.4.0-preview.1 is experimental.
 Download, corresponding source and checksums:
-https://github.com/eliagentili/specchio-studio/releases/tag/v1.3.1-preview.1
+https://github.com/eliagentili/specchio-studio/releases/tag/v1.4.0-preview.1
 Gatekeeper assessment rejects this build: it is not a notarized distribution.
 Read the limitations and uncertainties in the notes before downloading it.
 
 APP LANGUAGE
-The 1.4 development build offers English and Italian. English is the default;
+Version 1.4 offers English and Italian. English is the default;
 choose Italian or the system language through the app’s Language settings.
 Quit and reopen the app to apply a language change. Changing the
 preference does not interrupt active capture or exports.
-Public documentation and the website are in English. The published 1.3.1
-preview predates this localization work.
+Public documentation and the website are in English. The earlier 1.3.1
+preview predates this localization work. Legacy /it/ website links redirect
+to the English site.
 
 CONNECTING A SOURCE
 USB: connect an iPhone or iPad using a data cable, unlock it and trust the Mac.
@@ -110,6 +111,11 @@ VALIDATION
 are written to .build/test-results. ./test.sh --build-only compiles without
 running tests. A restricted environment may prevent access to macOS codec
 services; run the full tests in a Terminal with access to local services.
+The final isolated 1.4.0 build passed 24 test groups; package checks verified
+659 source-manifest hashes, bundled English/Italian resources and ad hoc
+signature integrity. UI checks covered English → Italian → English across
+relaunches, saved language preference, native menus, and English guide and
+report screens. These are not new physical iPhone or iPad tests.
 VALIDAZIONE.txt separates current results from earlier hardware reports.
 
 LICENSES AND PUBLICATION
@@ -129,8 +135,11 @@ RELEASE_CHECKLIST.txt lists the open items. PROMO.txt describes the preview;
 social copy remains in draft form, with no posts sent. Run python3
 scripts/release.py to prepare local packages with tests and a build;
 --source-only prepares only source files and does not validate the program.
-The published 1.3.1 packages are in .build/releases/1.3.1/; --source-only
-uses the source-only/ subdirectory. For a public binary, make corresponding
+The published 1.4.0 packages are in .build/releases/1.4.0/; --source-only
+uses the source-only/ subdirectory. Published source snapshot:
+1b78d6eedd7a11d054efcb996aef64e31d4ee92f.
+Later documentation commits describe the release without changing the tag
+or published packages. For a public binary, make corresponding
 source from the same build available on the same page, including
 dependencies, modifications and rebuild instructions.
 The source archive does not contain .git. The main history was initially
