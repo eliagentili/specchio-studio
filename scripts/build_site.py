@@ -3,6 +3,7 @@
 from pathlib import Path
 from html import escape
 import json
+import hashlib
 import shutil
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -136,6 +137,12 @@ COPY = {'en': {'title': 'Specchio Studio — Your device. Ready to share.',
         'notfound': 'This page is out of frame.',
         'notfound_body': 'The link may have changed. Head back to the project preview.'}}
 
+
+def asset(path, absolute=False):
+    """Content-derived URL: changed bytes bypass older browser/CDN caches."""
+    digest = hashlib.sha256((DEST / path).read_bytes()).hexdigest()[:12]
+    return (BASE if absolute else '') + path + '?v=' + digest
+
 def head(lang, c, page=''):
     prefix = ''
     path = page
@@ -146,9 +153,9 @@ def head(lang, c, page=''):
 <title>{escape(title)}</title><meta name="description" content="{escape(c['description'])}">
 <meta name="theme-color" content="#f6f5ef"><meta name="color-scheme" content="light">
 <link rel="canonical" href="{BASE}{path}">
-<meta property="og:type" content="website"><meta property="og:title" content="{escape(title)}"><meta property="og:description" content="{escape(c['description'])}"><meta property="og:url" content="{BASE}{path}"><meta property="og:site_name" content="Specchio Studio"><meta property="og:locale" content="en_US"><meta property="og:image" content="{BASE}assets/social-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Specchio Studio — Elia Gentili">
-<meta name="twitter:image:alt" content="Specchio Studio — Elia Gentili"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{escape(title)}"><meta name="twitter:description" content="{escape(c['description'])}"><meta name="twitter:image" content="{BASE}assets/social-card.png">
-<link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="{prefix}assets/app-icon.png"><link rel="stylesheet" href="{prefix}styles.css"><script src="{prefix}site.js" defer></script><script type="application/ld+json">{json.dumps(schema, ensure_ascii=False)}</script></head>'''
+<meta property="og:type" content="website"><meta property="og:title" content="{escape(title)}"><meta property="og:description" content="{escape(c['description'])}"><meta property="og:url" content="{BASE}{path}"><meta property="og:site_name" content="Specchio Studio"><meta property="og:locale" content="en_US"><meta property="og:image" content="{asset("assets/social-card.png", absolute=True)}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Specchio Studio — Elia Gentili">
+<meta name="twitter:image:alt" content="Specchio Studio — Elia Gentili"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{escape(title)}"><meta name="twitter:description" content="{escape(c['description'])}"><meta name="twitter:image" content="{asset("assets/social-card.png", absolute=True)}">
+<link rel="icon" href="{asset("assets/favicon.svg")}" type="image/svg+xml"><link rel="apple-touch-icon" href="{asset("assets/app-icon.png")}"><link rel="stylesheet" href="{asset("styles.css")}"><script src="{asset("site.js")}" defer></script><script type="application/ld+json">{json.dumps(schema, ensure_ascii=False)}</script></head>'''
 
 def footer(lang,c):
     return f'''<footer class="shell footer"><a class="wordmark" href="./">Specchio Studio<span class="footer-by">Elia Gentili · 2026</span></a><div><a href="{REPO}">{c['footer'][0]} ↗</a><a href="privacy.html">{c['footer'][1]}</a><a href="{PROFILE}">{c['footer'][2]} ↗</a></div></footer>'''
@@ -159,12 +166,12 @@ def build(lang,c):
     panels=''.join(f'<section id="panel-{i}" class="workflow-panel" role="tabpanel" aria-labelledby="tab-{i}" tabindex="0" {"hidden" if i else ""}><span class="panel-number" aria-hidden="true">0{i+1}</span><h3>{p[0]}</h3><p>{p[1]}</p><ul>'+''.join(f'<li>{s}</li>' for s in p[2])+f'</ul><p class="fine">{p[3]}</p></section>' for i,p in enumerate(c['panels']))
     faqs=''.join(f'<details><summary>{q}<span aria-hidden="true">+</span></summary><p>{a}</p></details>' for q,a in c['faqs'])
     content=head(lang,c)+f'''<body><a class="skip" href="#main">{c['skip']}</a>
-<header class="shell header"><a class="brand" href="./" aria-label="Specchio Studio"><img src="{prefix}assets/app-icon.png" width="38" height="38" alt=""><span>Specchio Studio</span></a><nav aria-label="Main navigation"><a href="#workflow">{c['nav'][0]}</a><a href="#maker">{c['nav'][1]}</a><a href="#questions">{c['nav'][2]}</a></nav></header>
+<header class="shell header"><a class="brand" href="./" aria-label="Specchio Studio"><img src="{asset("assets/app-icon.png")}" width="38" height="38" alt=""><span>Specchio Studio</span></a><nav aria-label="Main navigation"><a href="#workflow">{c['nav'][0]}</a><a href="#maker">{c['nav'][1]}</a><a href="#questions">{c['nav'][2]}</a></nav></header>
 <main id="main">
-<section class="shell hero"><div class="hero-copy"><p class="eyebrow status"><span></span>{c['badge']}</p><h1>{c['headline']}</h1><p class="hero-intro">{c['intro']}</p><div class="actions"><a class="button" href="{RELEASE}">{c['cta']} <span aria-hidden="true">↗</span></a><a class="text-link" href="#workflow">{c['authorlink']} <span aria-hidden="true">→</span></a></div><p class="requirements">{c['requirements']}</p></div><figure class="hero-figure"><div class="stage"><p class="stage-label">{c['stage_label']}</p><div class="stage-orbit" aria-hidden="true"></div><img class="hero-art" src="{prefix}assets/demo-preview.webp" width="1000" height="1200" alt="{c['imagealt']}" fetchpriority="high"><div class="stage-bottom"><span class="stage-dot"></span>{c['stage_bottom']}<span aria-hidden="true">↗</span></div></div><figcaption>{c['caption']}</figcaption></figure></section>
+<section class="shell hero"><div class="hero-copy"><p class="eyebrow status"><span></span>{c['badge']}</p><h1>{c['headline']}</h1><p class="hero-intro">{c['intro']}</p><div class="actions"><a class="button" href="{RELEASE}">{c['cta']} <span aria-hidden="true">↗</span></a><a class="text-link" href="#workflow">{c['authorlink']} <span aria-hidden="true">→</span></a></div><p class="requirements">{c['requirements']}</p></div><figure class="hero-figure"><div class="stage"><p class="stage-label">{c['stage_label']}</p><div class="stage-orbit" aria-hidden="true"></div><img class="hero-art" src="{asset("assets/demo-preview.webp")}" width="1000" height="1200" alt="{c['imagealt']}" fetchpriority="high"><div class="stage-bottom"><span class="stage-dot"></span>{c['stage_bottom']}<span aria-hidden="true">↗</span></div></div><figcaption>{c['caption']}</figcaption></figure></section>
 <div class="shell bridge"><span class="asterisk" aria-hidden="true">✳</span><h2>{c['bridge']}</h2><p>{c['bridge_body']}</p></div>
 <section class="workflow-wrap" id="workflow"><div class="shell"><p class="eyebrow">{c['workflow_label']}</p><h2 class="section-title">{c['workflow_title']}</h2><div class="workflow"><div class="workflow-tabs" role="tablist" aria-label="Workflows">{tabs}</div><div class="workflow-panels">{panels}</div></div></div></section>
-<section class="shell formats"><div class="split-heading"><div><p class="eyebrow">{c['formats_label']}</p><h2 class="section-title">{c['formats_title']}</h2></div><p>{c['formats_body']}</p></div><figure><img src="{prefix}assets/formats-proof.webp" width="1440" height="840" alt="{c['formats_alt']}" loading="lazy"><figcaption>{c['formats_caption']}</figcaption></figure></section>
+<section class="shell formats"><div class="split-heading"><div><p class="eyebrow">{c['formats_label']}</p><h2 class="section-title">{c['formats_title']}</h2></div><p>{c['formats_body']}</p></div><figure><img src="{asset("assets/formats-proof.webp")}" width="1440" height="840" alt="{c['formats_alt']}" loading="lazy"><figcaption>{c['formats_caption']}</figcaption></figure></section>
 <section class="privacy-wrap"><div class="shell privacy-grid"><div><p class="eyebrow">{c['privacy_label']}</p><h2 class="section-title">{c['privacy_title']}</h2><p class="section-body">{c['privacy_body']}</p><p class="fine">{c['privacy_note']}</p></div><div class="privacy-example"><p class="eyebrow">{c['privacy_try']}</p><div class="sample-card"><div class="sample-bar"><span></span><span></span><span></span><span class="sample-title">{c['sample_title']}</span></div><div class="sample-content"><span class="avatar" aria-hidden="true">A</span><h3>{c['sample_name']}</h3><p>{c['sample_label']}</p><div class="sample-value" aria-live="polite"><span class="mask-placeholder">{c['masked']}</span><span class="example-email" hidden>demo@example.invalid</span></div></div></div><button class="mask-toggle" type="button" aria-pressed="false" data-show="{c['privacy_toggle']}" data-hide="{c['privacy_hidden']}">{c['privacy_toggle']} <span aria-hidden="true">↗</span></button></div></div></section>
 <section class="shell maker" id="maker"><div class="maker-mark" aria-hidden="true"><div class="mirror-one"></div><div class="mirror-two"></div><span>EG<span>↗</span></span></div><div><p class="eyebrow">{c['maker_label']}</p><h2 class="section-title">{c['maker_title']}</h2><p class="section-body">{c['maker_body']}</p><p class="maker-stack">{c['maker_stack']}</p><a class="text-link" href="{PROFILE}">{c['maker_cta']} ↗</a></div></section>
 <section class="shell questions" id="questions"><div><p class="eyebrow">{c['faq_label']}</p><h2 class="section-title">{c['faq_title']}</h2></div><div class="faq-list">{faqs}</div></section>
@@ -180,7 +187,7 @@ for language,copy in COPY.items():
 (DEST/'.nojekyll').touch()
 shutil.copyfile(ROOT/'LICENSE', DEST/'LICENSE')
 (DEST/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join(f'<url><loc>{BASE}{p}</loc></url>' for p in ('','privacy.html'))+'</urlset>\n',encoding='utf-8')
-(DEST/'404.html').write_text('''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Page not found — Specchio Studio</title><link rel="stylesheet" href="'''+BASE+'''styles.css"></head><body><main class="shell prose"><p class="eyebrow">Specchio Studio · 404</p><h1>This page is out of frame.</h1><p>The link may have changed. Head back to the project preview.</p><a class="button" href="'''+BASE+'''">Back to Specchio Studio →</a></main></body></html>''',encoding='utf-8')
+(DEST/'404.html').write_text(f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Page not found — Specchio Studio</title><link rel="stylesheet" href="{asset("styles.css", absolute=True)}"></head><body><main class="shell prose"><p class="eyebrow">Specchio Studio · 404</p><h1>This page is out of frame.</h1><p>The link may have changed. Head back to the project preview.</p><a class="button" href="{BASE}">Back to Specchio Studio →</a></main></body></html>''',encoding='utf-8')
 def legacy_redirect(filename, target):
     destination = DEST / 'it' / filename
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -190,7 +197,7 @@ def legacy_redirect(filename, target):
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Continue to Specchio Studio</title><meta name="robots" content="noindex,follow">
 <meta http-equiv="refresh" content="0;url={relative}"><link rel="canonical" href="{canonical}">
-<link rel="stylesheet" href="../styles.css"></head><body><main class="shell prose">
+<link rel="stylesheet" href="../{asset("styles.css")}"></head><body><main class="shell prose">
 <p class="eyebrow">Specchio Studio</p><h1>One website. In English.</h1>
 <p>The product website is now in English. The Mac app supports English and Italian.</p>
 <a class="button" href="{relative}">Continue to Specchio Studio →</a></main></body></html>''', encoding='utf-8')

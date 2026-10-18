@@ -2,7 +2,7 @@
 """Check publication links, metadata, script boundaries and asset integrity."""
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import urlsplit, unquote
+from urllib.parse import urlsplit, unquote, parse_qsl
 import hashlib
 import json
 import re
@@ -49,17 +49,27 @@ for path in SITE.rglob('*.html'):
         assert 'no-js' in doc.classes, f'{path}: missing script-free fallback'
         assert doc.meta.get('description') and doc.meta.get('og:image'), f'{path}: incomplete metadata'
         assert doc.canonical==BASE+str(path.relative_to(SITE)).replace('index.html',''), f'{path}: incorrect canonical'
-        assert doc.scripts==['site.js'], f'{path}: unexpected scripts'
+        assert [urlsplit(ref).path for ref in doc.scripts]==['site.js'], f'{path}: unexpected scripts'
 
 count=0
+versions=0
 for path,doc in pages.items():
-    for ref in doc.refs:
+    # Metadata image URLs must invalidate cached social previews as well.
+    refs=doc.refs+[doc.meta[key] for key in ('og:image','twitter:image') if doc.meta.get(key)]
+    for ref in refs:
         parsed=urlsplit(ref)
-        if parsed.scheme or parsed.netloc: continue
-        target=(path.parent/unquote(parsed.path)).resolve() if parsed.path else path
+        if parsed.scheme or parsed.netloc:
+            if not ref.startswith(BASE): continue
+            target=(SITE/unquote(parsed.path[len(urlsplit(BASE).path):])).resolve()
+        else:
+            target=(path.parent/unquote(parsed.path)).resolve() if parsed.path else path
         assert SITE.resolve() in (target,*target.parents), f'Path outside site: {ref}'
         if target.is_dir(): target=target/'index.html'
         assert target.is_file(), f'{path}: broken link {ref}'
+        if target.suffix in {'.css','.js','.png','.svg','.webp'}:
+            expected=hashlib.sha256(target.read_bytes()).hexdigest()[:12]
+            assert parse_qsl(parsed.query)==[('v',expected)], f'{path}: stale or missing asset version {ref}'
+            versions+=1
         if parsed.fragment:
             assert parsed.fragment in pages[target.resolve()].ids, f'{path}: missing fragment {ref}'
         count+=1
@@ -73,4 +83,4 @@ js=(SITE/'site.js').read_text()
 assert not re.search(r'\b(fetch|XMLHttpRequest|localStorage|sessionStorage|document\.cookie)\b',js), 'Unexpected network or persistence API'
 assert not re.search(r'https?://',js), 'Unexpected script endpoint'
 subprocess.run(['node','--check',str(SITE/'site.js')],check=True)
-print(f'PASS: {len(pages)} HTML pages, {count} local references, English metadata, two legacy redirects, {len(assets)} asset hashes, no script network/persistence.')
+print(f'PASS: {len(pages)} HTML pages, {count} site references, {versions} content-versioned asset URLs, English metadata, two legacy redirects, {len(assets)} asset hashes, no script network/persistence.')
