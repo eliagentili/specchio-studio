@@ -1,40 +1,54 @@
-SPECCHIO STUDIO — BOZZA DI PRESENTAZIONE
+SPECCHIO STUDIO — IDENTITÀ E PRESENTAZIONE
 Versione 1.3.1, build 7 · 18 ottobre 2026
-NON PUBBLICATA. Usare solo dopo la revisione dei diritti e il collaudo finale
-indicati in RELEASE_CHECKLIST.txt. Inserire il link alla release verificata.
+Autore: Elia Gentili · https://github.com/eliagentili
 
-BOZZA LINKEDIN
-Sto sviluppando Specchio Studio, un’app nativa per Mac che porta lo schermo
-di iPhone e iPad in una finestra e aiuta a preparare demo, screenshot e video.
+MESSAGGIO PRINCIPALE
+Il tuo dispositivo. Pronto da condividere.
 
-Il progetto unisce mirroring USB e wireless, registrazione H.264/HEVC,
-annotazioni, OCR locale ed esportazione con sfondo e cornice. Nella versione
-1.2 ho aggiunto formati verticali 9:16, quadrati e orizzontali 16:9, per
-preparare lo stesso contenuto in proporzioni diverse.
+DESCRIZIONE BREVE
+Specchio Studio trasforma le acquisizioni di iPhone e iPad in demo di
+prodotto, contenuti e segnalazioni bug più chiare, direttamente sul Mac.
+Un progetto di Elia Gentili, pensato per un rilascio gratuito.
 
-Lavorare su acquisizione, codec e composizione mi ha permesso di approfondire
-SwiftUI, AVFoundation, VideoToolbox e Vision. L’elaborazione avviene sul Mac,
-senza account o servizi cloud.
+DESCRIZIONE GITHUB (EN)
+Native Mac studio for iPhone/iPad captures, demos, creator exports and bug
+reports. Local OCR and opaque masks. By Elia Gentili. Apple Silicon/macOS 14+.
 
-Sto preparando la pubblicazione gratuita dei sorgenti con licenza GPL,
-insieme a istruzioni di compilazione, test e limiti verificati.
+PRESENTAZIONE PERSONALE (IT)
+Ho creato Specchio Studio per riunire il lavoro che viene dopo uno
+screenshot: preparare una demo, coprire dettagli selezionati, esportare
+più formati e spiegare un bug con gli allegati giusti.
+Il progetto combina SwiftUI, acquisizione nativa, pipeline video e OCR
+locale in uno strumento per Mac. Il rilascio previsto è gratuito;
+l'app è ancora in revisione e non ha un download pubblico.
 
-Link al progetto/release: [inserire dopo la pubblicazione approvata]
+PRODUCT LINE (EN)
+Your device. Ready to share.
+Turn iPhone and iPad captures into product demos, creator assets and
+clearer bug reports on your Mac. Created by Elia Gentili.
 
-DESCRIZIONE BREVE PER GITHUB
-App nativa macOS per mirroring iPhone/iPad, registrazione e composizione di
-screenshot e video, con OCR locale e formati 9:16, 1:1 e 16:9. Apple Silicon,
-macOS 14+. Consulta README e VALIDAZIONE per requisiti e limiti.
+STATO E USO
+I testi per i post, il piano delle dimostrazioni, la descrizione GitHub
+completa e la strategia di lancio sono in marketing/LAUNCH.md.
+Sono bozze: nessun post o messaggio è stato inviato.
+La pagina prodotto è un'anteprima; non annuncia un'app già scaricabile.
+Usare i testi di rilascio soltanto quando esiste una release pubblica
+verificata e sono risolti i punti di RELEASE_CHECKLIST.txt.
 
-PRIMA DI USARE QUESTA BOZZA
-Controllare che ogni funzione citata corrisponda alla build pubblicata,
-chiudere i punti aperti della checklist e usare solo demo revisionate,
-senza dati personali. Le prove hardware documentate al momento risalgono
-al 17 ottobre 2026; non presentarle come nuovi collaudi della build 7.
+PROMESSE DA MANTENERE ESATTE
+Mac Apple Silicon, macOS 14+, interfaccia attuale italiana.
+Elaborazione media e OCR locali; nessun account nell'app richiesto.
+Maschere video fisse, senza inseguimento del movimento.
+OCR e suggerimenti privacy da controllare, senza rilevamento esaustivo.
+Registrazioni originali, audio e testo manuale dei report non oscurati
+automaticamente. L'originale non oscurato nei report è solo opt-in.
+Nessuna dichiarazione di perfezione, compatibilità universale, esclusività
+di mercato o assenza assoluta di rischi legali.
 
-Aggiornamento funzionale 1.3:
-Ora lo Studio prepara anche segnalazioni bug con screenshot, annotazioni,
-testo OCR e descrizione; genera pacchetti creator nei tre formati con copertina
-e permette di salvare lo stile. Le maschere privacy sono applicate negli export,
-con suggerimenti di rilevamento locali da verificare. Le maschere video sono
-fisse; nessuna promessa di rilevamento completo o esclusività di mercato.
+COLLEGAMENTI
+Anteprima italiana: https://eliagentili.github.io/specchio-studio-site/it/
+Product preview: https://eliagentili.github.io/specchio-studio-site/
+Autore: https://github.com/eliagentili
+Guida tecnica: LEGGIMI.txt
+Verifiche e limiti: VALIDAZIONE.txt
+Diritti e distribuzione: RELEASE_CHECKLIST.txt

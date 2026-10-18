@@ -35,7 +35,7 @@ Le verifiche manuali ancora aperte comprendono nuovo collaudo iPhone, iPad, sess
 
 La build locale è firmata ad hoc e non notarizzata. Per il rilascio devono essere chiusi i punti di `RELEASE_CHECKLIST.txt`: provenienza dei contributi e delle risorse, disponibilità del nome, revisione della dipendenza FairPlay, conformità delle licenze e distribuzione dei sorgenti corrispondenti.
 
-L’archivio senza `.git` può essere valutato per una futura distribuzione pubblica solo dopo la revisione dei diritti. La sua preparazione non modifica il repository. `PROMO.txt` è una bozza non pubblicata.
+L’archivio senza `.git` può essere valutato per una futura distribuzione pubblica solo dopo la revisione dei diritti. La sua preparazione non modifica il repository. `PROMO.txt` e `marketing/LAUNCH.md` contengono testi promozionali e bozze social; nessun post social è stato inviato. La presentazione pubblica è distinta dalla distribuzione dell’app.
 
 Le chiavi di abbinamento risiedono nei dati locali dell’app. Build, registrazioni personali e dati di abbinamento devono rimanere esclusi dai sorgenti distribuiti.
 
@@ -52,3 +52,9 @@ Le maschere immagine e video sono separate; gli stili non persistono dati della 
 Aggiornati libplist 2.8.0 e OpenSSL 3.6.5; controlli sulle dimensioni e sullo stato dell’abbinamento PIN, con regressioni AddressSanitizer e scambio autenticato sintetico completo. Il confronto dei sorgenti ufficiali è ripetibile con `scripts/verify_upstream.py`; pin e impronte sono in `ThirdParty/upstream.json`.
 
 `UPSTREAM_AUDIT.txt` registra ambito e limiti del controllo. Su autorizzazione del titolare, main è stato sostituito con un solo commit radice della versione revisionata. Backup e materiali di analisi sono conservati privatamente fuori dal progetto. La riscrittura non elimina cache del servizio o cloni precedenti e non cambia la provenienza del codice. Il ramo OpenSSL 3.6 termina il supporto il 1° novembre 2026, quindi va pianificata una migrazione. Non è stata pubblicata una release o modificata la visibilità del repository.
+
+## Presentazione pubblica
+
+Landing bilingue: https://eliagentili.github.io/specchio-studio-site/ (italiano in `/it/`). Il repository pubblico `eliagentili/specchio-studio-site` contiene soltanto sito, immagini originali e licenza del sito, con una cronologia autonoma. Il repository dell’app resta privato: non è stata pubblicata una release o un’app scaricabile.
+
+`docs/` è la sorgente statica del sito; `scripts/build_site.py` rigenera le pagine EN/IT, `scripts/check_site.py` verifica collegamenti, metadati e integrità degli asset, `scripts/package_site.py` prepara una cartella isolata tramite elenco esplicito dei file ammessi. `marketing/SITE.md` descrive la manutenzione; `marketing/LAUNCH.md` raccoglie posizionamento, storyboard e bozze LinkedIn.

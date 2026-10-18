@@ -12,11 +12,11 @@ import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 FILES = (
-    "Info.plist", "LICENSE", "README.md", "LEGGIMI.txt", "VALIDAZIONE.txt",
+    "Info.plist", "LICENSE", "README.md", "README.it.md", "LEGGIMI.txt", "VALIDAZIONE.txt",
     "PROJECT_STATUS.md", "RELEASE_CHECKLIST.txt", "UPSTREAM_AUDIT.txt", "PROMO.txt", ".gitignore",
     "build.sh", "test.sh", "Anteprima-demo.png",
 )
-DIRECTORIES = ("Sources", "Native", "Resources", "Tests", "ThirdParty", "scripts")
+DIRECTORIES = ("Sources", "Native", "Resources", "Tests", "ThirdParty", "scripts", "docs", "marketing")
 SKIP_PARTS = {".git", ".build", ".DS_Store", "__pycache__"}
 
 
